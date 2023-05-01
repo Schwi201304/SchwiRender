@@ -1,5 +1,6 @@
 #include "swpch.h"
 #include "Schwi.h"
+#include <imgui.h>
 
 class ExampleLayer : public schwi::Layer
 {
@@ -11,14 +12,27 @@ public:
 
 	void OnUpdate() override
 	{
-		SW_INFO("ExampleLayer::Update,Name:{}",m_Name);
+		if (schwi::Input::IsKeyPressed(schwi::Key::Space))
+			SW_TRACE("Space key is pressed (poll)!");
 	}
 
 	void OnEvent(schwi::Event& event) override
 	{
-		SW_TRACE("{0}", event);
+		if (event.GetEventType() == schwi::EventType::KeyPressed)
+		{
+			schwi::KeyPressedEvent& e = (schwi::KeyPressedEvent&)event;
+			if (e.GetKeyCode() == schwi::Key::Tab)
+				SW_TRACE("Tab key is pressed (event)!");
+			SW_TRACE("{0}", (char)e.GetKeyCode());
+		}
 	}
 
+	virtual void OnImGuiRender() override
+	{
+		ImGui::Begin("Test");
+		ImGui::Text("Hello World");
+		ImGui::End();
+	}
 };
 
 class Sandbox : public schwi::Application
@@ -33,14 +47,16 @@ public:
 	{
 	}
 };
+
 schwi::Application* schwi::CreateApplication()
 {
 	return new Sandbox();
 }
-int main() 
+
+int main()
 {
 	schwi::Log::Init();
-	std::cout << "Hello!"<<std::endl;
+	std::cout << "Hello!" << std::endl;
 	auto app = schwi::CreateApplication();
 	app->Run();
 

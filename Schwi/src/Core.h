@@ -10,3 +10,5 @@ struct fmt::formatter<T> : fmt::formatter<std::string>             \
 };                                                                                                   
                                                                                                             
 #define SW_ASSERT(x, ...) { if(!(x)) { SW_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }  
+
+#define SW_BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)

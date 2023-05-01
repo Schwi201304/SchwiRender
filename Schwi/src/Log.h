@@ -16,8 +16,8 @@ namespace schwi {
 	};
 }
 
-#define SW_TRACE(...) schwi::Log::GetLogger()->trace(__VA_ARGS__);
-#define SW_DEBUG(...) schwi::Log::GetLogger()->debug(__VA_ARGS__);
-#define SW_INFO(...) schwi::Log::GetLogger()->info(__VA_ARGS__);
-#define SW_WARN(...) schwi::Log::GetLogger()->warn(__VA_ARGS__);
-#define SW_ERROR(...) schwi::Log::GetLogger()->error(__VA_ARGS__);
+#define SW_TRACE(...) schwi::Log::GetLogger()->trace(__VA_ARGS__)
+#define SW_DEBUG(...) schwi::Log::GetLogger()->debug(__VA_ARGS__)
+#define SW_INFO(...) schwi::Log::GetLogger()->info(__VA_ARGS__)
+#define SW_WARN(...) schwi::Log::GetLogger()->warn(__VA_ARGS__)
+#define SW_ERROR(...) schwi::Log::GetLogger()->error(__VA_ARGS__)
