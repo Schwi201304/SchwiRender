@@ -1,9 +1,8 @@
 #pragma once
 
-#include <memory>
-#include "spdlog/spdlog.h"
-#include "spdlog/sinks/stdout_color_sinks.h"
-#include "Schwi.h"
+#include "Core.h"
+#include <spdlog/spdlog.h>
+#include <spdlog/fmt/ostr.h>
 
 namespace schwi {
 	class Log
@@ -18,8 +17,8 @@ namespace schwi {
 	};
 }
 
-#define SW_LOG_TRACE(...) schwi::Log::GetLogger()->trace(__VA_ARGS__);
-#define SW_LOG_DEBUG(...) schwi::Log::GetLogger()->debug(__VA_ARGS__);
-#define SW_LOG_INFO(...) schwi::Log::GetLogger()->info(__VA_ARGS__);
-#define SW_LOG_WARN(...) schwi::Log::GetLogger()->warn(__VA_ARGS__);
-#define SW_LOG_ERROR(...) schwi::Log::GetLogger()->error(__VA_ARGS__);
+#define SW_TRACE(...) schwi::Log::GetLogger()->trace(__VA_ARGS__);
+#define SW_DEBUG(...) schwi::Log::GetLogger()->debug(__VA_ARGS__);
+#define SW_INFO(...) schwi::Log::GetLogger()->info(__VA_ARGS__);
+#define SW_WARN(...) schwi::Log::GetLogger()->warn(__VA_ARGS__);
+#define SW_ERROR(...) schwi::Log::GetLogger()->error(__VA_ARGS__);

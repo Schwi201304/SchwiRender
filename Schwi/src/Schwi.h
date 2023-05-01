@@ -1,3 +1,5 @@
 #pragma once
 
-#include <iostream>
+#include "Core.h"
+#include "Application.h"
+#include "Log.h"
