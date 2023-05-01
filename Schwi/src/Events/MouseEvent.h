@@ -69,7 +69,7 @@ namespace schwi {
 		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "MouseButtonPressedEvent: " << CodeString(m_Button);
+			ss << "MouseButtonPressedEvent: " << m_Button;
 			return ss.str();
 		}
 
@@ -85,15 +85,10 @@ namespace schwi {
 		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "MouseButtonReleasedEvent: " << CodeString(m_Button);
+			ss << "MouseButtonReleasedEvent: " << m_Button;
 			return ss.str();
 		}
 
 		EVENT_CLASS_TYPE(MouseButtonReleased)
 	};
 }
-
-SW_FMT_FOMATTER(schwi::MouseMovedEvent)
-SW_FMT_FOMATTER(schwi::MouseScrolledEvent)
-SW_FMT_FOMATTER(schwi::MouseButtonPressedEvent)
-SW_FMT_FOMATTER(schwi::MouseButtonReleasedEvent)

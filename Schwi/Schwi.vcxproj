@@ -84,6 +84,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\LayerStack.h" />
+    <ClInclude Include="src\Layer.h" />
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\Code.h" />
     <ClInclude Include="src\Events\ApplicationEvent.h" />
@@ -96,6 +98,8 @@
     <ClInclude Include="src\Platform\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\LayerStack.cpp" />
+    <ClCompile Include="src\Layer.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Core.h">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>

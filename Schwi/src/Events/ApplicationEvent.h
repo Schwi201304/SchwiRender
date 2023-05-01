@@ -60,9 +60,3 @@ namespace schwi {
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 }
-
-SW_FMT_FOMATTER(schwi::WindowResizeEvent)
-SW_FMT_FOMATTER(schwi::WindowCloseEvent)
-SW_FMT_FOMATTER(schwi::AppTickEvent)
-SW_FMT_FOMATTER(schwi::AppUpdateEvent)
-SW_FMT_FOMATTER(schwi::AppRenderEvent)

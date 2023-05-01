@@ -1,7 +1,9 @@
 #pragma once
 
 namespace schwi {
-	enum class MouseCode
+
+	using MouseCode = int;
+	enum : MouseCode
 	{
 		// From glfw3.h
 		Button0 = 0,
@@ -19,7 +21,8 @@ namespace schwi {
 		ButtonMiddle = Button2
 	};
 
-	enum class KeyCode
+	using KeyCode = int;
+	enum :int
 	{
 		// From glfw3.h
 		Space = 32,
@@ -153,6 +156,4 @@ namespace schwi {
 		RightSuper = 347,
 		Menu = 348
 	};
-
-#define CodeString(type) static_cast<int>(type)
 }

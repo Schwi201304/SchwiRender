@@ -7,6 +7,6 @@ struct fmt::formatter<T> : fmt::formatter<std::string>             \
     {                                                              \
         return format_to(ctx.out(), "{}", e.ToString());           \
     }                                                              \
-};
-
-#define SW_ASSERT(x, ...) { if(!(x)) { SW_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+};                                                                                                   
+                                                                                                            
+#define SW_ASSERT(x, ...) { if(!(x)) { SW_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }  

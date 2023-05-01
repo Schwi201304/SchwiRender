@@ -76,3 +76,11 @@ namespace schwi {
 		Event& m_Event;
 	};
 }
+
+template<typename T>
+struct fmt::formatter<T, std::enable_if_t<std::is_base_of<schwi::Event, T>::value, char>>
+	: fmt::formatter<std::string> {
+	auto format(const T& e, fmt::format_context& ctx) {
+		return fmt::format_to(ctx.out(), "{}", e.ToString());
+	}
+};

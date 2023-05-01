@@ -27,7 +27,7 @@ namespace schwi {
 		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "KeyPressedEvent: " << CodeString(m_KeyCode) << " (repeat = " << m_IsRepeat << ")";
+			ss << "KeyPressedEvent: " << m_KeyCode << " (repeat = " << m_IsRepeat << ")";
 			return ss.str();
 		}
 
@@ -45,7 +45,7 @@ namespace schwi {
 		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "KeyReleasedEvent: " << CodeString(m_KeyCode);
+			ss << "KeyReleasedEvent: " << m_KeyCode;
 			return ss.str();
 		}
 
@@ -61,14 +61,10 @@ namespace schwi {
 		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "KeyTypedEvent: " << CodeString(m_KeyCode);
+			ss << "KeyTypedEvent: " << m_KeyCode;
 			return ss.str();
 		}
 
 		EVENT_CLASS_TYPE(KeyTyped)
 	};
 }
-
-SW_FMT_FOMATTER(schwi::KeyPressedEvent)
-SW_FMT_FOMATTER(schwi::KeyReleasedEvent)
-SW_FMT_FOMATTER(schwi::KeyTypedEvent)
