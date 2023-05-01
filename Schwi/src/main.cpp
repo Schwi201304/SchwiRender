@@ -1,4 +1,6 @@
+#include "swpch.h"
 #include "Schwi.h"
+
 
 int main() 
 {

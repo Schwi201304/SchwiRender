@@ -1,13 +1,5 @@
 #pragma once
 
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-#include <vector>
-#include <memory>
-#include <fmt/ostream.h>
-
 #define SW_FMT_FOMATTER(T) template<>                              \
 struct fmt::formatter<T> : fmt::formatter<std::string>             \
 {                                                                  \
@@ -15,4 +7,6 @@ struct fmt::formatter<T> : fmt::formatter<std::string>             \
     {                                                              \
         return format_to(ctx.out(), "{}", e.ToString());           \
     }                                                              \
-};                                                                 \
+};
+
+#define SW_ASSERT(x, ...) { if(!(x)) { SW_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }

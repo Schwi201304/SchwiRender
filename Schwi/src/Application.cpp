@@ -1,13 +1,16 @@
+#include "swpch.h"
+
 #include "Application.h"
 #include "Events/MouseEvent.h"
 #include "Events/ApplicationEvent.h"
 #include "Events/KeyEvent.h"
-#include "Log.h"
+
+#include <GLFW/glfw3.h>
 
 namespace schwi {
 	Application::Application()
 	{
-
+		m_Window = std::unique_ptr<Window>(Window::Create());
 	}
 
 	Application::~Application()
@@ -17,17 +20,11 @@ namespace schwi {
 
 	void Application::Run()
 	{
-		WindowResizeEvent e(1280, 720); 
-		if (e.IsInCategory(EventCategoryApplication))
+		while (m_Running)
 		{
-			SW_TRACE(e);
+			glClearColor(112.0f/255.0f, 204.0f/255.0f, 1.0f, 1.0f);
+			glClear(GL_COLOR_BUFFER_BIT);
+			m_Window->OnUpdate();
 		}
-		MouseMoveEvent mme(720, 360);
-		if (mme.IsInCategory(EventCategoryInput))
-		{
-			SW_TRACE(mme);
-		}
-		WindowCloseEvent wce;
-		//while (true);
 	}
 }

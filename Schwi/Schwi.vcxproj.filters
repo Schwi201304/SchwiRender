@@ -36,6 +36,15 @@
     <ClInclude Include="src\Events\KeyEvent.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\swpch.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Window.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\WindowsWindow.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Log.cpp">
@@ -51,6 +60,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\Application.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\swpch.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\WindowsWindow.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
