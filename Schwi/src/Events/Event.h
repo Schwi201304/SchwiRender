@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Core.h"
-#include "Code.h"
+#include "Core/Code.h"
 
 namespace schwi {
 	enum class EventType

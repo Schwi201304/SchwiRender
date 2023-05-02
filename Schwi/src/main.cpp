@@ -12,19 +12,19 @@ public:
 
 	void OnUpdate() override
 	{
-		if (schwi::Input::IsKeyPressed(schwi::Key::Space))
-			SW_TRACE("Space key is pressed (poll)!");
+		//if (schwi::Input::IsKeyPressed(schwi::Key::Space))
+		//	SW_TRACE("Space key is pressed (poll)!");
 	}
 
 	void OnEvent(schwi::Event& event) override
 	{
-		if (event.GetEventType() == schwi::EventType::KeyPressed)
-		{
-			schwi::KeyPressedEvent& e = (schwi::KeyPressedEvent&)event;
-			if (e.GetKeyCode() == schwi::Key::Tab)
-				SW_TRACE("Tab key is pressed (event)!");
-			SW_TRACE("{0}", (char)e.GetKeyCode());
-		}
+		//if (event.GetEventType() == schwi::EventType::KeyPressed)
+		//{
+		//	schwi::KeyPressedEvent& e = (schwi::KeyPressedEvent&)event;
+		//	if (e.GetKeyCode() == schwi::Key::Tab)
+		//		SW_TRACE("Tab key is pressed (event)!");
+		//	SW_TRACE("{0}", (char)e.GetKeyCode());
+		//}
 	}
 
 	virtual void OnImGuiRender() override

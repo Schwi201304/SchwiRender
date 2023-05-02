@@ -7,10 +7,4 @@ namespace schwi {
 		: m_Name(name)
 	{
 	}
-
-	Layer::~Layer()
-	{
-
-	}
-
 }

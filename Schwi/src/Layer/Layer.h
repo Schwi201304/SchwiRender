@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Core.h"
 #include "Events/Event.h"
 
 namespace schwi {
@@ -8,7 +7,7 @@ namespace schwi {
 	{
 	public:
 		Layer(const std::string& name = "Layer");
-		virtual ~Layer();
+		virtual ~Layer() = default;
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
@@ -17,7 +16,7 @@ namespace schwi {
 		virtual void OnEvent(Event& event) {}
 
 		inline const std::string& GetName() const { return m_Name; }
-		
+
 	protected:
 		std::string m_Name;
 
