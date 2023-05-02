@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Log.h">
+    <ClInclude Include="src\Core\Log.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Application.h">
@@ -30,7 +30,7 @@
     <ClInclude Include="src\Events\MouseEvent.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Code.h">
+    <ClInclude Include="src\Core\Code.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Events\KeyEvent.h">
@@ -39,33 +39,51 @@
     <ClInclude Include="src\swpch.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Window.h">
+    <ClInclude Include="src\Core\Window.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Layer.h">
+    <ClInclude Include="src\Layer\Layer.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\LayerStack.h">
+    <ClInclude Include="src\Layer\LayerStack.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\ImGui\ImGuiLayer.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Input.h">
+    <ClInclude Include="src\Core\Input.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsInput.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\Context.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Shader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Buffer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Renderer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Log.cpp">
+    <ClCompile Include="src\Core\Log.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core.h">
+    <ClCompile Include="src\Core\Core.h">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\Schwi.h">
@@ -83,10 +101,10 @@
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Layer.cpp">
+    <ClCompile Include="src\Layer\Layer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\LayerStack.cpp">
+    <ClCompile Include="src\Layer\LayerStack.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\ImGui\ImGuiLayer.cpp">
@@ -96,6 +114,21 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\ImGui\ImGuiBuild.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\Shader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\Buffer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\Renderer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

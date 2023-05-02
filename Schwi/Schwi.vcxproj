@@ -86,37 +86,48 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\Renderer.h" />
+    <ClInclude Include="src\Renderer\Buffer.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
+    <ClInclude Include="src\Renderer\Shader.h" />
+    <ClInclude Include="src\Renderer\Context.h" />
     <ClInclude Include="src\ImGui\ImGuiLayer.h" />
-    <ClInclude Include="src\Input.h" />
-    <ClInclude Include="src\LayerStack.h" />
-    <ClInclude Include="src\Layer.h" />
+    <ClInclude Include="src\Core\Input.h" />
+    <ClInclude Include="src\Layer\LayerStack.h" />
+    <ClInclude Include="src\Layer\Layer.h" />
     <ClInclude Include="src\Application.h" />
-    <ClInclude Include="src\Code.h" />
+    <ClInclude Include="src\Core\Code.h" />
     <ClInclude Include="src\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Events\Event.h" />
     <ClInclude Include="src\Events\KeyEvent.h" />
     <ClInclude Include="src\Events\MouseEvent.h" />
-    <ClInclude Include="src\Log.h" />
+    <ClInclude Include="src\Core\Log.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\swpch.h" />
-    <ClInclude Include="src\Window.h" />
+    <ClInclude Include="src\Core\Window.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
+    <ClCompile Include="src\Renderer\Shader.cpp" />
     <ClCompile Include="src\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\ImGui\ImGuiLayer.cpp" />
-    <ClCompile Include="src\LayerStack.cpp" />
-    <ClCompile Include="src\Layer.cpp" />
+    <ClCompile Include="src\Layer\LayerStack.cpp" />
+    <ClCompile Include="src\Layer\Layer.cpp" />
     <ClCompile Include="src\Application.cpp" />
-    <ClCompile Include="src\Core.h">
+    <ClCompile Include="src\Core\Core.h">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Log.cpp">
+    <ClCompile Include="src\Core\Log.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Schwi.h" />
     <ClCompile Include="src\swpch.cpp">

@@ -1,5 +1,5 @@
 #pragma once
-#include "Layer.h"
+#include "Layer/Layer.h"
 #include "Events/ApplicationEvent.h"
 #include "Events/KeyEvent.h"
 #include "Events/MouseEvent.h"
@@ -10,7 +10,7 @@ namespace schwi {
 	{
 	public:
 		ImGuiLayer();
-		~ImGuiLayer();
+		~ImGuiLayer() = default;
 
 		virtual void OnAttach() override;
 		virtual void OnDetach() override;
@@ -21,7 +21,7 @@ namespace schwi {
 
 	private:
 		float m_Time = 0.0f;
-				
+
 	};
 
 }

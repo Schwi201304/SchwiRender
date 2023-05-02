@@ -2,7 +2,6 @@
 
 #include "swpch.h"
 
-#include "Core.h"
 #include "Events/Event.h"
 
 namespace schwi {
@@ -27,7 +26,7 @@ namespace schwi {
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;
 
-		virtual ~Window() {}
+		virtual ~Window() = default;
 
 		virtual void OnUpdate() = 0;
 

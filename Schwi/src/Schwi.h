@@ -1,10 +1,10 @@
 #pragma once
 
 #include "swpch.h"
-#include "Log.h"
-#include "Core.h"
+#include "Core/Log.h"
+#include "Core/Core.h"
 #include "Application.h"
-#include "Layer.h"
+#include "Layer/Layer.h"
 #include "ImGui/ImGuiLayer.h"
-#include "Input.h"
-#include "Code.h"
+#include "Core/Input.h"
+#include "Core/Code.h"

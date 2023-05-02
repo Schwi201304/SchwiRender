@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Window.h"
+#include "Core/Window.h"
 #include <GLFW/glfw3.h>
+#include "renderer/Context.h"
 
 namespace schwi {
 	class WindowsWindow :public Window
@@ -27,6 +28,7 @@ namespace schwi {
 
 	private:
 		GLFWwindow* m_Window;
+		Context* m_Context;
 
 		struct WindowData
 		{
