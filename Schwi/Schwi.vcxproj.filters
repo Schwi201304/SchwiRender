@@ -84,6 +84,15 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\RendererAPI.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\RenderCommand.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Log.cpp">
@@ -119,9 +128,6 @@
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\ImGui\ImGuiBuild.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -141,6 +147,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\RendererAPI.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\RenderCommand.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

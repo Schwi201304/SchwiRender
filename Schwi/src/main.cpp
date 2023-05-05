@@ -29,9 +29,27 @@ public:
 
 	virtual void OnImGuiRender() override
 	{
+		static bool show = true;
+		static float f = 0.0f;
+		static int counter = 0;
 		ImGui::Begin("Test");
 		ImGui::Text("Hello World");
+		ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
+		if (ImGui::Button("Button"))
+			counter++;
+		ImGui::SameLine();
+		ImGui::Text("counter = %d", counter); 
+		if (ImGui::Button("Show Example"))
+			show=!show;
+		ImGui::ColorEdit4("clear color", (float*)&schwi::s_ClearColor);
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
+
+		if (show) {
+			ImGui::Begin("Example", &show);
+			ImGui::Text("Hello from another window!");
+			ImGui::End();
+		}
 	}
 };
 

@@ -1,13 +1,13 @@
 #include "swpch.h"
 #include "Application.h"
 
-#include <glad/glad.h>
 #include "Core/Input.h"
 #include "Core/Core.h"
 
 namespace schwi {
 
-	Application* Application::s_Instance = nullptr;
+	Application* Application::s_Instance = nullptr; 
+	glm::vec4 s_ClearColor{ 102.f / 255.f, 204.f / 255.f, 1.f, 1.f };
 
 	Application::Application()
 	{
@@ -131,6 +131,7 @@ namespace schwi {
 	{
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(SW_BIND_EVENT_FN(Application::OnWindowClose));
+		dispatcher.Dispatch<KeyPressedEvent>(SW_BIND_EVENT_FN(Application::OnKeyPressed));
 
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )
 		{
@@ -143,19 +144,23 @@ namespace schwi {
 
 	void Application::Run()
 	{
-		SW_DEBUG("{}", m_LayerStack.size());
+		//SW_DEBUG("{}", m_LayerStack.size());
 		while (m_Running)
 		{
-			glClearColor(112.0f / 255.0f, 204.0f / 255.0f, 1.0f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT);
+			RenderCommand::SetClearColor(s_ClearColor);
+			RenderCommand::Clear();
+
+			Renderer::BeginScene();
 
 			m_BlueShader->Bind();
 			m_SquareVA->Bind();
-			glDrawElements(GL_TRIANGLES, m_SquareVA->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+			Renderer::Submit(m_SquareVA);
 
 			m_Shader->Bind();
 			m_VertexArray->Bind();
-			glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+			Renderer::Submit(m_VertexArray);
+
+			Renderer::EndScene();
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
@@ -173,5 +178,15 @@ namespace schwi {
 	{
 		m_Running = false;
 		return true;
+	}
+
+	bool Application::OnKeyPressed(KeyPressedEvent& e)
+	{
+		if (e.GetKeyCode() == schwi::Key::Escape)
+		{
+			m_Running = false;
+			return true;
+		}
+		return false;
 	}
 }
