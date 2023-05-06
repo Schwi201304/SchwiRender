@@ -9,6 +9,7 @@
 #include "Renderer/Buffer.h"
 #include "Renderer/VertexArray.h"
 #include "Renderer/Renderer.h"
+#include "Renderer/Camera.h"
 
 namespace schwi {
 	extern glm::vec4 s_ClearColor;
@@ -40,6 +41,8 @@ namespace schwi {
 
 		std::shared_ptr<Shader> m_BlueShader;
 		std::shared_ptr<VertexArray> m_SquareVA;
+
+		std::shared_ptr<Camera> m_Camera;
 
 	private:
 		static Application* s_Instance;

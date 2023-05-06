@@ -6,7 +6,7 @@
 
 namespace schwi {
 
-	Application* Application::s_Instance = nullptr; 
+	Application* Application::s_Instance = nullptr;
 	glm::vec4 s_ClearColor{ 102.f / 255.f, 204.f / 255.f, 1.f, 1.f };
 
 	Application::Application()
@@ -15,6 +15,7 @@ namespace schwi {
 		s_Instance = this;
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(SW_BIND_EVENT_FN(Application::OnEvent));
+		m_Camera = std::make_shared<PerspCamera>(45.0f, static_cast<float>(m_Window->GetWidth()) / m_Window->GetHeight());
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
@@ -25,7 +26,7 @@ namespace schwi {
 		float vertices[3 * 7] = {
 			-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
 			 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-			 0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f 
+			 0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f
 		};
 
 		std::shared_ptr<VertexBuffer> vertexBuffer;
@@ -69,12 +70,13 @@ namespace schwi {
 			
 			layout(location = 0) in vec3 a_Position;
 			layout(location = 1) in vec4 a_Color;
+			uniform mat4 u_ViewProjection;
 			out vec4 v_Color;
 
 			void main()
 			{
 				v_Color = a_Color;
-				gl_Position = vec4(a_Position, 1.0);	
+				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);	
 			}
 		)";
 
@@ -95,11 +97,12 @@ namespace schwi {
 			#version 330 core
 			
 			layout(location = 0) in vec3 a_Position;
+			uniform mat4 u_ViewProjection;
 			out vec3 v_Position;
 			void main()
 			{
 				v_Position = a_Position;
-				gl_Position = vec4(a_Position, 1.0);	
+				gl_Position = u_ViewProjection *  vec4(a_Position, 1.0);	
 			}
 		)";
 
@@ -150,15 +153,11 @@ namespace schwi {
 			RenderCommand::SetClearColor(s_ClearColor);
 			RenderCommand::Clear();
 
-			Renderer::BeginScene();
+			Renderer::BeginScene(m_Camera);
 
-			m_BlueShader->Bind();
-			m_SquareVA->Bind();
-			Renderer::Submit(m_SquareVA);
+			Renderer::Submit(m_BlueShader, m_SquareVA);
 
-			m_Shader->Bind();
-			m_VertexArray->Bind();
-			Renderer::Submit(m_VertexArray);
+			Renderer::Submit(m_Shader, m_VertexArray);
 
 			Renderer::EndScene();
 
@@ -182,11 +181,36 @@ namespace schwi {
 
 	bool Application::OnKeyPressed(KeyPressedEvent& e)
 	{
-		if (e.GetKeyCode() == schwi::Key::Escape)
+		switch (e.GetKeyCode())
 		{
+		case schwi::Key::Escape:
 			m_Running = false;
 			return true;
+		case schwi::Key::W:
+			m_Camera->SetPosition(m_Camera->GetPosition() + 1.0f * m_Camera->GetFrontVector());
+			SW_DEBUG("Pos:{},Front:{}", glm::to_string(m_Camera->GetPosition()), glm::to_string(m_Camera->GetFrontVector()));
+			return true;
+		case schwi::Key::S:
+			m_Camera->SetPosition(m_Camera->GetPosition() - 1.0f * m_Camera->GetFrontVector());
+			SW_DEBUG("Pos:{}", glm::to_string(m_Camera->GetPosition()));
+			return true;
+		case schwi::Key::R:
+			m_Camera->SetPitch(m_Camera->GetPitch() + 5);
+			SW_DEBUG("Pitch:{}", m_Camera->GetPitch());
+			return true;
+		case schwi::Key::F:
+			m_Camera->SetPitch(m_Camera->GetPitch() - 5);
+			SW_DEBUG("Pitch:{},Front:{}", m_Camera->GetPitch(), glm::to_string(m_Camera->GetFrontVector()));
+			return true;
+		case schwi::Key::A:
+			m_Camera->SetYaw(m_Camera->GetYaw() - 5);
+			SW_DEBUG("Yaw:{},Front:{}", m_Camera->GetYaw(), glm::to_string(m_Camera->GetFrontVector()));
+			return true;
+		case schwi::Key::D:
+			m_Camera->SetYaw(m_Camera->GetYaw() + 5);
+			SW_DEBUG("Yaw:{}", m_Camera->GetYaw());
+			return true;
+		default:return false;
 		}
-		return false;
 	}
 }

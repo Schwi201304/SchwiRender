@@ -1,4 +1,5 @@
 #pragma once
+#include <glm/glm.hpp>
 
 namespace schwi {
 	class Shader
@@ -9,6 +10,7 @@ namespace schwi {
 
 		void Bind() const;
 		void Unbind() const;
+		void UploadUniformMat4(const std::string& name, const glm::mat4& matrix);
 	private:
 		uint32_t m_RendererID;
 	};
