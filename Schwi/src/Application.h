@@ -2,17 +2,12 @@
 
 #include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
-#include "Layer/LayerStack.h"
-#include "Core/Window.h"
 #include "ImGui/ImGuiLayer.h"
-#include "Renderer/Shader.h"
-#include "Renderer/Buffer.h"
-#include "Renderer/VertexArray.h"
-#include "Renderer/Renderer.h"
-#include "Renderer/Camera.h"
+#include "Core/Timetep.h"
+#include "Core/Window.h"
+#include "Layer/LayerStack.h"
 
 namespace schwi {
-	extern glm::vec4 s_ClearColor;
 	class Application
 	{
 	public:
@@ -36,13 +31,7 @@ namespace schwi {
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 
-		std::shared_ptr<Shader> m_Shader;
-		std::shared_ptr<VertexArray> m_VertexArray;
-
-		std::shared_ptr<Shader> m_BlueShader;
-		std::shared_ptr<VertexArray> m_SquareVA;
-
-		std::shared_ptr<Camera> m_Camera;
+		float m_LastFrameTime = 0.0f;
 
 	private:
 		static Application* s_Instance;
