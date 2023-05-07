@@ -1,9 +1,11 @@
 #include "swpch.h"
 #include "Application.h"
 
-#include <glad/glad.h>
+#include "Renderer/Renderer.h"
 #include "Core/Input.h"
 #include "Core/Core.h"
+
+#include <glfw/glfw3.h>
 
 namespace schwi {
 
@@ -16,51 +18,10 @@ namespace schwi {
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(SW_BIND_EVENT_FN(Application::OnEvent));
 
+		Renderer::Init();
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
-
-		glGenVertexArrays(1, &m_VertexArray);
-		glBindVertexArray(m_VertexArray);
-
-		float vertices[3 * 3] = {
-			-0.5f, -0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			 0.0f,  0.5f, 0.0f
-		};
-
-		m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
-
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
-
-
-		uint32_t indices[3] = { 0, 1, 2 };
-		m_IndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
-
-		std::string vertexSrc = R"(
-			#version 330 core
-			
-			layout(location = 0) in vec3 a_Position;
-			out vec3 v_Position;
-			void main()
-			{
-				v_Position = a_Position;
-				gl_Position = vec4(a_Position, 1.0);	
-			}
-		)";
-
-		std::string fragmentSrc = R"(
-			#version 330 core
-			
-			layout(location = 0) out vec4 color;
-			in vec3 v_Position;
-			void main()
-			{
-				color = vec4(v_Position + 0.5, 1.0);
-			}
-		)";
-
-		m_Shader.reset(new Shader(vertexSrc, fragmentSrc));
+				
 	}
 
 	void Application::PushLayer(Layer* layer)
@@ -77,6 +38,7 @@ namespace schwi {
 	{
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(SW_BIND_EVENT_FN(Application::OnWindowClose));
+		dispatcher.Dispatch<KeyPressedEvent>(SW_BIND_EVENT_FN(Application::OnKeyPressed));
 
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )
 		{
@@ -89,17 +51,15 @@ namespace schwi {
 
 	void Application::Run()
 	{
+		//SW_DEBUG("{}", m_LayerStack.size());
 		while (m_Running)
 		{
-			glClearColor(112.0f / 255.0f, 204.0f / 255.0f, 1.0f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT);
-
-			m_Shader->Bind();
-			glBindVertexArray(m_VertexArray);
-			glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+			float time = (float)glfwGetTime();
+			Timestep timestep = time - m_LastFrameTime;
+			m_LastFrameTime = time;
 
 			for (Layer* layer : m_LayerStack)
-				layer->OnUpdate();
+				layer->OnUpdate(timestep);
 
 			m_ImGuiLayer->Begin();
 			for (Layer* layer : m_LayerStack)
@@ -114,5 +74,16 @@ namespace schwi {
 	{
 		m_Running = false;
 		return true;
+	}
+
+	bool Application::OnKeyPressed(KeyPressedEvent& e)
+	{
+		switch (e.GetKeyCode())
+		{
+		case schwi::Key::Escape:
+			m_Running = false;
+			return true;
+		default:return false;
+		}
 	}
 }

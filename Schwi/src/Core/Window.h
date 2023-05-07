@@ -32,6 +32,8 @@ namespace schwi {
 
 		virtual unsigned int GetWidth() const = 0;
 		virtual unsigned int GetHeight() const = 0;
+		virtual std::pair<unsigned int, unsigned int> GetResolution() const = 0;
+		virtual float GetAspect() const = 0;
 
 		// Window attributes
 		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
