@@ -21,5 +21,3 @@ namespace schwi {
 #define SW_INFO(...) schwi::Log::GetLogger()->info(__VA_ARGS__)
 #define SW_WARN(...) schwi::Log::GetLogger()->warn(__VA_ARGS__)
 #define SW_ERROR(...) schwi::Log::GetLogger()->error(__VA_ARGS__)
-
-#define SW_ASSERT(x, ...) { if(!(x)) { SW_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }  

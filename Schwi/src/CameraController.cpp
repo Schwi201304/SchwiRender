@@ -34,7 +34,7 @@ namespace schwi{
 		case CameraType::Orthographic:
 			break;
 		case CameraType::Perspective:
-			std::dynamic_pointer_cast<PerspCamera>(m_Camera)->SetFov(m_ZoomLevel);
+			CastRef<PerspCamera>(m_Camera)->SetFov(m_ZoomLevel);
 			break;
 		default:
 			SW_ASSERT(false, "Unknow CameraType");
@@ -50,7 +50,7 @@ namespace schwi{
 		case CameraType::Orthographic:
 			break;
 		case CameraType::Perspective:
-			std::dynamic_pointer_cast<PerspCamera>(m_Camera)->SetAspect(aspect);
+			CastRef<PerspCamera>(m_Camera)->SetAspect(aspect);
 			break;
 		default:
 			SW_ASSERT(false, "Unknow CameraType");

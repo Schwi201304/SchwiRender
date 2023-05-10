@@ -10,18 +10,18 @@ namespace schwi {
 	{
 	public:
 		CameraController() = default;
-		CameraController(std::shared_ptr<Camera> camera) :m_Camera(camera) {}
+		CameraController(Ref<Camera> camera) :m_Camera(camera) {}
 
 		void OnUpdate(Timestep ts);
 		void OnEvent(Event& e);
 
-		std::shared_ptr<Camera>& GetCamera() { return m_Camera; }
-		const  std::shared_ptr<Camera>& GetCamera() const { return m_Camera; }
+		Ref<Camera>& GetCamera() { return m_Camera; }
+		const  Ref<Camera>& GetCamera() const { return m_Camera; }
 	private:
 		bool OnMouseScrolled(MouseScrolledEvent& e);
 		bool OnWindowResized(WindowResizeEvent& e);
 	private:
-		std::shared_ptr<Camera> m_Camera;
+		Ref<Camera> m_Camera;
 
 		float m_ZoomLevel = 45.0f;
 		float m_CameraMoveSpeed = 5.0f;
