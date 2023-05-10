@@ -3,7 +3,7 @@
 #include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
 #include "ImGui/ImGuiLayer.h"
-#include "Core/Timetep.h"
+#include "Core/Timestep.h"
 #include "Core/Window.h"
 #include "Layer/LayerStack.h"
 

@@ -7,7 +7,8 @@ public:
 	ExampleLayer()
 		: Layer("Example")
 	{
-		m_Camera = std::make_shared<schwi::PerspCamera>(45.0f, schwi::Application::Get().GetWindow().GetAspect());
+		m_CameraController = schwi::CameraController(std::make_shared<schwi::PerspCamera>(
+			45.0f, schwi::Application::Get().GetWindow().GetAspect()));
 		m_VertexArray.reset(schwi::VertexArray::Create());
 
 		float vertices[3 * 7] = {
@@ -117,60 +118,24 @@ public:
 		)";
 
 		m_FlatColorShader.reset(schwi::Shader::Create(flatColorShaderVertexSrc, flatColorShaderFragmentSrc));
-
-		std::string textureShaderVertexSrc = R"(
-			#version 330 core
-			
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec2 a_TexCoord;
-			uniform mat4 u_ViewProjection;
-			uniform mat4 u_Transform;
-			out vec2 v_TexCoord;
-			void main()
-			{
-				v_TexCoord = a_TexCoord;
-				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);	
-			}
-		)";
-
-		std::string textureShaderFragmentSrc = R"(
-			#version 330 core
-			
-			layout(location = 0) out vec4 color;
-			in vec2 v_TexCoord;
-			
-			uniform sampler2D u_Texture;
-			void main()
-			{
-				color = texture(u_Texture, v_TexCoord);
-			}
-		)";
-
-		m_TextureShader.reset(schwi::Shader::Create(textureShaderVertexSrc, textureShaderFragmentSrc));
+		m_TextureShader.reset(schwi::Shader::Create("assets/shaders/texture.glsl"));
 
 		m_Texture = schwi::Texture2D::Create("assets/textures/kq.png");
 
-		std::dynamic_pointer_cast<schwi::OpenGLShader>(m_TextureShader)->Bind();
-		std::dynamic_pointer_cast<schwi::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+		m_TextureShader->Bind();
+		m_TextureShader->UploadUniformInt("u_Texture", 0);
 	}
 
 	void OnUpdate(schwi::Timestep ts) override
 	{
-		if (schwi::Input::IsKeyPressed(schwi::Key::W))
-			m_Camera->SetPosition(m_Camera->GetPosition() + m_CameraMoveSpeed * ts * m_Camera->GetFrontVector());
-		if (schwi::Input::IsKeyPressed(schwi::Key::S))
-			m_Camera->SetPosition(m_Camera->GetPosition() - m_CameraMoveSpeed * ts * m_Camera->GetFrontVector());
-		if (schwi::Input::IsKeyPressed(schwi::Key::A))
-			m_Camera->SetYaw(m_Camera->GetYaw() - m_CameraRotationSpeed * ts);
-		if (schwi::Input::IsKeyPressed(schwi::Key::D))
-			m_Camera->SetYaw(m_Camera->GetYaw() + m_CameraRotationSpeed * ts);
+		m_CameraController.OnUpdate(ts);
 
 		schwi::RenderCommand::SetClearColor(m_ClearColor);
 		schwi::RenderCommand::Clear();
 
 		//SW_DEBUG("Pos:{},Yaw:{}",glm::to_string(m_Camera->GetPosition()),m_Camera->GetYaw());
 
-		schwi::Renderer::BeginScene(m_Camera);
+		schwi::Renderer::BeginScene(m_CameraController.GetCamera());
 
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
@@ -192,8 +157,9 @@ public:
 		schwi::Renderer::EndScene();
 	}
 
-	void OnEvent(schwi::Event& event) override
+	void OnEvent(schwi::Event& e) override
 	{
+		m_CameraController.OnEvent(e);
 	}
 
 	virtual void OnImGuiRender() override
@@ -221,9 +187,7 @@ private:
 	std::shared_ptr<schwi::VertexArray> m_SquareVA;
 	std::shared_ptr<schwi::Texture2D> m_Texture;
 
-	std::shared_ptr<schwi::Camera> m_Camera;
-	float m_CameraMoveSpeed = 5.0f;
-	float m_CameraRotationSpeed = 90.0f;
+	schwi::CameraController m_CameraController;
 
 	glm::vec4 m_ClearColor{ 102.f / 255.f, 204.f / 255.f, 1.f, 1.f };
 };

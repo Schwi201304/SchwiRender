@@ -96,7 +96,7 @@
     <ClInclude Include="src\Renderer\Camera.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Timetep.h">
+    <ClInclude Include="src\Core\Timestep.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
@@ -106,6 +106,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CameraController.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -185,5 +188,11 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\CameraController.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\shaders\texture.glsl" />
   </ItemGroup>
 </Project>

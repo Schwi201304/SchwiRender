@@ -11,25 +11,38 @@ namespace schwi {
 	OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
 		: m_Path(path)
 	{
-		glGenTextures(1, &m_TextureID);
-		glBindTexture(GL_TEXTURE_2D, m_TextureID);
+		int width, height, channel;
+		stbi_set_flip_vertically_on_load(1);
+		stbi_uc* data = stbi_load(path.c_str(), &width, &height, &channel, 0);
+		SW_TRACE("Loading image:'{0}' {1}*{2} channels:{3}", path, width, height, channel);
+		SW_ASSERT(data, "Failed to load image!");
+		GLenum internalFormat = 0, dataFormat = 0;
+		if (channel == 4)
+		{
+			internalFormat = GL_RGBA8;
+			dataFormat = GL_RGBA;
+		}
+		else if (channel == 3)
+		{
+			internalFormat = GL_RGB8;
+			dataFormat = GL_RGB;
+		}
+		SW_ASSERT(internalFormat & dataFormat, "Format not supported!");
+		//SW_DEBUG("{:0x} {:0x}", internalFormat, dataFormat);
+		m_Width = width;
+		m_Height = height;
+		m_Channel = channel;
 
+		glCreateTextures(GL_TEXTURE_2D, 1,&m_TextureID);
+		glTextureStorage2D(m_TextureID, 4, internalFormat, m_Width, m_Height);
+		
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTextureParameteri(m_TextureID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTextureParameteri(m_TextureID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-		stbi_set_flip_vertically_on_load(1);
-		stbi_uc* data = stbi_load(path.c_str(), &m_Width, &m_Height, &m_Channel, 0);
-		SW_TRACE("Loading image:{}", path);
-		SW_ASSERT(data, "Failed to load image!Image path");
-		GLenum format;
-		if (m_Channel == 3)format = GL_RGB;
-		else if (m_Channel == 4)format = GL_RGBA;
-		else SW_ERROR("Error Channel:{}", m_Channel);
-
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Width, m_Height, 0, format, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
+		glTextureParameteri(m_TextureID, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
+		glTextureParameteri(m_TextureID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+				
+		glTextureSubImage2D(m_TextureID, 0, 0, 0, m_Width, m_Height, dataFormat, GL_UNSIGNED_BYTE, data);
+		glGenerateTextureMipmap(m_TextureID);
 
 		stbi_image_free(data);
 	}
@@ -41,6 +54,6 @@ namespace schwi {
 
 	void OpenGLTexture2D::Bind(uint32_t slot) const
 	{
-		glBindTexture(slot, m_TextureID);
+		glBindTextureUnit(slot, m_TextureID);
 	}
 }

@@ -4,21 +4,22 @@
 
 namespace schwi {
 
-	enum class CameraType
+	enum CameraType
 	{
-		None,
-		Orthographic,
-		Perspective
+		CameraTypeNone = 0,
+		Orthographic = 1,
+		Perspective = 2
 	};
 
 	class Camera
 	{
 	public:
 		Camera() = default;
-		Camera(float nearPlane, float farPlane) :m_NearPlane(nearPlane), m_FarPlane(farPlane) {}
+		Camera(float nearPlane, float farPlane, CameraType cameraType = CameraType::Perspective)
+			:m_NearPlane(nearPlane), m_FarPlane(farPlane), m_CameraType(cameraType) {}
 		virtual ~Camera() = default;
 
-		virtual const std::string& GetCameraType() const = 0;
+		const CameraType& GetCameraType() { return m_CameraType; };
 
 		const float& GetPitch() const { return m_Pitch; }
 		const float& GetYaw() const { return m_Yaw; }
@@ -44,6 +45,7 @@ namespace schwi {
 		void UpdateViewProjectionMatrix() { m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix; }
 
 	protected:
+		CameraType m_CameraType;
 		float m_FarPlane, m_NearPlane;
 		float m_Pitch = 0.0f, m_Yaw = -90.0f;
 		glm::vec3 m_Position = { 0.0f, 0.0f, 5.0f };
@@ -57,7 +59,8 @@ namespace schwi {
 	{
 	public:
 		OrthoCamera(float left, float right, float bottom, float top, float nearPlane = 0.1f, float farPlane = 100.0f)
-			:m_Left(left), m_Right(right), m_Bottom(bottom), m_Top(top), Camera(nearPlane, farPlane)
+			:m_Left(left), m_Right(right), m_Bottom(bottom), m_Top(top),
+			Camera(nearPlane, farPlane, CameraType::Orthographic)
 		{
 			UpdateViewMatrix();
 			UpdateProjectionMatrix();
@@ -65,7 +68,6 @@ namespace schwi {
 		}
 		~OrthoCamera() = default;
 
-		virtual const std::string& GetCameraType() const override { return "Orthographic Camera"; }
 		const float& GetLeft() const { return m_Left; }
 		const float& GetRight() const { return m_Right; }
 		const float& GetBottom() const { return m_Bottom; }
@@ -86,7 +88,8 @@ namespace schwi {
 	{
 	public:
 		PerspCamera(float fov, float aspect, float nearPlane = 0.1f, float farPlane = 100.0f)
-			:m_Fov(fov), m_Aspect(aspect), Camera(nearPlane, farPlane)
+			:m_Fov(fov), m_Aspect(aspect),
+			Camera(nearPlane, farPlane, CameraType::Perspective)
 		{
 			UpdateViewMatrix();
 			UpdateProjectionMatrix();
@@ -94,7 +97,6 @@ namespace schwi {
 		}
 		~PerspCamera() = default;
 
-		virtual const std::string& GetCameraType() const override { return "Perspective Camera"; }
 		const float& GetFov() const { return m_Fov; }
 		const float& GetAspect() const { return m_Aspect; }
 
