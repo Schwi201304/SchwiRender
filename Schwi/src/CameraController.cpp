@@ -44,8 +44,17 @@ namespace schwi{
 
 	bool CameraController::OnWindowResized(WindowResizeEvent& e)
 	{
-		auto aspect = (float)e.GetWidth() / (float)e.GetHeight();
-		std::dynamic_pointer_cast<PerspCamera>(m_Camera)->SetAspect(aspect);
+		auto aspect = (float)e.GetWidth() / (float)e.GetHeight(); 
+		switch (m_Camera->GetCameraType())
+		{
+		case CameraType::Orthographic:
+			break;
+		case CameraType::Perspective:
+			std::dynamic_pointer_cast<PerspCamera>(m_Camera)->SetAspect(aspect);
+			break;
+		default:
+			SW_ASSERT(false, "Unknow CameraType");
+		}
 		return false;
 	}
 

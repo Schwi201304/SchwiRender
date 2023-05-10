@@ -76,7 +76,7 @@ namespace schwi {
 
 	void PerspCamera::SetAspect(float aspect)
 	{
-		if (aspect = m_Aspect)return;
+		if (aspect == m_Aspect)return;
 		m_Aspect = aspect;
 		UpdateProjectionMatrix();
 		UpdateViewProjectionMatrix();
