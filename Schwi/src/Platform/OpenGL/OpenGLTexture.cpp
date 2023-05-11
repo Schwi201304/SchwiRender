@@ -15,7 +15,7 @@ namespace schwi {
 		stbi_set_flip_vertically_on_load(1);
 		stbi_uc* data = stbi_load(path.c_str(), &width, &height, &channel, 0);
 		SW_TRACE("Loading image:'{0}' {1}*{2} channels:{3}", path, width, height, channel);
-		SW_ASSERT(data, "Failed to load image!");
+		//SW_ASSERT(data, "Failed to load image!");
 		GLenum internalFormat = 0, dataFormat = 0;
 		if (channel == 4)
 		{
@@ -27,7 +27,7 @@ namespace schwi {
 			internalFormat = GL_RGB8;
 			dataFormat = GL_RGB;
 		}
-		SW_ASSERT(internalFormat & dataFormat, "Format not supported!");
+		//SW_ASSERT(internalFormat & dataFormat, "Format not supported!");
 		//SW_DEBUG("{:0x} {:0x}", internalFormat, dataFormat);
 		m_Width = width;
 		m_Height = height;

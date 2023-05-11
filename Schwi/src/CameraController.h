@@ -20,12 +20,17 @@ namespace schwi {
 	private:
 		bool OnMouseScrolled(MouseScrolledEvent& e);
 		bool OnWindowResized(WindowResizeEvent& e);
+		bool OnMouseMoved(MouseMovedEvent& e);
+		bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
+		bool OnMouseButtonReleased(MouseButtonReleasedEvent& e);
 	private:
 		Ref<Camera> m_Camera;
+		bool leftButtonDown = false;
+		float lastX=0.0f, lastY=0.0f;
 
 		float m_ZoomLevel = 45.0f;
 		float m_CameraMoveSpeed = 5.0f;
-		float m_CameraRotationSpeed = 90.0f;
+		float m_CameraRotationSpeed = 0.1f;
 	};
 
 }

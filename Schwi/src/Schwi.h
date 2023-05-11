@@ -20,6 +20,8 @@
 #include "Renderer/VertexArray.h"
 #include "Renderer/Camera.h"
 #include "Renderer/Texture.h"
+#include "Renderer/Light.h"
+#include "Renderer/Material.h"
 
 #include "Application.h"
 #include "CameraController.h"

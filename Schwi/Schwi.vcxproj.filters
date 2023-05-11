@@ -111,6 +111,12 @@
     <ClInclude Include="src\CameraController.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\Light.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Material.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Log.cpp">
@@ -194,5 +200,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\shaders\texture.glsl" />
+    <None Include="assets\shaders\default.glsl" />
+    <None Include="assets\shaders\phong.glsl" />
+    <None Include="assets\shaders\light.glsl" />
   </ItemGroup>
 </Project>
