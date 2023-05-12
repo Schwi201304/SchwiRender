@@ -96,7 +96,7 @@
     <ClInclude Include="src\Renderer\Camera.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Timetep.h">
+    <ClInclude Include="src\Core\Timestep.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
@@ -106,6 +106,21 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CameraController.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Light.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Material.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Mesh.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Model.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -185,5 +200,21 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\CameraController.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\Mesh.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\Model.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\shaders\texture.glsl" />
+    <None Include="assets\shaders\default.glsl" />
+    <None Include="assets\shaders\phong.glsl" />
+    <None Include="assets\shaders\light.glsl" />
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

@@ -7,7 +7,6 @@
 #include "swpch.h"
 #include "Core/Log.h"
 #include "Core/Core.h"
-#include "Application.h"
 #include "Layer/Layer.h"
 #include "ImGui/ImGuiLayer.h"
 #include "Core/Input.h"
@@ -21,3 +20,10 @@
 #include "Renderer/VertexArray.h"
 #include "Renderer/Camera.h"
 #include "Renderer/Texture.h"
+#include "Renderer/Light.h"
+#include "Renderer/Material.h"
+#include "Renderer/Mesh.h"
+#include "Renderer/Model.h"
+
+#include "Application.h"
+#include "CameraController.h"

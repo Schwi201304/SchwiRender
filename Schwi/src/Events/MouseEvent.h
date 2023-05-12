@@ -11,6 +11,7 @@ namespace schwi {
 
 		float GetX() const { return m_MouseX; }
 		float GetY() const { return m_MouseY; }
+		std::pair<float, float> GetPosition() const { return{ m_MouseX,m_MouseY }; }
 
 		std::string ToString() const override
 		{

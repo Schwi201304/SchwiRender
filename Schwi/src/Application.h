@@ -3,7 +3,7 @@
 #include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
 #include "ImGui/ImGuiLayer.h"
-#include "Core/Timetep.h"
+#include "Core/Timestep.h"
 #include "Core/Window.h"
 #include "Layer/LayerStack.h"
 
@@ -26,9 +26,12 @@ namespace schwi {
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 		bool OnKeyPressed(KeyPressedEvent& e);
+		bool OnWindowResize(WindowResizeEvent& e);
+
 		std::unique_ptr<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
+		bool m_Minimized = false;
 		LayerStack m_LayerStack;
 
 		float m_LastFrameTime = 0.0f;

@@ -1,14 +1,16 @@
 #include "swpch.h"
 #include "Schwi.h"
 
-class ExampleLayer : public schwi::Layer
+using namespace schwi;
+class Example_Texture : public schwi::Layer
 {
 public:
-	ExampleLayer()
-		: Layer("Example")
+	Example_Texture()
+		: Layer("Example_Texture")
 	{
-		m_Camera = std::make_shared<schwi::PerspCamera>(45.0f, schwi::Application::Get().GetWindow().GetAspect());
-		m_VertexArray.reset(schwi::VertexArray::Create());
+		m_CameraController = schwi::CameraController(CreateRef<schwi::PerspCamera>(
+			45.0f, schwi::Application::Get().GetWindow().GetAspect()));
+		m_VertexArray = schwi::VertexArray::Create();
 
 		float vertices[3 * 7] = {
 			-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
@@ -16,8 +18,8 @@ public:
 			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
 
-		std::shared_ptr<schwi::VertexBuffer> vertexBuffer;
-		vertexBuffer.reset(schwi::VertexBuffer::Create(vertices, sizeof(vertices)));
+		Ref<schwi::VertexBuffer> vertexBuffer;
+		vertexBuffer = VertexBuffer::Create(vertices, sizeof(vertices));
 		schwi::BufferLayout layout = {
 			{ schwi::ShaderDataType::Float3, "a_Position" },
 			{ schwi::ShaderDataType::Float4, "a_Color" }
@@ -26,11 +28,11 @@ public:
 		m_VertexArray->AddVertexBuffer(vertexBuffer);
 
 		uint32_t indices[3] = { 0, 1, 2 };
-		std::shared_ptr<schwi::IndexBuffer> indexBuffer;
-		indexBuffer.reset(schwi::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+		Ref<schwi::IndexBuffer> indexBuffer;
+		indexBuffer = schwi::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
-		m_SquareVA.reset(schwi::VertexArray::Create());
+		m_SquareVA = schwi::VertexArray::Create();
 
 		float squareVertices[5 * 4] = {
 			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
@@ -39,8 +41,8 @@ public:
 			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
-		std::shared_ptr<schwi::VertexBuffer> squareVB;
-		squareVB.reset(schwi::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+		Ref<schwi::VertexBuffer> squareVB;
+		squareVB = schwi::VertexBuffer::Create(squareVertices, sizeof(squareVertices));
 		squareVB->SetLayout({
 			{ schwi::ShaderDataType::Float3, "a_Position" },
 			{ schwi::ShaderDataType::Float2, "a_TexCoord" }
@@ -48,152 +50,38 @@ public:
 		m_SquareVA->AddVertexBuffer(squareVB);
 
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-		std::shared_ptr<schwi::IndexBuffer> squareIB;
-		squareIB.reset(schwi::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+		Ref<schwi::IndexBuffer> squareIB;
+		squareIB = schwi::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
 		m_SquareVA->SetIndexBuffer(squareIB);
 
-		std::string vertexSrc = R"(
-			#version 330 core
-			
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec4 a_Color;
-
-			uniform mat4 u_ViewProjection;
-			uniform mat4 u_Transform;
-
-			out vec3 v_Position;
-			out vec4 v_Color;
-
-			void main()
-			{
-				v_Position = a_Position;
-				v_Color = a_Color;
-				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);	
-			}
-		)";
-
-		std::string fragmentSrc = R"(
-			#version 330 core
-			
-			layout(location = 0) out vec4 color;
-			in vec3 v_Position;
-			in vec4 v_Color;
-			void main()
-			{
-				color = vec4(v_Position * 0.5 + 0.5, 1.0);
-				color = v_Color;
-			}
-		)";
-
-		m_Shader.reset(schwi::Shader::Create(vertexSrc, fragmentSrc));
-
-		std::string flatColorShaderVertexSrc = R"(
-			#version 330 core
-			
-			layout(location = 0) in vec3 a_Position;
-
-			uniform mat4 u_ViewProjection;
-			uniform mat4 u_Transform;
-
-			out vec3 v_Position;
-
-			void main()
-			{
-				v_Position = a_Position;
-				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);	
-			}
-		)";
-
-		std::string flatColorShaderFragmentSrc = R"(
-			#version 330 core
-			
-			layout(location = 0) out vec4 color;
-			uniform vec3 u_color;
-			in vec3 v_Position;
-			void main()
-			{
-				color = vec4(u_color, 1.0);
-			}
-		)";
-
-		m_FlatColorShader.reset(schwi::Shader::Create(flatColorShaderVertexSrc, flatColorShaderFragmentSrc));
-
-		std::string textureShaderVertexSrc = R"(
-			#version 330 core
-			
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec2 a_TexCoord;
-			uniform mat4 u_ViewProjection;
-			uniform mat4 u_Transform;
-			out vec2 v_TexCoord;
-			void main()
-			{
-				v_TexCoord = a_TexCoord;
-				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);	
-			}
-		)";
-
-		std::string textureShaderFragmentSrc = R"(
-			#version 330 core
-			
-			layout(location = 0) out vec4 color;
-			in vec2 v_TexCoord;
-			
-			uniform sampler2D u_Texture;
-			void main()
-			{
-				color = texture(u_Texture, v_TexCoord);
-			}
-		)";
-
-		m_TextureShader.reset(schwi::Shader::Create(textureShaderVertexSrc, textureShaderFragmentSrc));
+		m_TextureShader = schwi::Shader::Create("assets/shaders/texture.glsl");
 
 		m_Texture = schwi::Texture2D::Create("assets/textures/kq.png");
 
-		std::dynamic_pointer_cast<schwi::OpenGLShader>(m_TextureShader)->Bind();
-		std::dynamic_pointer_cast<schwi::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+		m_TextureShader->Bind();
+		m_TextureShader->SetInt("u_Texture", 0);
 	}
 
 	void OnUpdate(schwi::Timestep ts) override
 	{
-		if (schwi::Input::IsKeyPressed(schwi::Key::W))
-			m_Camera->SetPosition(m_Camera->GetPosition() + m_CameraMoveSpeed * ts * m_Camera->GetFrontVector());
-		if (schwi::Input::IsKeyPressed(schwi::Key::S))
-			m_Camera->SetPosition(m_Camera->GetPosition() - m_CameraMoveSpeed * ts * m_Camera->GetFrontVector());
-		if (schwi::Input::IsKeyPressed(schwi::Key::A))
-			m_Camera->SetYaw(m_Camera->GetYaw() - m_CameraRotationSpeed * ts);
-		if (schwi::Input::IsKeyPressed(schwi::Key::D))
-			m_Camera->SetYaw(m_Camera->GetYaw() + m_CameraRotationSpeed * ts);
+		m_CameraController.OnUpdate(ts);
 
 		schwi::RenderCommand::SetClearColor(m_ClearColor);
 		schwi::RenderCommand::Clear();
 
-		//SW_DEBUG("Pos:{},Yaw:{}",glm::to_string(m_Camera->GetPosition()),m_Camera->GetYaw());
-
-		schwi::Renderer::BeginScene(m_Camera);
+		schwi::Renderer::BeginScene(m_CameraController.GetCamera());
 
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
-		m_FlatColorShader->Bind();
-		m_FlatColorShader->UploadUniformFloat3("u_color", m_SquareColor);
-
-		for (int y = 0; y < 20; y++)
-		{
-			for (int x = 0; x < 20; x++)
-			{
-				glm::vec3 pos(x * 0.11f, y * 0.11f, 0.0f);
-				glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
-				schwi::Renderer::Submit(m_FlatColorShader, m_SquareVA, transform);
-			}
-		}
 		m_Texture->Bind();
 		schwi::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 		schwi::Renderer::EndScene();
 	}
 
-	void OnEvent(schwi::Event& event) override
+	void OnEvent(schwi::Event& e) override
 	{
+		m_CameraController.OnEvent(e);
 	}
 
 	virtual void OnImGuiRender() override
@@ -213,19 +101,204 @@ public:
 	}
 
 private:
-	std::shared_ptr<schwi::Shader> m_Shader;
-	std::shared_ptr<schwi::VertexArray> m_VertexArray;
+	Ref<schwi::Shader> m_Shader;
+	Ref<schwi::VertexArray> m_VertexArray;
 
 	glm::vec3 m_SquareColor{ 0.2, 0.3, 0.8 };
-	std::shared_ptr<schwi::Shader> m_FlatColorShader, m_TextureShader;
-	std::shared_ptr<schwi::VertexArray> m_SquareVA;
-	std::shared_ptr<schwi::Texture2D> m_Texture;
+	Ref<schwi::Shader> m_FlatColorShader, m_TextureShader;
+	Ref<schwi::VertexArray> m_SquareVA;
+	Ref<schwi::Texture2D> m_Texture;
 
-	std::shared_ptr<schwi::Camera> m_Camera;
-	float m_CameraMoveSpeed = 5.0f;
-	float m_CameraRotationSpeed = 90.0f;
+	schwi::CameraController m_CameraController;
 
 	glm::vec4 m_ClearColor{ 102.f / 255.f, 204.f / 255.f, 1.f, 1.f };
+};
+
+class Example_Light : public Layer
+{
+public:
+	Example_Light() :Layer("Example_Light")
+	{
+		m_CameraController = CameraController(CreateRef<schwi::PerspCamera>(
+			45.0f, Application::Get().GetWindow().GetAspect()));
+		m_VertexArray = VertexArray::Create();
+
+		float vertices[] = {
+		-0.5f, -0.5f, -0.5f, 0.0f, 0.0f,  0.0f,  0.0f, -1.0f,
+		 0.5f, -0.5f, -0.5f, 1.0f, 0.0f,  0.0f,  0.0f, -1.0f,
+		 0.5f,  0.5f, -0.5f, 1.0f, 1.0f,  0.0f,  0.0f, -1.0f,
+		-0.5f,  0.5f, -0.5f, 0.0f, 1.0f,  0.0f,  0.0f, -1.0f,
+
+		-0.5f, -0.5f,  0.5f, 0.0f, 0.0f,  0.0f,  0.0f,  1.0f,
+		 0.5f, -0.5f,  0.5f, 1.0f, 0.0f,  0.0f,  0.0f,  1.0f,
+		 0.5f,  0.5f,  0.5f, 1.0f, 1.0f,  0.0f,  0.0f,  1.0f,
+		-0.5f,  0.5f,  0.5f, 0.0f, 1.0f,  0.0f,  0.0f,  1.0f,
+
+		-0.5f,  0.5f,  0.5f, 0.0f, 0.0f, -1.0f,  0.0f,  0.0f,
+		-0.5f,  0.5f, -0.5f, 1.0f, 0.0f, -1.0f,  0.0f,  0.0f,
+		-0.5f, -0.5f, -0.5f, 1.0f, 1.0f, -1.0f,  0.0f,  0.0f,
+		-0.5f, -0.5f,  0.5f, 0.0f, 1.0f, -1.0f,  0.0f,  0.0f,
+
+		 0.5f,  0.5f,  0.5f, 0.0f, 0.0f,  1.0f,  0.0f,  0.0f,
+		 0.5f,  0.5f, -0.5f, 1.0f, 0.0f,  1.0f,  0.0f,  0.0f,
+		 0.5f, -0.5f, -0.5f, 1.0f, 1.0f,  1.0f,  0.0f,  0.0f,
+		 0.5f, -0.5f,  0.5f, 0.0f, 1.0f,  1.0f,  0.0f,  0.0f,
+
+		-0.5f, -0.5f, -0.5f, 0.0f, 0.0f,  0.0f, -1.0f,  0.0f,
+		 0.5f, -0.5f, -0.5f, 1.0f, 0.0f,  0.0f, -1.0f,  0.0f,
+		 0.5f, -0.5f,  0.5f, 1.0f, 1.0f,  0.0f, -1.0f,  0.0f,
+		-0.5f, -0.5f,  0.5f, 0.0f, 1.0f,  0.0f, -1.0f,  0.0f,
+
+		-0.5f,  0.5f, -0.5f, 0.0f, 0.0f,  0.0f,  1.0f,  0.0f,
+		 0.5f,  0.5f, -0.5f, 1.0f, 0.0f,  0.0f,  1.0f,  0.0f,
+		 0.5f,  0.5f,  0.5f, 1.0f, 1.0f,  0.0f,  1.0f,  0.0f,
+		-0.5f,  0.5f,  0.5f, 0.0f, 1.0f,  0.0f,  1.0f,  0.0f,
+		};
+
+		Ref<VertexBuffer> vertexBuffer;
+		vertexBuffer = VertexBuffer::Create(vertices, sizeof(vertices));
+		BufferLayout layout = {
+			{ ShaderDataType::Float3, "a_Position" },
+			{ ShaderDataType::Float2, "a_TexCoord" },
+			{ ShaderDataType::Float3, "a_Normal"}
+		};
+		vertexBuffer->SetLayout(layout);
+		m_VertexArray->AddVertexBuffer(vertexBuffer);
+
+		uint32_t indices[] = {
+			0,1,2,2,3,0,
+			4,5,6,6,7,4,
+			8,9,10,10,11,8,
+			12,13,14,14,15,12,
+			16,17,18,18,19,16,
+			20,21,22,22,23,20
+		};
+
+		Ref<IndexBuffer> indexBuffer;
+		indexBuffer = IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
+		m_VertexArray->SetIndexBuffer(indexBuffer);
+
+		m_LightVao = VertexArray::Create();
+		m_LightVao->AddVertexBuffer(vertexBuffer);
+		m_LightVao->SetIndexBuffer(indexBuffer);
+		m_LightShader = schwi::Shader::Create("assets/shaders/default.glsl");
+
+		m_Shader = Shader::Create("assets/shaders/light.glsl");
+		m_Texture = Texture2D::Create("assets/textures/kq.png");
+		m_Material.DiffuseTexture = m_Texture;
+		m_Material.SpecularTexture = m_Texture;
+		m_Material.m_Shader = m_Shader;
+		m_Material.Bind();
+		m_Light.Color = glm::vec3(1.0f, 1.0f, 1.0f);
+		m_Light.Bind(m_Shader, m_LightPos, 0);
+		m_Shader->SetInt("PointLightNum", 1);
+	}
+
+	void OnUpdate(Timestep ts)
+	{
+		m_CameraController.OnUpdate(ts);
+
+		RenderCommand::SetClearColor(m_ClearColor);
+		RenderCommand::Clear();
+
+		Renderer::BeginScene(m_CameraController.GetCamera());
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_LightPos);
+		transform = glm::scale(transform, glm::vec3(0.1f));
+
+		m_Material.DiffuseTexture = m_Texture;
+		m_Material.Bind();
+		m_Light.Bind(m_Shader, m_LightPos, 0);
+		m_Shader->SetInt("PointLightNum", 1);
+		m_Shader->SetFloat3("u_ViewPos", m_CameraController.GetCamera()->GetPosition());
+		Renderer::Submit(m_Shader, m_VertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
+		Renderer::Submit(m_LightShader, m_LightVao, transform);
+
+		Renderer::EndScene();
+	}
+
+	void OnEvent(Event& e) override
+	{
+		m_CameraController.OnEvent(e);
+	}
+
+	virtual void OnImGuiRender() override
+	{}
+
+
+private:
+	Ref<Shader> m_Shader, m_LightShader;
+	Ref<Texture2D> m_Texture;
+	Ref<VertexArray> m_VertexArray, m_LightVao;
+	CameraController m_CameraController;
+	PointLight m_Light;
+	PhongMaterial m_Material;
+
+	glm::vec4 m_ClearColor{ 102.f / 255.f, 204.f / 255.f, 1.f, 1.f };
+	//glm::vec4 m_ClearColor{ 0, 0, 0, 1.f };
+	glm::vec3 m_LightPos{ 1.0f,1.0f,2.0f };
+};
+
+class Example_Model :public Layer
+{
+public:
+	Example_Model() :Layer("Example_Model")
+	{
+		m_CameraController = CameraController(CreateRef<schwi::PerspCamera>(
+			45.0f, Application::Get().GetWindow().GetAspect()));
+
+		m_Model = CreateRef<Model>("assets/models/nanosuit/nanosuit.obj", glm::scale(glm::mat4(1.0f), glm::vec3(0.1f)));
+
+		m_Shader = Shader::Create("assets/shaders/phong.glsl");
+		m_Light.Color = glm::vec3(1.0f, 1.0f, 1.0f);
+		m_Light.Bind(m_Shader, m_LightPos, 0);
+		m_Shader->SetInt("PointLightNum", 1);
+
+		m_LightShader = Shader::Create("assets/shaders/default.glsl");
+		m_LightMesh = CreateRef<Mesh>(MeshType::Sphere,2);
+	}
+
+	void OnUpdate(Timestep ts)
+	{
+		m_CameraController.OnUpdate(ts);
+
+		RenderCommand::SetLineMode(true);
+		RenderCommand::SetClearColor(m_ClearColor);
+		RenderCommand::Clear();
+
+		Renderer::BeginScene(m_CameraController.GetCamera());
+
+		m_Shader->SetInt("PointLightNum", 1);
+		m_Shader->SetFloat3("u_ViewPos", m_CameraController.GetCamera()->GetPosition());
+
+		m_Model->Draw(m_Shader);
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_LightPos);
+		transform = glm::scale(transform, glm::vec3(0.1f));
+		m_LightMesh->Draw(m_LightShader, transform);
+
+		Renderer::EndScene();
+	}
+
+	void OnEvent(Event& e) override
+	{
+		m_CameraController.OnEvent(e);
+	}
+
+	virtual void OnImGuiRender() override
+	{}
+private:
+	Ref<Shader> m_Shader, m_LightShader;
+	Ref<VertexArray> m_LightVao;
+	Ref<Model> m_Model;
+	Ref<Mesh> m_LightMesh;
+	CameraController m_CameraController;
+	PointLight m_Light;
+
+	glm::vec4 m_ClearColor{ 102.f / 255.f, 204.f / 255.f, 1.f, 1.f };
+	//glm::vec4 m_ClearColor{ 0, 0, 0, 1.f };
+	glm::vec3 m_LightPos{ 1.0f,2.0f,1.0f };
 };
 
 class Sandbox : public schwi::Application
@@ -233,7 +306,9 @@ class Sandbox : public schwi::Application
 public:
 	Sandbox()
 	{
-		PushLayer(new ExampleLayer());
+		//PushLayer(new Example_Texture());
+		//PushLayer(new Example_Light());
+		PushLayer(new Example_Model());
 	}
 
 	~Sandbox()
@@ -241,7 +316,7 @@ public:
 	}
 };
 
-schwi::Application* schwi::CreateApplication()
+Application* schwi::CreateApplication()
 {
 	return new Sandbox();
 }
@@ -253,6 +328,6 @@ int main()
 	auto app = schwi::CreateApplication();
 	app->Run();
 
-	delete app;
+	app = nullptr;
 	return 0;
 }

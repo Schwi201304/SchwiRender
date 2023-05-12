@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Events/Event.h"
-#include "Core/Timetep.h"
+#include "Core/Timestep.h"
 
 namespace schwi {
 	class Layer

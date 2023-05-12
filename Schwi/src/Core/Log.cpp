@@ -4,7 +4,7 @@
 #include <spdlog/sinks/basic_file_sink.h>
 
 namespace schwi {
-	std::shared_ptr<spdlog::logger> Log::logger;
+	Ref<spdlog::logger> Log::logger;
 
 	void Log::Init()
 	{
