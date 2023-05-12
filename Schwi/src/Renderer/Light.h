@@ -14,15 +14,6 @@ namespace schwi {
 		LightType_SpotLight = 4
 	};
 
-	static std::unordered_map<LightType, std::string> LightTypeMap =
-	{
-		{LightType::LightType_None, "None"},
-		{LightType::LightType_Basic, "Basic"},
-		{LightType::LightType_DirLight, "DirLight"},
-		{LightType::LightType_PointLight, "PointLight"},
-		{LightType::LightType_SpotLight, "SpotLight"}
-	};
-
 	struct Light
 	{
 		glm::vec3 Color{ 1.0f };

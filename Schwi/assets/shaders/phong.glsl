@@ -172,8 +172,7 @@ vec3 CalculatePointLight(PointLight light)
 	vec3 ambient = Ambient * light.color * vec3(texture(u_Material.diffuse, v_TexCoords));
 
 	//  diffuse light
-	//vec3 norm = normalize(normal);
-	vec3 norm = normal;
+	vec3 norm = normalize(normal);
 	vec3 lightDir = normalize(TBN * light.position - v_FragPos);
 	float diff = max(dot(norm, lightDir), 0.0);
 	vec3 diffuse = vec3(texture(u_Material.diffuse, v_TexCoords)) * light.color * diff;
@@ -188,7 +187,6 @@ vec3 CalculatePointLight(PointLight light)
 	float dist = length(TBN * light.position - v_FragPos);
 	float attenuation = 1.0 / (light.constant + light.linear * dist + light.quadratic * (dist * dist));
 
-	return vec3(norm);
 	return (ambient + diffuse + specular) * attenuation * light.intensity;
 }
 

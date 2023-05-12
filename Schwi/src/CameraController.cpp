@@ -86,8 +86,8 @@ namespace schwi {
 		if (leftButtonDown)
 		{
 			auto [x, y] = e.GetPosition();
-			float xOffset = lastX - x;
-			float yOffset = y - lastY;
+			float xOffset = x - lastX;
+			float yOffset = lastY - y;
 
 			m_Camera->SetYaw(m_Camera->GetYaw() + m_CameraRotationSpeed * xOffset);
 			m_Camera->SetPitch(m_Camera->GetPitch() + m_CameraRotationSpeed * yOffset);

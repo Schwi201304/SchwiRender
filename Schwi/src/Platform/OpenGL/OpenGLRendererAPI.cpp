@@ -16,6 +16,14 @@ namespace schwi {
 		glViewport(x, y, width, height);
 	}
 
+	void OpenGLRendererAPI::SetLineMode(const bool enable)
+	{
+		if (enable)
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		else
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+
 	void OpenGLRendererAPI::SetClearColor(const glm::vec4& color)
 	{
 		glClearColor(color.r, color.g, color.b, color.a);

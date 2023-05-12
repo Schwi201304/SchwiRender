@@ -15,7 +15,10 @@ namespace schwi {
 		{
 			s_RendererAPI->SetViewport(x, y, width, height);
 		}
-
+		inline static void SetLineMode(const bool enable)
+		{
+			s_RendererAPI->SetLineMode(enable);
+		}
 		inline static void SetClearColor(const glm::vec4& color)
 		{
 			s_RendererAPI->SetClearColor(color);
@@ -32,7 +35,7 @@ namespace schwi {
 		}
 
 	private:
-		static RendererAPI* s_RendererAPI;
+		static Scope<RendererAPI> s_RendererAPI;
 	};
 
 }

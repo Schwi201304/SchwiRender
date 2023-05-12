@@ -22,6 +22,8 @@
 #include "Renderer/Texture.h"
 #include "Renderer/Light.h"
 #include "Renderer/Material.h"
+#include "Renderer/Mesh.h"
+#include "Renderer/Model.h"
 
 #include "Application.h"
 #include "CameraController.h"

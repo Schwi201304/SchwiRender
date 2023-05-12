@@ -32,7 +32,7 @@ public:
 		indexBuffer = schwi::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
-		m_SquareVA=schwi::VertexArray::Create();
+		m_SquareVA = schwi::VertexArray::Create();
 
 		float squareVertices[5 * 4] = {
 			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
@@ -124,35 +124,35 @@ public:
 		m_VertexArray = VertexArray::Create();
 
 		float vertices[] = {
-		-0.5f, -0.5f, -0.5f, 0.0f, 0.0f,  0.0f,  0.0f, -1.0f, 
-		 0.5f, -0.5f, -0.5f, 1.0f, 0.0f,  0.0f,  0.0f, -1.0f, 
-		 0.5f,  0.5f, -0.5f, 1.0f, 1.0f,  0.0f,  0.0f, -1.0f, 
-		-0.5f,  0.5f, -0.5f, 0.0f, 1.0f,  0.0f,  0.0f, -1.0f, 
-							 		 					  
-		-0.5f, -0.5f,  0.5f, 0.0f, 0.0f,  0.0f,  0.0f,  1.0f, 
-		 0.5f, -0.5f,  0.5f, 1.0f, 0.0f,  0.0f,  0.0f,  1.0f, 
-		 0.5f,  0.5f,  0.5f, 1.0f, 1.0f,  0.0f,  0.0f,  1.0f, 
-		-0.5f,  0.5f,  0.5f, 0.0f, 1.0f,  0.0f,  0.0f,  1.0f, 
-							 		 					  
-		-0.5f,  0.5f,  0.5f, 0.0f, 0.0f, -1.0f,  0.0f,  0.0f, 
-		-0.5f,  0.5f, -0.5f, 1.0f, 0.0f, -1.0f,  0.0f,  0.0f, 
-		-0.5f, -0.5f, -0.5f, 1.0f, 1.0f, -1.0f,  0.0f,  0.0f, 
-		-0.5f, -0.5f,  0.5f, 0.0f, 1.0f, -1.0f,  0.0f,  0.0f, 
-							 		 					  
-		 0.5f,  0.5f,  0.5f, 0.0f, 0.0f,  1.0f,  0.0f,  0.0f, 
-		 0.5f,  0.5f, -0.5f, 1.0f, 0.0f,  1.0f,  0.0f,  0.0f, 
-		 0.5f, -0.5f, -0.5f, 1.0f, 1.0f,  1.0f,  0.0f,  0.0f, 
-		 0.5f, -0.5f,  0.5f, 0.0f, 1.0f,  1.0f,  0.0f,  0.0f, 
-							 		 					  
-		-0.5f, -0.5f, -0.5f, 0.0f, 0.0f,  0.0f, -1.0f,  0.0f, 
-		 0.5f, -0.5f, -0.5f, 1.0f, 0.0f,  0.0f, -1.0f,  0.0f, 
-		 0.5f, -0.5f,  0.5f, 1.0f, 1.0f,  0.0f, -1.0f,  0.0f, 
-		-0.5f, -0.5f,  0.5f, 0.0f, 1.0f,  0.0f, -1.0f,  0.0f, 
+		-0.5f, -0.5f, -0.5f, 0.0f, 0.0f,  0.0f,  0.0f, -1.0f,
+		 0.5f, -0.5f, -0.5f, 1.0f, 0.0f,  0.0f,  0.0f, -1.0f,
+		 0.5f,  0.5f, -0.5f, 1.0f, 1.0f,  0.0f,  0.0f, -1.0f,
+		-0.5f,  0.5f, -0.5f, 0.0f, 1.0f,  0.0f,  0.0f, -1.0f,
 
-		-0.5f,  0.5f, -0.5f, 0.0f, 0.0f,  0.0f,  1.0f,  0.0f, 
-		 0.5f,  0.5f, -0.5f, 1.0f, 0.0f,  0.0f,  1.0f,  0.0f, 
-		 0.5f,  0.5f,  0.5f, 1.0f, 1.0f,  0.0f,  1.0f,  0.0f, 
-		-0.5f,  0.5f,  0.5f, 0.0f, 1.0f,  0.0f,  1.0f,  0.0f, 
+		-0.5f, -0.5f,  0.5f, 0.0f, 0.0f,  0.0f,  0.0f,  1.0f,
+		 0.5f, -0.5f,  0.5f, 1.0f, 0.0f,  0.0f,  0.0f,  1.0f,
+		 0.5f,  0.5f,  0.5f, 1.0f, 1.0f,  0.0f,  0.0f,  1.0f,
+		-0.5f,  0.5f,  0.5f, 0.0f, 1.0f,  0.0f,  0.0f,  1.0f,
+
+		-0.5f,  0.5f,  0.5f, 0.0f, 0.0f, -1.0f,  0.0f,  0.0f,
+		-0.5f,  0.5f, -0.5f, 1.0f, 0.0f, -1.0f,  0.0f,  0.0f,
+		-0.5f, -0.5f, -0.5f, 1.0f, 1.0f, -1.0f,  0.0f,  0.0f,
+		-0.5f, -0.5f,  0.5f, 0.0f, 1.0f, -1.0f,  0.0f,  0.0f,
+
+		 0.5f,  0.5f,  0.5f, 0.0f, 0.0f,  1.0f,  0.0f,  0.0f,
+		 0.5f,  0.5f, -0.5f, 1.0f, 0.0f,  1.0f,  0.0f,  0.0f,
+		 0.5f, -0.5f, -0.5f, 1.0f, 1.0f,  1.0f,  0.0f,  0.0f,
+		 0.5f, -0.5f,  0.5f, 0.0f, 1.0f,  1.0f,  0.0f,  0.0f,
+
+		-0.5f, -0.5f, -0.5f, 0.0f, 0.0f,  0.0f, -1.0f,  0.0f,
+		 0.5f, -0.5f, -0.5f, 1.0f, 0.0f,  0.0f, -1.0f,  0.0f,
+		 0.5f, -0.5f,  0.5f, 1.0f, 1.0f,  0.0f, -1.0f,  0.0f,
+		-0.5f, -0.5f,  0.5f, 0.0f, 1.0f,  0.0f, -1.0f,  0.0f,
+
+		-0.5f,  0.5f, -0.5f, 0.0f, 0.0f,  0.0f,  1.0f,  0.0f,
+		 0.5f,  0.5f, -0.5f, 1.0f, 0.0f,  0.0f,  1.0f,  0.0f,
+		 0.5f,  0.5f,  0.5f, 1.0f, 1.0f,  0.0f,  1.0f,  0.0f,
+		-0.5f,  0.5f,  0.5f, 0.0f, 1.0f,  0.0f,  1.0f,  0.0f,
 		};
 
 		Ref<VertexBuffer> vertexBuffer;
@@ -189,6 +189,7 @@ public:
 		m_Material.SpecularTexture = m_Texture;
 		m_Material.m_Shader = m_Shader;
 		m_Material.Bind();
+		m_Light.Color = glm::vec3(1.0f, 1.0f, 1.0f);
 		m_Light.Bind(m_Shader, m_LightPos, 0);
 		m_Shader->SetInt("PointLightNum", 1);
 	}
@@ -203,7 +204,7 @@ public:
 		Renderer::BeginScene(m_CameraController.GetCamera());
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_LightPos);
-		transform = glm::scale(transform,glm::vec3(0.1f));
+		transform = glm::scale(transform, glm::vec3(0.1f));
 
 		m_Material.DiffuseTexture = m_Texture;
 		m_Material.Bind();
@@ -239,13 +240,75 @@ private:
 	glm::vec3 m_LightPos{ 1.0f,1.0f,2.0f };
 };
 
+class Example_Model :public Layer
+{
+public:
+	Example_Model() :Layer("Example_Model")
+	{
+		m_CameraController = CameraController(CreateRef<schwi::PerspCamera>(
+			45.0f, Application::Get().GetWindow().GetAspect()));
+
+		m_Model = CreateRef<Model>("assets/models/nanosuit/nanosuit.obj", glm::scale(glm::mat4(1.0f), glm::vec3(0.1f)));
+
+		m_Shader = Shader::Create("assets/shaders/phong.glsl");
+		m_Light.Color = glm::vec3(1.0f, 1.0f, 1.0f);
+		m_Light.Bind(m_Shader, m_LightPos, 0);
+		m_Shader->SetInt("PointLightNum", 1);
+
+		m_LightShader = Shader::Create("assets/shaders/default.glsl");
+		m_LightMesh = CreateRef<Mesh>(3);
+	}
+
+	void OnUpdate(Timestep ts)
+	{
+		m_CameraController.OnUpdate(ts);
+
+		RenderCommand::SetLineMode(true);
+		RenderCommand::SetClearColor(m_ClearColor);
+		RenderCommand::Clear();
+
+		Renderer::BeginScene(m_CameraController.GetCamera());
+
+		m_Shader->SetInt("PointLightNum", 1);
+		m_Shader->SetFloat3("u_ViewPos", m_CameraController.GetCamera()->GetPosition());
+
+		m_Model->Draw(m_Shader);
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_LightPos);
+		transform = glm::scale(transform, glm::vec3(0.1f));
+		m_LightMesh->Draw(m_LightShader, transform);
+
+		Renderer::EndScene();
+	}
+
+	void OnEvent(Event& e) override
+	{
+		m_CameraController.OnEvent(e);
+	}
+
+	virtual void OnImGuiRender() override
+	{}
+private:
+	Ref<Shader> m_Shader, m_LightShader;
+	Ref<VertexArray> m_LightVao;
+	Ref<Model> m_Model;
+	Ref<Mesh> m_LightMesh;
+	CameraController m_CameraController;
+	PointLight m_Light;
+
+	glm::vec4 m_ClearColor{ 102.f / 255.f, 204.f / 255.f, 1.f, 1.f };
+	//glm::vec4 m_ClearColor{ 0, 0, 0, 1.f };
+	glm::vec3 m_LightPos{ 1.0f,2.0f,1.0f };
+};
+
 class Sandbox : public schwi::Application
 {
 public:
 	Sandbox()
 	{
 		//PushLayer(new Example_Texture());
-		PushLayer(new Example_Light());
+		//PushLayer(new Example_Light());
+		PushLayer(new Example_Model());
 	}
 
 	~Sandbox()

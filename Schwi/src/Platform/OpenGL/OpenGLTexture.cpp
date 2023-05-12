@@ -8,9 +8,10 @@
 
 namespace schwi {
 
-	OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
-		: m_Path(path)
+	OpenGLTexture2D::OpenGLTexture2D(const std::string& path, TextureType type)
 	{
+		m_Path = path;
+
 		int width, height, channel;
 		stbi_set_flip_vertically_on_load(1);
 		stbi_uc* data = stbi_load(path.c_str(), &width, &height, &channel, 0);
@@ -33,14 +34,14 @@ namespace schwi {
 		m_Height = height;
 		m_Channel = channel;
 
-		glCreateTextures(GL_TEXTURE_2D, 1,&m_TextureID);
+		glCreateTextures(GL_TEXTURE_2D, 1, &m_TextureID);
 		glTextureStorage2D(m_TextureID, 4, internalFormat, m_Width, m_Height);
-		
+
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glTextureParameteri(m_TextureID, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
 		glTextureParameteri(m_TextureID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-				
+
 		glTextureSubImage2D(m_TextureID, 0, 0, 0, m_Width, m_Height, dataFormat, GL_UNSIGNED_BYTE, data);
 		glGenerateTextureMipmap(m_TextureID);
 
