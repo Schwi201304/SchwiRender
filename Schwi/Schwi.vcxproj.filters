@@ -206,6 +206,9 @@
     <ClCompile Include="src\Renderer\Mesh.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer\Model.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\shaders\texture.glsl" />

@@ -256,7 +256,7 @@ public:
 		m_Shader->SetInt("PointLightNum", 1);
 
 		m_LightShader = Shader::Create("assets/shaders/default.glsl");
-		m_LightMesh = CreateRef<Mesh>(3);
+		m_LightMesh = CreateRef<Mesh>(MeshType::Sphere,2);
 	}
 
 	void OnUpdate(Timestep ts)
