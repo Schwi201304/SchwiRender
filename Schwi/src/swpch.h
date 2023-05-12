@@ -9,7 +9,9 @@
 #include <utility>
 #include <algorithm>
 #include <functional>
-#include <fmt/ostream.h>
 #include <Windows.h>
+#include <glm/glm.hpp>
+#include <glm/gtx/string_cast.hpp>
+
 
 #include "Core/Log.h"
