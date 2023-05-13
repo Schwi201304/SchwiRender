@@ -4,12 +4,17 @@
 #include <spdlog/sinks/basic_file_sink.h>
 
 namespace schwi {
-	Ref<spdlog::logger> Log::logger;
+	Ref<spdlog::logger> Log::s_CoreLogger;
+	Ref<spdlog::logger> Log::s_ClientLogger;
 
 	void Log::Init()
 	{
 		spdlog::set_pattern("%^[%T] %n: %v%$");
-		logger = spdlog::stdout_color_mt("Schwi");
-		logger->set_level(spdlog::level::trace);
+
+		s_CoreLogger = spdlog::stdout_color_mt("SCHWI");
+		s_CoreLogger->set_level(spdlog::level::trace);
+
+		s_ClientLogger = spdlog::stdout_color_mt("APP");
+		s_ClientLogger->set_level(spdlog::level::trace);
 	}
 }

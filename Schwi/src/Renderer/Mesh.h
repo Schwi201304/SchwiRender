@@ -1,6 +1,6 @@
 #pragma once
-#include "swpch.h"
 
+#include "Core/Core.h"
 #include "Texture.h"
 #include "Shader.h"
 #include "Material.h"
@@ -10,7 +10,7 @@
 #define MAX_BONE_INFLUENCE 4
 
 namespace schwi {
-	struct Vertex {
+	struct SCHWI_API Vertex {
 		glm::vec3 Position;
 		glm::vec2 TexCoords;
 		glm::vec3 Normal;
@@ -18,7 +18,7 @@ namespace schwi {
 		glm::vec3 Bitangent;
 	};
 
-	enum class MeshType {
+	enum class SCHWI_API MeshType {
 		None,
 		Plane,
 		Cube,
@@ -26,7 +26,7 @@ namespace schwi {
 		TriangleMesh
 	};
 
-	class Mesh {
+	class SCHWI_API Mesh {
 	public:
 		std::vector<Vertex>              m_Vertices;
 		std::vector<unsigned int>        m_Indices;

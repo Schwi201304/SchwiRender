@@ -14,5 +14,5 @@
 #include <glm/gtx/string_cast.hpp>
 
 
-#include "Core/Log.h"
 #include "Core/Core.h"
+#include "Core/Log.h"

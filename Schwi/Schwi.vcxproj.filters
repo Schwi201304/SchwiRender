@@ -123,6 +123,9 @@
     <ClInclude Include="src\Renderer\Model.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\EntryPoint.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Log.cpp">
@@ -132,9 +135,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\Schwi.h">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\Application.cpp">

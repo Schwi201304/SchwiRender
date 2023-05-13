@@ -6,7 +6,7 @@
 
 namespace schwi {
 
-	struct WindowProps
+	struct SCHWI_API WindowProps
 	{
 		std::string Title;
 		unsigned int Width;
@@ -21,7 +21,7 @@ namespace schwi {
 	};
 
 	// Interface representing a desktop system based Window
-	class Window
+	class SCHWI_API Window
 	{
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;

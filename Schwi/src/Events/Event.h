@@ -1,9 +1,10 @@
 #pragma once
 
+#include "Core/Core.h"
 #include "Core/Code.h"
 
 namespace schwi {
-	enum class EventType
+	enum class SCHWI_API EventType
 	{
 		None = 0,
 		WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
@@ -12,7 +13,7 @@ namespace schwi {
 		MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
 	};
 
-	enum EventCategory
+	enum SCHWI_API EventCategory
 	{
 		EventCategoryNone = 0,
 		EventCategoryApplication = 1<<0,
@@ -29,7 +30,7 @@ namespace schwi {
 
 #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
 
-	class Event
+	class SCHWI_API Event
 	{
 	public:
 		virtual ~Event() = default;
@@ -52,7 +53,7 @@ namespace schwi {
 		}
 	};
 
-	class EventDispatcher
+	class SCHWI_API EventDispatcher
 	{
 	public:
 		EventDispatcher(Event& event)

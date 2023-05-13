@@ -18,7 +18,7 @@ namespace schwi {
 
 	OpenGLShader::OpenGLShader(const std::string& filepath)
 	{
-		SW_TRACE("Loading shader :'{}'", filepath);
+		SW_CORE_TRACE("Loading shader :'{}'", filepath);
 		std::string source = ReadFile(filepath);
 		auto shaderSources = PreProcess(source);
 		Compile(shaderSources);
@@ -46,7 +46,7 @@ namespace schwi {
 		}
 		else
 		{
-			SW_ERROR("Could not open file '{0}'", filepath);
+			SW_CORE_ERROR("Could not open file '{0}'", filepath);
 		}
 		return result;
 	}

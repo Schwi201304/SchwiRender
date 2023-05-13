@@ -21,10 +21,10 @@ namespace schwi {
 		glfwMakeContextCurrent(m_WindowHandle);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		SW_ASSERT(status, "Failed to initialize Glad!");
-		SW_INFO("OpenGL Info:");
-		SW_INFO("	Vendor: {0}", sw_glGetString(GL_VENDOR));
-		SW_INFO("	Renderer: {0}", sw_glGetString(GL_RENDERER));
-		SW_INFO("	Version: {0}", sw_glGetString(GL_VERSION));
+		SW_CORE_INFO("OpenGL Info:");
+		SW_CORE_INFO("	Vendor: {0}", sw_glGetString(GL_VENDOR));
+		SW_CORE_INFO("	Renderer: {0}", sw_glGetString(GL_RENDERER));
+		SW_CORE_INFO("	Version: {0}", sw_glGetString(GL_VERSION));
 	}
 
 	void OpenGLContext::SwapBuffers()

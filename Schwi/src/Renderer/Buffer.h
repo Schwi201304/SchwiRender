@@ -1,7 +1,9 @@
 #pragma once
 
+#include "Core/Core.h"
+
 namespace schwi {
-	enum class ShaderDataType
+	enum class SCHWI_API ShaderDataType
 	{
 		None = 0, Float, Float2, Float3, Float4, Mat3, Mat4, Int, Int2, Int3, Int4, Bool
 	};
@@ -27,7 +29,7 @@ namespace schwi {
 		return 0;
 	}
 
-	struct BufferElement
+	struct SCHWI_API BufferElement
 	{
 		std::string Name;
 		ShaderDataType Type;
@@ -64,7 +66,7 @@ namespace schwi {
 		}
 	};
 
-	class BufferLayout
+	class SCHWI_API BufferLayout
 	{
 	public:
 		BufferLayout() = default;
@@ -99,7 +101,7 @@ namespace schwi {
 		uint32_t m_Stride = 0;
 	};
 
-	class VertexBuffer
+	class SCHWI_API VertexBuffer
 	{
 	public:
 		virtual ~VertexBuffer() = default;
@@ -113,7 +115,7 @@ namespace schwi {
 		static Ref<VertexBuffer> Create(const void* vertices, uint32_t size);
 	};
 
-	class IndexBuffer
+	class SCHWI_API IndexBuffer
 	{
 	public:
 		virtual ~IndexBuffer() = default;

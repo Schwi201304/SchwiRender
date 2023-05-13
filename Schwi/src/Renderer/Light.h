@@ -1,6 +1,7 @@
 #pragma once
 
-#include "swpch.h"
+#include <string>
+#include "Core/Core.h"
 #include "Camera.h"
 #include "Shader.h"
 

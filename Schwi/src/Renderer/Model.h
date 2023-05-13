@@ -1,15 +1,16 @@
 #pragma once
-#include "swpch.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#include <vector>
 
+#include "Core/Core.h"
 #include "Mesh.h"
 
 
 namespace schwi {
-	class Model
+	class SCHWI_API Model
 	{
 	public:
 		std::vector<Ref<Texture2D>> m_TexturesLoaded;

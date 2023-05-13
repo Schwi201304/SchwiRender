@@ -6,7 +6,7 @@
 #include "Events/MouseEvent.h"
 
 namespace schwi {
-	class CameraController
+	class SCHWI_API CameraController
 	{
 	public:
 		CameraController() = default;

@@ -3,7 +3,7 @@
 #include "RendererAPI.h"
 
 namespace schwi {
-	class RenderCommand
+	class SCHWI_API RenderCommand
 	{
 	public:
 		inline static void Init()

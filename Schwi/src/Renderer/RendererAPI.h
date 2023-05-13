@@ -2,8 +2,9 @@
 
 #include <glm/glm.hpp>
 #include "VertexArray.h"
+
 namespace schwi {
-	class RendererAPI
+	class SCHWI_API RendererAPI
 	{
 	public:
 		enum class API

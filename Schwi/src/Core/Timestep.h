@@ -1,8 +1,10 @@
 #pragma once
 
+#include "Core/Core.h"
+
 namespace schwi {
 
-	class Timestep
+	class SCHWI_API Timestep
 	{
 	public:
 		Timestep(float time = 0.0f)

@@ -2,7 +2,7 @@
 #include <swpch.h>
 
 namespace schwi {
-	class Input
+	class SCHWI_API Input
 	{
 	protected:
 		Input() = default;

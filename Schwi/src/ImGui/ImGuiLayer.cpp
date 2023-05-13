@@ -20,7 +20,7 @@ namespace schwi {
 	{
 		// Setup Dear ImGui context
 		IMGUI_CHECKVERSION();
-		ImGui::CreateContext();
+		m_CurrentContext.reset(ImGui::CreateContext());
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
 		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
@@ -81,7 +81,19 @@ namespace schwi {
 
 	void ImGuiLayer::OnImGuiRender()
 	{
-		//static bool show = true;
-		//ImGui::ShowDemoWindow(&show);
+		static float f = 0.0f;
+		static int counter = 0;
+		//ImGui::ShowDemoWindow();
+		//ImGui::SetCurrentContext(Application::Get().GetImGuiLayer()->GetCurrentContext().get());
+		ImGui::Begin("Test");
+		ImGui::Text("Hello World");
+		ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
+		if (ImGui::Button("Button"))
+			counter++;
+		ImGui::SameLine();
+		ImGui::Text("counter = %d", counter);
+		ImGui::ColorEdit3("clear color", (float*)&Application::Get().m_ClearColor);
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		ImGui::End();
 	}
 }

@@ -1,17 +1,19 @@
 #pragma once
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include "Core/Core.h"
 
 namespace schwi {
 
-	enum CameraType
+	enum SCHWI_API CameraType
 	{
 		CameraTypeNone = 0,
 		Orthographic = 1,
 		Perspective = 2
 	};
 
-	class Camera
+	class SCHWI_API Camera
 	{
 	public:
 		Camera() = default;
@@ -55,7 +57,7 @@ namespace schwi {
 		glm::vec3 m_Front = { 0.0f, 0.0f, -1.0f }, m_Up = { 0.0f, 1.0f, 0.0f }, m_Right = { 1.0f, 0.0f, 0.0f };
 	};
 
-	class OrthoCamera :public Camera
+	class SCHWI_API OrthoCamera :public Camera
 	{
 	public:
 		OrthoCamera(float left, float right, float bottom, float top, float nearPlane = 0.1f, float farPlane = 100.0f)
@@ -84,7 +86,7 @@ namespace schwi {
 		float m_Left, m_Right, m_Bottom, m_Top;
 	};
 
-	class PerspCamera :public Camera
+	class SCHWI_API PerspCamera :public Camera
 	{
 	public:
 		PerspCamera(float fov, float aspect, float nearPlane = 0.1f, float farPlane = 100.0f)

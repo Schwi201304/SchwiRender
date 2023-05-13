@@ -2,7 +2,7 @@
 #include "Renderer/VertexArray.h"
 
 namespace schwi {
-	class OpenGLVertexArray : public VertexArray
+	class SCHWI_API OpenGLVertexArray : public VertexArray
 	{
 	public:
 		OpenGLVertexArray();

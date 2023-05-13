@@ -3,7 +3,7 @@
 #include "Buffer.h"
 
 namespace schwi {
-	class VertexArray
+	class SCHWI_API VertexArray
 	{
 	public:
 		virtual ~VertexArray() {}

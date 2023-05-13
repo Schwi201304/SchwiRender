@@ -8,7 +8,6 @@
 #include <glfw/glfw3.h>
 
 namespace schwi {
-
 	Application* Application::s_Instance = nullptr;
 
 	Application::Application()
@@ -19,23 +18,27 @@ namespace schwi {
 		m_Window->SetEventCallback(SW_BIND_EVENT_FN(Application::OnEvent));
 
 		Renderer::Init();
-		m_ImGuiLayer = new ImGuiLayer();
+		m_ImGuiLayer = CreateRef<ImGuiLayer>();
 		PushOverlay(m_ImGuiLayer);
 				
 	}
 
-	void Application::PushLayer(Layer* layer)
+	void Application::PushLayer(Ref<Layer> layer)
 	{
 		m_LayerStack.PushLayer(layer);
 	}
 
-	void Application::PushOverlay(Layer* layer)
+	void Application::PushOverlay(Ref<Layer> layer)
 	{
 		m_LayerStack.PushOverlay(layer);
 	}
 
 	void Application::OnEvent(Event& e)
 	{
+		const ImGuiIO& io = ImGui::GetIO();
+		if (io.WantCaptureMouse||io.WantCaptureKeyboard) {
+			return;
+		}
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(SW_BIND_EVENT_FN(Application::OnWindowClose));
 		dispatcher.Dispatch<WindowResizeEvent>(SW_BIND_EVENT_FN(Application::OnWindowResize));
@@ -52,21 +55,24 @@ namespace schwi {
 
 	void Application::Run()
 	{
-		//SW_DEBUG("{}", m_LayerStack.size());
+		//SW_CORE_DEBUG("{}", m_LayerStack.size());
 		while (m_Running)
 		{
+			RenderCommand::SetClearColor(m_ClearColor);
+			RenderCommand::Clear();
+
 			float time = (float)glfwGetTime();
 			Timestep timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
 
 			if (!m_Minimized)
 			{
-				for (Layer* layer : m_LayerStack)
+				for (auto layer : m_LayerStack)
 					layer->OnUpdate(timestep);
 			}
 
 			m_ImGuiLayer->Begin();
-			for (Layer* layer : m_LayerStack)
+			for (auto layer : m_LayerStack)
 				layer->OnImGuiRender();
 			m_ImGuiLayer->End();
 

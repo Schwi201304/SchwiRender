@@ -8,7 +8,7 @@
 #include "Layer/LayerStack.h"
 
 namespace schwi {
-	class Application
+	class SCHWI_API Application
 	{
 	public:
 		Application();
@@ -16,12 +16,15 @@ namespace schwi {
 
 		void Run();
 		void OnEvent(Event& e);
-		void PushLayer(Layer* layer);
-		void PushOverlay(Layer* layer);
+		void PushLayer(Ref<Layer> layer);
+		void PushOverlay(Ref<Layer> layer);
 
 		inline Window& GetWindow() { return *m_Window; }
+		inline Ref<ImGuiLayer> GetImGuiLayer() { return m_ImGuiLayer; }
 		inline static Application& Get() { return *s_Instance; }
 
+	public:
+		glm::vec4 m_ClearColor{ 102.f / 255.f, 204.f / 255.f, 1.f, 1.f };
 
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
@@ -29,7 +32,7 @@ namespace schwi {
 		bool OnWindowResize(WindowResizeEvent& e);
 
 		std::unique_ptr<Window> m_Window;
-		ImGuiLayer* m_ImGuiLayer;
+		Ref<ImGuiLayer> m_ImGuiLayer;
 		bool m_Running = true;
 		bool m_Minimized = false;
 		LayerStack m_LayerStack;

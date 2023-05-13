@@ -4,13 +4,12 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "swpch.h"
-#include "Core/Log.h"
 #include "Core/Core.h"
-#include "Layer/Layer.h"
-#include "ImGui/ImGuiLayer.h"
+#include "Core/Log.h"
 #include "Core/Input.h"
 #include "Core/Code.h"
+#include "Layer/Layer.h"
+#include "ImGui/ImGuiLayer.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 
 #include "Renderer/Renderer.h"
@@ -27,3 +26,5 @@
 
 #include "Application.h"
 #include "CameraController.h"
+
+#define SolutionDir std::string(SOLUTION_DIR)

@@ -5,7 +5,7 @@
 #include "renderer/Context.h"
 
 namespace schwi {
-	class WindowsWindow :public Window
+	class SCHWI_API WindowsWindow :public Window
 	{
 	public:
 		WindowsWindow(const WindowProps& props);

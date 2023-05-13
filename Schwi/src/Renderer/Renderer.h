@@ -6,7 +6,7 @@
 
 namespace schwi {
 
-	class Renderer
+	class SCHWI_API Renderer
 	{
 	public:
 		static void Init();

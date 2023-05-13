@@ -2,7 +2,7 @@
 #include "Event.h"
 
 namespace schwi {
-	class WindowResizeEvent : public Event
+	class SCHWI_API WindowResizeEvent : public Event
 	{
 	public:
 		WindowResizeEvent(unsigned int width, unsigned int height)
@@ -24,7 +24,7 @@ namespace schwi {
 		unsigned int m_Width, m_Height;
 	};
 
-	class WindowCloseEvent : public Event
+	class SCHWI_API WindowCloseEvent : public Event
 	{
 	public:
 		WindowCloseEvent() = default;
@@ -33,7 +33,7 @@ namespace schwi {
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 
-	class AppTickEvent : public Event
+	class SCHWI_API AppTickEvent : public Event
 	{
 	public:
 		AppTickEvent() = default;
@@ -42,7 +42,7 @@ namespace schwi {
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 
-	class AppUpdateEvent : public Event
+	class SCHWI_API AppUpdateEvent : public Event
 	{
 	public:
 		AppUpdateEvent() = default;
@@ -51,7 +51,7 @@ namespace schwi {
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 
-	class AppRenderEvent : public Event
+	class SCHWI_API AppRenderEvent : public Event
 	{
 	public:
 		AppRenderEvent() = default;

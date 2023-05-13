@@ -2,7 +2,7 @@
 
 #include "Renderer/RendererAPI.h"
 namespace schwi {
-	class OpenGLRendererAPI : public RendererAPI
+	class SCHWI_API OpenGLRendererAPI : public RendererAPI
 	{
 	public:
 		virtual void Init() override;

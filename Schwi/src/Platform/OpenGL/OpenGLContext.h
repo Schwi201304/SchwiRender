@@ -6,7 +6,7 @@ struct GLFWwindow;
 
 namespace schwi {
 
-	class OpenGLContext : public Context
+	class SCHWI_API OpenGLContext : public Context
 	{
 	public:
 		OpenGLContext(GLFWwindow* windowHandle);

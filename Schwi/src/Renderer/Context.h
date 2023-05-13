@@ -1,7 +1,10 @@
 #pragma once
+
+#include "Core/Core.h"
+
 namespace schwi {
 
-	class Context
+	class SCHWI_API Context
 	{
 	public:
 		virtual void Init() = 0;

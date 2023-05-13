@@ -1,5 +1,9 @@
 #pragma once
-#include "swpch.h"
+
+#include <glm/glm.hpp>
+#include <string>
+
+#include "Core/Core.h"
 #include "Shader.h"
 #include "Texture.h"
 
@@ -28,7 +32,7 @@ namespace schwi {
 
 	struct PhongMaterial :public Material
 	{
-		Ref<Shader> m_Shader = Shader::Create("assets/shaders/phong.glsl");
+		Ref<Shader> m_Shader = nullptr;
 		Ref<Texture2D> DiffuseTexture = nullptr;
 		Ref<Texture2D> SpecularTexture = nullptr;
 		Ref<Texture2D> NormalTexture = nullptr;

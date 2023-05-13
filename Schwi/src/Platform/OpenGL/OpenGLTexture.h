@@ -2,7 +2,7 @@
 #include "Renderer/Texture.h"
 
 namespace schwi {
-	class OpenGLTexture2D : public Texture2D
+	class SCHWI_API OpenGLTexture2D : public Texture2D
 	{
 	public:
 		OpenGLTexture2D(const std::string& path, TextureType type);

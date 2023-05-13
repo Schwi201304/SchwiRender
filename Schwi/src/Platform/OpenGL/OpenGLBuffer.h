@@ -2,7 +2,7 @@
 #include "Renderer/Buffer.h"
 
 namespace schwi {
-	class OpenGLVertexBuffer : public VertexBuffer
+	class SCHWI_API OpenGLVertexBuffer : public VertexBuffer
 	{
 	public:
 		OpenGLVertexBuffer(const void* vertices, uint32_t size);
@@ -19,7 +19,7 @@ namespace schwi {
 		BufferLayout m_Layout;
 	};
 
-	class OpenGLIndexBuffer : public IndexBuffer
+	class SCHWI_API OpenGLIndexBuffer : public IndexBuffer
 	{
 	public:
 		OpenGLIndexBuffer(uint32_t* indices, uint32_t count);

@@ -5,10 +5,14 @@
 #include "Core/Code.h"
 #include "Core/Core.h"
 
+#include <imgui.h>
+
 namespace schwi {
 
 	void CameraController::OnUpdate(Timestep ts)
 	{
+		if (ImGui::GetIO().WantCaptureKeyboard)
+			return;
 		if (schwi::Input::IsKeyPressed(schwi::Key::W))
 			m_Camera->SetPosition(m_Camera->GetPosition() + m_CameraMoveSpeed * ts * m_Camera->GetFrontVector());
 		if (schwi::Input::IsKeyPressed(schwi::Key::S))
@@ -42,7 +46,7 @@ namespace schwi {
 		default:
 			SW_ASSERT(false, "Unknow CameraType");
 		}
-		return false;
+		return true;
 	}
 
 	bool CameraController::OnWindowResized(WindowResizeEvent& e)
@@ -58,7 +62,7 @@ namespace schwi {
 		default:
 			SW_ASSERT(false, "Unknow CameraType");
 		}
-		return false;
+		return true;
 	}
 
 	bool CameraController::OnMouseButtonPressed(MouseButtonPressedEvent& e)
@@ -69,7 +73,7 @@ namespace schwi {
 			lastY = Input::GetMouseY();
 			leftButtonDown = true;
 		}
-		return false;
+		return true;
 	}
 
 	bool CameraController::OnMouseButtonReleased(MouseButtonReleasedEvent& e)
@@ -78,7 +82,7 @@ namespace schwi {
 		{
 			leftButtonDown = false;
 		}
-		return false;
+		return true;
 	}
 
 	bool CameraController::OnMouseMoved(MouseMovedEvent& e)
@@ -96,7 +100,7 @@ namespace schwi {
 			lastY = y;
 		}
 
-		return false;
+		return true;
 	}
 
 }

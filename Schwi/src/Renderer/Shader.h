@@ -1,7 +1,9 @@
 #pragma once
 
+#include "Core/Core.h"
+
 namespace schwi {
-	class Shader
+	class SCHWI_API Shader
 	{
 	public:
 		virtual ~Shader() = default;

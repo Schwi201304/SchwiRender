@@ -1,7 +1,9 @@
 #pragma once
 
+#include "Core/Core.h"
+
 namespace schwi {
-	enum class TextureType
+	enum class SCHWI_API TextureType
 	{
 		NONE,
 		DIFFUSE,
@@ -11,7 +13,7 @@ namespace schwi {
 
 	};
 
-	class Texture
+	class SCHWI_API Texture
 	{
 	public:
 		virtual ~Texture() = default;
@@ -24,7 +26,7 @@ namespace schwi {
 		virtual void Bind(uint32_t slot = 0) const = 0;
 	};
 
-	class Texture2D : public Texture
+	class SCHWI_API Texture2D : public Texture
 	{
 	public:
 		static Ref<Texture2D> Create(const std::string& path, TextureType type = TextureType::DIFFUSE);

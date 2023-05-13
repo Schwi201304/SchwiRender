@@ -1,5 +1,31 @@
 #pragma once
 
+#ifdef _WIN32
+	#ifdef _WIN64
+		#define SW_PLATFORM_WINDOWS
+	#else
+		#error "x86 Builds are not supported!"
+	#endif
+#else
+	#error "Only Windows-x64 is supported!"
+#endif// _WIN32
+
+#ifdef _DEBUG
+	#define SW_ASSERT(x, ...) { if(!(x)) { SW_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }  
+#else
+	#define SW_ASSERT(...)
+#endif //_DEBUG
+
+#ifdef SW_PLATFORM_WINDOWS
+	#ifdef SW_BUILD_DLL
+		#define SCHWI_API __declspec(dllexport)
+	#else
+		#define SCHWI_API __declspec(dllimport)
+	#endif
+#else
+	#error Hazel only supports Windows!
+#endif
+
 #define SW_FMT_FOMATTER(T) template<>                              \
 struct fmt::formatter<T> : fmt::formatter<std::string>             \
 {                                                                  \
@@ -9,9 +35,8 @@ struct fmt::formatter<T> : fmt::formatter<std::string>             \
     }                                                              \
 };                                                                                                   
 
-#define SW_BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
-
-#define SW_ASSERT(x, ...) { if(!(x)) { SW_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }  
+//#define SW_BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
+#define SW_BIND_EVENT_FN(fn) [this](auto&&... args) -> decltype(auto) { return this->fn(std::forward<decltype(args)>(args)...); }
 
 #include <memory>
 namespace schwi

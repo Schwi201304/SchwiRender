@@ -4,7 +4,7 @@
 #include "Core/Timestep.h"
 
 namespace schwi {
-	class Layer
+	class SCHWI_API Layer
 	{
 	public:
 		Layer(const std::string& name = "Layer");
