@@ -99,7 +99,7 @@ namespace schwi {
 				std::vector<GLchar> infoLog(maxLength);
 				glGetShaderInfoLog(shader, maxLength, &maxLength, &infoLog[0]);
 				glDeleteShader(shader);
-				SW_ERROR("{0}", infoLog.data());
+				SW_CORE_ERROR("Shader compilation failure:{0}", infoLog.data());
 				SW_ASSERT(false, "Shader compilation failure!");
 				break;
 			}

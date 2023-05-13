@@ -11,7 +11,7 @@
 #endif// _WIN32
 
 #ifdef _DEBUG
-	#define SW_ASSERT(x, ...) { if(!(x)) { SW_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }  
+	#define SW_ASSERT(x, ...) { if(!(x)) { SW_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }  
 #else
 	#define SW_ASSERT(...)
 #endif //_DEBUG

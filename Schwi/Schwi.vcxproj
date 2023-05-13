@@ -92,6 +92,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Scene\Scene.h" />
     <ClInclude Include="src\Core\EntryPoint.h" />
     <ClInclude Include="src\Renderer\Light.h" />
     <ClInclude Include="src\CameraController.h" />
@@ -131,6 +132,7 @@
     <ClInclude Include="src\Renderer\Texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Scene\Scene.cpp" />
     <ClCompile Include="src\CameraController.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />

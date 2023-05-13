@@ -31,4 +31,10 @@ namespace schwi {
 	public:
 		static Ref<Texture2D> Create(const std::string& path, TextureType type = TextureType::DIFFUSE);
 	};
+
+	class SCHWI_API CubeMap
+	{
+	public:
+
+	};
 }

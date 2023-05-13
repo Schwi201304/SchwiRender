@@ -103,6 +103,9 @@ struct SpotLight
 	vec3 direction;
 	float cutoff;
 	float outerCutOff;
+	float constant;
+	float linear;
+	float quadratic;
 	float intensity;
 };
 
@@ -120,7 +123,7 @@ uniform int PointLightNum;
 uniform int SpotLightNum;
 uniform int u_UseNormalMap;
 
-float Ambient = 0.1;
+uniform float Ambient = 0.1;
 vec3 normal = vec3(0.0, 0.0, 1.0);
 
 //  Calculate normal light
@@ -201,9 +204,6 @@ vec3 CalculateSpotLight(SpotLight light)
 	vec3 lightDir = normalize(TBN * light.position - v_FragPos);
 	float diff = max(dot(norm, lightDir), 0.0);
 
-	float theta = dot(lightDir, normalize(light.direction));
-	float epsilon = light.cutoff - light.outerCutOff;
-	float intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0, 1.0);
 
 	vec3 diffuse = vec3(texture(u_Material.diffuse, v_TexCoords)) * light.color * diff;
 	//  specular light
@@ -211,8 +211,16 @@ vec3 CalculateSpotLight(SpotLight light)
 	vec3 reflectDir = reflect(-lightDir, norm);
 	float spec = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.shininess);
 	vec3 specular = vec3(texture(u_Material.specular, v_TexCoords)) * spec * light.color;
-	return (ambient + diffuse + specular) * light.intensity * intensity;
 
+	//  attenuation factor
+	float dist = length(TBN * light.position - v_FragPos);
+	float attenuation = 1.0 / (light.constant + light.linear * dist + light.quadratic * (dist * dist));
+
+	float theta = dot(lightDir, normalize(-light.direction));
+	float epsilon = light.cutoff - light.outerCutOff;
+	float intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0, 1.0);
+
+	return (ambient + diffuse + specular) * light.intensity * intensity * attenuation;
 }
 
 void main()
