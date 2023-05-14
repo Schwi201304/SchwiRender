@@ -79,7 +79,7 @@ public:
 		m_Material.m_Shader = m_Shader;
 		m_Material.Bind();
 		m_Light.Color = glm::vec3(1.0f, 1.0f, 1.0f);
-		m_Light.Bind(m_Shader, m_LightPos, 0);
+		m_Light.Bind(m_Shader, 0);
 		m_Shader->SetInt("PointLightNum", 1);
 	}
 
@@ -89,12 +89,12 @@ public:
 
 		Renderer::BeginScene(m_CameraController.GetCamera());
 
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_LightPos);
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Light.position);
 		transform = glm::scale(transform, glm::vec3(0.1f));
 
 		m_Material.DiffuseTexture = m_Texture;
 		m_Material.Bind();
-		m_Light.Bind(m_Shader, m_LightPos, 0);
+		m_Light.Bind(m_Shader, 0);
 		m_Shader->SetInt("PointLightNum", 1);
 		m_Shader->SetFloat3("u_ViewPos", m_CameraController.GetCamera()->GetPosition());
 		Renderer::Submit(m_Shader, m_VertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
@@ -113,7 +113,7 @@ public:
 	{
 		ImGui::SetCurrentContext(Application::Get().GetImGuiLayer()->GetCurrentContext().get());
 		ImGui::Begin("Test");
-		ImGui::DragFloat3("Light Pos", (float*)&m_LightPos, 0.01f);
+		ImGui::DragFloat3("Light Pos", (float*)&m_Light.position, 0.01f);
 		ImGui::End();
 	}
 
@@ -125,8 +125,6 @@ private:
 	CameraController m_CameraController;
 	PointLight m_Light;
 	PhongMaterial m_Material;
-
-	glm::vec3 m_LightPos{ 1.0f,1.0f,2.0f };
 };
 
 class APP : public schwi::Application

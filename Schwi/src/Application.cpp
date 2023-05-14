@@ -60,6 +60,7 @@ namespace schwi {
 		{
 			RenderCommand::SetClearColor(m_ClearColor);
 			RenderCommand::Clear();
+			RenderCommand::SetStencilMask(0x00);
 
 			float time = (float)glfwGetTime();
 			Timestep timestep = time - m_LastFrameTime;

@@ -12,8 +12,35 @@ namespace schwi {
 
 	void Model::Draw(Ref<Shader>& shader)
 	{
+		if (m_DrawOutline) {
+			RenderCommand::SetStencilOp(Stencil::KEEP, Stencil::REPLACE, Stencil::REPLACE);
+			RenderCommand::SetStencilFunc(Stencil::ALWAYS, 1, 0xFF);
+			RenderCommand::SetStencilMask(0xFF);
+		}
+
 		for (uint32_t i = 0; i < m_Meshes.size(); i++)
+		{
 			m_Meshes[i]->Draw(shader, m_Transform);
+		}
+		RenderCommand::SetStencilOp(Stencil::KEEP, Stencil::KEEP, Stencil::KEEP);
+	}
+
+	void Model::DrawOutline()
+	{
+		if (m_DrawOutline) {
+			RenderCommand::SetStencilFunc(Stencil::NOTEQUAL, 1, 0xFF);
+			RenderCommand::SetStencilMask(0x00);
+			RenderCommand::SetDepthTest(false);
+			m_OutlineShader->Bind();
+			m_OutlineShader->SetFloat4("u_FragColor", glm::vec4(1.0f, 0.65f, 0.0f, 1.0f));
+			for (uint32_t i = 0; i < m_Meshes.size(); i++)
+			{
+				Renderer::Submit(m_OutlineShader, m_Meshes[i]->m_VertexArray,
+					glm::scale(m_Transform, glm::vec3(1.05f)));
+			}
+			RenderCommand::SetStencilMask(0xFF);
+			RenderCommand::SetDepthTest(true);
+		}
 	}
 
 	void Model::loadModel(const std::string& path)

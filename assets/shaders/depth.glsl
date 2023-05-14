@@ -13,14 +13,23 @@ void main()
 	gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
 }
 
+
 #type fragment
 #version 330 core
 
 out vec4 FragColor;
 
-uniform vec4 u_FragColor = vec4(1.0f);
+float near = 0.1; 
+float far  = 100.0; 
+
+float LinearizeDepth(float depth) 
+{
+    float z = depth * 2.0 - 1.0;
+    return (2.0 * near * far) / (far + near - z * (far - near));    
+}
 
 void main()
-{
-	FragColor = u_FragColor;
+{             
+    float depth = LinearizeDepth(gl_FragCoord.z) / far; 
+    FragColor = vec4(vec3(depth), 1.0);
 }

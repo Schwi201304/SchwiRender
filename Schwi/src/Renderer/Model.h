@@ -18,12 +18,15 @@ namespace schwi {
 		std::string m_Directory;
 		glm::mat4 m_Transform;
 		bool m_GammaCorrection;
+		bool m_DrawOutline = false;
+		Ref<Shader> m_OutlineShader = Shader::Create(std::string(SOLUTION_DIR) + "assets/shaders/default.glsl");
 
 		Model(std::string const& path,
 			const glm::mat4& transform = glm::mat4(1.0f),
 			bool gamma = false);
 
 		void Draw(Ref<Shader>& shader);
+		void DrawOutline();
 
 	private:
 		void loadModel(const std::string& path);

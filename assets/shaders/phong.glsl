@@ -54,7 +54,7 @@ void main()
 #type fragment
 #version 330 core
 
-layout(location = 0) out vec4 FragColor;
+out vec4 FragColor;
 
 in vec2 v_TexCoords;
 in vec3 v_Normal;
@@ -216,7 +216,7 @@ vec3 CalculateSpotLight(SpotLight light)
 	float dist = length(TBN * light.position - v_FragPos);
 	float attenuation = 1.0 / (light.constant + light.linear * dist + light.quadratic * (dist * dist));
 
-	float theta = dot(lightDir, normalize(-light.direction));
+	float theta = dot(lightDir, normalize(light.direction));
 	float epsilon = light.cutoff - light.outerCutOff;
 	float intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0, 1.0);
 

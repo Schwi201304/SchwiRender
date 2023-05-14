@@ -33,6 +33,8 @@ namespace schwi {
 		Ref<VertexArray> m_VertexArray;
 		Ref<PhongMaterial> m_Material;
 
+		bool m_DrawOutline = false;
+
 		Mesh(std::vector<Vertex> vertices,
 			std::vector<uint32_t> indices,
 			std::unordered_map<TextureType, Ref<Texture2D>> textures);
@@ -41,7 +43,7 @@ namespace schwi {
 		void Draw(Ref<Shader>& shader, const glm::mat4& transform);
 
 	private:
-		void GenVertexArray(); 
+		void GenVertexArray();
 		void CreatePlane(const uint32_t& sample);
 		void CreateCube(const uint32_t& sample);
 		void CreateSphere(const uint32_t& sample);
