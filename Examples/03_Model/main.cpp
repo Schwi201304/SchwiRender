@@ -25,7 +25,7 @@ public:
 
 		m_DefaultShader = Shader::Create(SolutionDir + "assets/shaders/default.glsl");
 
-		m_LightMesh = CreateRef<Mesh>(MeshType::Sphere, 2); 
+		m_LightMesh = CreateRef<Mesh>(MeshType::Sphere, 2);
 		m_PlaneMesh = CreateRef<Mesh>(MeshType::Plane, 5);
 	}
 
@@ -53,8 +53,8 @@ public:
 		m_LightMesh->Draw(m_DefaultShader, transform);
 		//Floor
 		m_DefaultShader->Bind();
-		m_DefaultShader->SetFloat4("u_FragColor", glm::vec4(0.5f,0.5f,0.5f,1.0f));
-		m_PlaneMesh->Draw(m_DefaultShader, glm::scale(glm::mat4(1.0f), glm::vec3(10.0f)) );
+		m_DefaultShader->SetFloat4("u_FragColor", glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
+		m_PlaneMesh->Draw(m_DefaultShader, glm::scale(glm::mat4(1.0f), glm::vec3(10.0f)));
 		//Model
 		m_Model->Draw(m_Shader);
 		//Glass

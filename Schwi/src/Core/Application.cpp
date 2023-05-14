@@ -20,7 +20,10 @@ namespace schwi {
 		Renderer::Init();
 		m_ImGuiLayer = CreateRef<ImGuiLayer>();
 		PushOverlay(m_ImGuiLayer);
-				
+		
+		m_ScreenShader = Shader::Create(std::string(SOLUTION_DIR) + "assets/shaders/screen.glsl");
+		auto [w, h] = Application::Get().GetWindow().GetResolution();
+		m_FrameBuffer = FrameBuffer::Create(w, h);
 	}
 
 	void Application::PushLayer(Ref<Layer> layer)
@@ -58,6 +61,8 @@ namespace schwi {
 		//SW_CORE_DEBUG("{}", m_LayerStack.size());
 		while (m_Running)
 		{
+			m_FrameBuffer->Bind();
+
 			RenderCommand::SetClearColor(m_ClearColor);
 			RenderCommand::Clear();
 			RenderCommand::SetStencilMask(0x00);
@@ -72,9 +77,21 @@ namespace schwi {
 					layer->OnUpdate(timestep);
 			}
 
+			m_FrameBuffer->Unbind();
+
+			RenderCommand::SetClearColor(m_ClearColor);
+			RenderCommand::Clear();
 			m_ImGuiLayer->Begin();
 			for (auto layer : m_LayerStack)
 				layer->OnImGuiRender();
+			ImGui::Begin("Scene");
+			uint32_t textureID = m_FrameBuffer->GetColorAttachment();
+			auto [w, h] = Application::Get().GetWindow().GetResolution();
+			ImGui::Text("point:%p", textureID);
+			ImGui::SameLine();
+			ImGui::Text("resolution:%d * %d", w, h);
+			ImGui::Image((void*)(intptr_t)textureID, ImVec2(w, h), ImVec2(0, 1), ImVec2(1, 0));
+			ImGui::End();
 			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();

@@ -127,4 +127,17 @@ namespace schwi {
 
 		static Ref<IndexBuffer> Create(uint32_t* indices, uint32_t size);
 	};
+
+	class SCHWI_API FrameBuffer
+	{
+	public:
+		virtual ~FrameBuffer() = default;
+
+		virtual uint32_t GetColorAttachment() const = 0;
+		virtual uint32_t GetDepthAttachment() const = 0;
+		virtual void Bind()const = 0;
+		virtual void Unbind()const = 0;
+
+		static Ref<FrameBuffer> Create(const uint32_t& width, const uint32_t height);
+	};
 }

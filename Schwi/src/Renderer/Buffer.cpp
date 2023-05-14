@@ -29,4 +29,16 @@ namespace schwi {
 		SW_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;
 	}
+
+	Ref<FrameBuffer> FrameBuffer::Create(const uint32_t& width, const uint32_t height)
+	{
+		switch (Renderer::GetAPI())
+		{
+		case RendererAPI::API::None:    SW_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
+		case RendererAPI::API::OpenGL:  return CreateRef<OpenGLFrameBuffer>(width, height);
+		}
+
+		SW_ASSERT(false, "Unknown RendererAPI!");
+		return nullptr;
+	}
 }

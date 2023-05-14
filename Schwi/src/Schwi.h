@@ -24,7 +24,7 @@
 #include "Renderer/Mesh.h"
 #include "Renderer/Model.h"
 
-#include "Application.h"
-#include "CameraController.h"
+#include "Core/Application.h"
+#include "Scene/CameraController.h"
 
 #define SolutionDir std::string(SOLUTION_DIR)

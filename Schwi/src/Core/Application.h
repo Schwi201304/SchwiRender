@@ -6,6 +6,8 @@
 #include "Core/Timestep.h"
 #include "Core/Window.h"
 #include "Layer/LayerStack.h"
+#include "Renderer/Buffer.h"
+#include "Renderer/Shader.h"
 
 namespace schwi {
 	class SCHWI_API Application
@@ -41,6 +43,8 @@ namespace schwi {
 
 	private:
 		static Application* s_Instance;
+		Ref<Shader> m_ScreenShader;
+		Ref<FrameBuffer> m_FrameBuffer;
 	};
 
 	Application* CreateApplication();

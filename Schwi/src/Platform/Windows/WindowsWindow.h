@@ -13,9 +13,9 @@ namespace schwi {
 
 		void OnUpdate() override;
 
-		inline unsigned int GetWidth() const override { return m_Data.Width; }
-		inline unsigned int GetHeight() const override { return m_Data.Height; }
-		inline std::pair<unsigned int, unsigned int> GetResolution() const override { return std::make_pair(m_Data.Width, m_Data.Height); }
+		inline uint32_t GetWidth() const override { return m_Data.Width; }
+		inline uint32_t GetHeight() const override { return m_Data.Height; }
+		inline std::pair<uint32_t, uint32_t> GetResolution() const override { return std::make_pair(m_Data.Width, m_Data.Height); }
 		inline float GetAspect() const override { return static_cast<float>(m_Data.Width) / static_cast<float>(m_Data.Height); }
 
 		// Window attributes
@@ -35,7 +35,7 @@ namespace schwi {
 		struct WindowData
 		{
 			std::string Title;
-			unsigned int Width, Height;
+			uint32_t Width, Height;
 			bool VSync;
 
 			EventCallbackFn EventCallback;

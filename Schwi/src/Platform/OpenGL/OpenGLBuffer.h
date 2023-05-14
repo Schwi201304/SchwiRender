@@ -32,4 +32,21 @@ namespace schwi {
 		uint32_t m_RendererID;
 		uint32_t m_Count;
 	};
+
+	class SCHWI_API OpenGLFrameBuffer : public FrameBuffer
+	{
+	public:
+		OpenGLFrameBuffer(const uint32_t& width, const uint32_t& height);
+		virtual uint32_t GetColorAttachment() const override { return m_ColorAttachment; }
+		virtual uint32_t GetDepthAttachment() const override { return m_DepthAttachment; }
+		virtual void Bind() const override;
+		virtual void Unbind() const override;
+		void Resize(uint32_t width, uint32_t height);
+	private:
+		void Configuration();
+
+		uint32_t m_RendererID;
+		uint32_t m_ColorAttachment, m_DepthAttachment;
+		uint32_t m_Width, m_Height;
+	};
 }

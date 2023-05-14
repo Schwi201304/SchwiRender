@@ -18,7 +18,7 @@
     <ClInclude Include="src\Core\Log.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Application.h">
+    <ClInclude Include="src\Core\Application.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Events\ApplicationEvent.h">
@@ -108,7 +108,7 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\CameraController.h">
+    <ClInclude Include="src\Scene\CameraController.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\Light.h">
@@ -129,6 +129,9 @@
     <ClInclude Include="src\Scene\Scene.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\Scene\SceneLayer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Log.cpp">
@@ -140,7 +143,7 @@
     <ClCompile Include="src\Schwi.h">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Application.cpp">
+    <ClCompile Include="src\Core\Application.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\swpch.cpp">
@@ -203,7 +206,7 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\CameraController.cpp">
+    <ClCompile Include="src\Scene\CameraController.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer\Mesh.cpp">
@@ -213,6 +216,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\Scene\Scene.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\SceneLayer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

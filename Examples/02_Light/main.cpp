@@ -89,7 +89,7 @@ public:
 
 		Renderer::BeginScene(m_CameraController.GetCamera());
 
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Light.position);
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Light.Position);
 		transform = glm::scale(transform, glm::vec3(0.1f));
 
 		m_Material.DiffuseTexture = m_Texture;
@@ -113,7 +113,7 @@ public:
 	{
 		ImGui::SetCurrentContext(Application::Get().GetImGuiLayer()->GetCurrentContext().get());
 		ImGui::Begin("Test");
-		ImGui::DragFloat3("Light Pos", (float*)&m_Light.position, 0.01f);
+		ImGui::DragFloat3("Light Pos", (float*)&m_Light.Position, 0.01f);
 		ImGui::End();
 	}
 
