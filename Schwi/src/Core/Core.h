@@ -20,7 +20,7 @@
 	#ifdef SW_BUILD_DLL
 		#define SCHWI_API __declspec(dllexport)
 	#else
-		#define SCHWI_API __declspec(dllimport)
+		#define SCHWI_API
 	#endif
 #else
 	#error Hazel only supports Windows!
@@ -63,3 +63,5 @@ namespace schwi
 		return std::dynamic_pointer_cast<T>(std::forward<Args>(args)...);
 	}
 }
+
+#define SolutionDir std::string(SOLUTION_DIR)

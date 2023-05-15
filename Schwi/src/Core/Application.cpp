@@ -4,6 +4,7 @@
 #include "Renderer/Renderer.h"
 #include "Core/Input.h"
 #include "Core/Core.h"
+#include "ImGui/MenuLayer.h"
 
 #include <glfw/glfw3.h>
 
@@ -17,13 +18,11 @@ namespace schwi {
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(SW_BIND_EVENT_FN(Application::OnEvent));
 
-		Renderer::Init();
 		m_ImGuiLayer = CreateRef<ImGuiLayer>();
 		PushOverlay(m_ImGuiLayer);
-		
-		m_ScreenShader = Shader::Create(std::string(SOLUTION_DIR) + "assets/shaders/screen.glsl");
-		auto [w, h] = Application::Get().GetWindow().GetResolution();
-		m_FrameBuffer = FrameBuffer::Create(w, h);
+		PushOverlay(CreateRef<MenuLayer>());
+		m_SceneLayer = CreateRef<SceneLayer>();
+		PushLayer(m_SceneLayer);
 	}
 
 	void Application::PushLayer(Ref<Layer> layer)
@@ -38,10 +37,10 @@ namespace schwi {
 
 	void Application::OnEvent(Event& e)
 	{
-		const ImGuiIO& io = ImGui::GetIO();
-		if (io.WantCaptureMouse||io.WantCaptureKeyboard) {
-			return;
-		}
+		//const ImGuiIO& io = ImGui::GetIO();
+		//if (io.WantCaptureMouse||io.WantCaptureKeyboard) {
+		//	return;
+		//}
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(SW_BIND_EVENT_FN(Application::OnWindowClose));
 		dispatcher.Dispatch<WindowResizeEvent>(SW_BIND_EVENT_FN(Application::OnWindowResize));
@@ -61,8 +60,6 @@ namespace schwi {
 		//SW_CORE_DEBUG("{}", m_LayerStack.size());
 		while (m_Running)
 		{
-			m_FrameBuffer->Bind();
-
 			RenderCommand::SetClearColor(m_ClearColor);
 			RenderCommand::Clear();
 			RenderCommand::SetStencilMask(0x00);
@@ -77,21 +74,11 @@ namespace schwi {
 					layer->OnUpdate(timestep);
 			}
 
-			m_FrameBuffer->Unbind();
-
 			RenderCommand::SetClearColor(m_ClearColor);
 			RenderCommand::Clear();
 			m_ImGuiLayer->Begin();
 			for (auto layer : m_LayerStack)
 				layer->OnImGuiRender();
-			ImGui::Begin("Scene");
-			uint32_t textureID = m_FrameBuffer->GetColorAttachment();
-			auto [w, h] = Application::Get().GetWindow().GetResolution();
-			ImGui::Text("point:%p", textureID);
-			ImGui::SameLine();
-			ImGui::Text("resolution:%d * %d", w, h);
-			ImGui::Image((void*)(intptr_t)textureID, ImVec2(w, h), ImVec2(0, 1), ImVec2(1, 0));
-			ImGui::End();
 			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();
@@ -124,8 +111,8 @@ namespace schwi {
 		}
 
 		m_Minimized = false;
-		Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
-
+		//Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
+		RenderCommand::SetViewport(0, 0, e.GetWidth(), e.GetHeight());
 		return false;
 	}
 }

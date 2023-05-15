@@ -40,7 +40,9 @@ namespace schwi {
 	{
 		m_Material->m_Shader = shader;
 		m_Material->Bind();
-		Renderer::Submit(shader, m_VertexArray, transform);
+		m_VertexArray->Bind();
+		shader->SetMat4("u_Transform", transform);
+		RenderCommand::DrawIndexed(m_VertexArray);
 	}
 
 	void Mesh::CreatePlane(const uint32_t& sample)

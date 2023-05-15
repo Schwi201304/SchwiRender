@@ -132,6 +132,9 @@
     <ClInclude Include="src\Scene\SceneLayer.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\ImGui\MenuLayer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Log.cpp">
@@ -219,6 +222,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\Scene\SceneLayer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ImGui\MenuLayer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

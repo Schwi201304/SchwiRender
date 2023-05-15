@@ -41,7 +41,7 @@ namespace schwi {
 		virtual uint32_t GetDepthAttachment() const override { return m_DepthAttachment; }
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
-		void Resize(uint32_t width, uint32_t height);
+		virtual void Resize(uint32_t width, uint32_t height)override;
 	private:
 		void Configuration();
 

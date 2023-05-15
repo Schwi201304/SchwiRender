@@ -26,5 +26,6 @@
 
 #include "Core/Application.h"
 #include "Scene/CameraController.h"
+#include "Scene/SceneLayer.h"
 
 #define SolutionDir std::string(SOLUTION_DIR)

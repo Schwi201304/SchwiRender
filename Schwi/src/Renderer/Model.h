@@ -19,7 +19,7 @@ namespace schwi {
 		glm::mat4 m_Transform;
 		bool m_GammaCorrection;
 		bool m_DrawOutline = false;
-		Ref<Shader> m_OutlineShader = Shader::Create(std::string(SOLUTION_DIR) + "assets/shaders/default.glsl");
+		Ref<Shader> m_OutlineShader = Shader::Create(SolutionDir + "assets/shaders/default.glsl");
 
 		Model(std::string const& path,
 			const glm::mat4& transform = glm::mat4(1.0f),

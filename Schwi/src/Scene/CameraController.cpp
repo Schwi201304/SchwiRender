@@ -11,26 +11,55 @@ namespace schwi {
 
 	void CameraController::OnUpdate(Timestep ts)
 	{
-		if (ImGui::GetIO().WantCaptureKeyboard)
+		if (!m_Active)
 			return;
-		if (schwi::Input::IsKeyPressed(schwi::Key::W))
+		if (ImGui::IsKeyDown(ImGuiKey::ImGuiKey_W))
 			m_Camera->SetPosition(m_Camera->GetPosition() + m_CameraMoveSpeed * ts * m_Camera->GetFrontVector());
-		if (schwi::Input::IsKeyPressed(schwi::Key::S))
+		if (ImGui::IsKeyDown(ImGuiKey::ImGuiKey_S))
 			m_Camera->SetPosition(m_Camera->GetPosition() - m_CameraMoveSpeed * ts * m_Camera->GetFrontVector());
-		if (schwi::Input::IsKeyPressed(schwi::Key::A))
+		if (ImGui::IsKeyDown(ImGuiKey::ImGuiKey_A))
 			m_Camera->SetPosition(m_Camera->GetPosition() - m_CameraMoveSpeed * ts * m_Camera->GetRightVector());
-		if (schwi::Input::IsKeyPressed(schwi::Key::D))
+		if (ImGui::IsKeyDown(ImGuiKey::ImGuiKey_D))
 			m_Camera->SetPosition(m_Camera->GetPosition() + m_CameraMoveSpeed * ts * m_Camera->GetRightVector());
+
+		if (ImGui::IsMouseDragging(ImGuiMouseButton_Left))
+		{
+			auto offset = ImGui::GetIO().MouseDelta;
+			m_Camera->SetYaw(m_Camera->GetYaw() + m_CameraRotationSpeed * offset.x);
+			m_Camera->SetPitch(m_Camera->GetPitch() - m_CameraRotationSpeed * offset.y);
+		}
 	}
 
 	void CameraController::OnEvent(Event& e)
 	{
+		if (!m_Active)
+			return;
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<MouseScrolledEvent>(SW_BIND_EVENT_FN(CameraController::OnMouseScrolled));
 		dispatcher.Dispatch<WindowResizeEvent>(SW_BIND_EVENT_FN(CameraController::OnWindowResized));
 		dispatcher.Dispatch<MouseButtonPressedEvent>(SW_BIND_EVENT_FN(CameraController::OnMouseButtonPressed));
 		dispatcher.Dispatch<MouseButtonReleasedEvent>(SW_BIND_EVENT_FN(CameraController::OnMouseButtonReleased));
 		dispatcher.Dispatch<MouseMovedEvent>(SW_BIND_EVENT_FN(CameraController::OnMouseMoved));
+	}
+
+	void CameraController::OnResize(float width, float height)
+	{
+		float aspect = width / height;
+		switch (m_Camera->GetCameraType())
+		{
+		case CameraType::Orthographic:
+			break;
+		case CameraType::Perspective:
+			CastRef<PerspCamera>(m_Camera)->SetAspect(aspect);
+			break;
+		default:
+			SW_ASSERT(false, "Unknow CameraType");
+		}
+	}
+
+	void CameraController::SetActive(bool active)
+	{
+		m_Active = active;
 	}
 
 	bool CameraController::OnMouseScrolled(MouseScrolledEvent& e)

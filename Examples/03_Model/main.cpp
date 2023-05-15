@@ -67,7 +67,6 @@ public:
 
 		m_Model->DrawOutline();
 
-		Renderer::EndScene();
 	}
 
 	void OnEvent(Event& e) override

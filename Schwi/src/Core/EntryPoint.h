@@ -4,8 +4,22 @@
 #include "Application.h"
 
 #ifdef SW_PLATFORM_WINDOWS
+extern schwi::Application* schwi::CreateApplication();
 
-//extern schwi::Application* schwi::CreateApplication();
+#ifdef SW_BUILD_EXE
+class APP : public schwi::Application
+{
+public:
+	APP(){}		
+	~APP(){}		
+};
+
+schwi::Application* schwi::CreateApplication()
+{
+	return new APP();
+}
+#endif
+
 
 int main(int argc, char** argv)
 {
@@ -18,4 +32,4 @@ int main(int argc, char** argv)
 	return 0;
 }
 
-#endif
+#endif//end SW_PLATFORM_WINDOWS

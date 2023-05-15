@@ -8,6 +8,7 @@
 #include "Layer/LayerStack.h"
 #include "Renderer/Buffer.h"
 #include "Renderer/Shader.h"
+#include "Scene/SceneLayer.h"
 
 namespace schwi {
 	class SCHWI_API Application
@@ -23,7 +24,10 @@ namespace schwi {
 
 		inline Window& GetWindow() { return *m_Window; }
 		inline Ref<ImGuiLayer> GetImGuiLayer() { return m_ImGuiLayer; }
+		inline bool GetRunStatus() { return m_Running; }
 		inline static Application& Get() { return *s_Instance; }
+
+		inline void SetRunStatus(bool running) { m_Running = running; }
 
 	public:
 		glm::vec4 m_ClearColor{ 102.f / 255.f, 204.f / 255.f, 1.f, 1.f };
@@ -33,15 +37,16 @@ namespace schwi {
 		bool OnKeyPressed(KeyPressedEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
 
+	private:
 		std::unique_ptr<Window> m_Window;
 		Ref<ImGuiLayer> m_ImGuiLayer;
+		Ref<SceneLayer> m_SceneLayer;
 		bool m_Running = true;
 		bool m_Minimized = false;
 		LayerStack m_LayerStack;
 
 		float m_LastFrameTime = 0.0f;
 
-	private:
 		static Application* s_Instance;
 		Ref<Shader> m_ScreenShader;
 		Ref<FrameBuffer> m_FrameBuffer;

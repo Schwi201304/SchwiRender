@@ -14,6 +14,9 @@ namespace schwi {
 
 		void OnUpdate(Timestep ts);
 		void OnEvent(Event& e);
+		void OnResize(float width, float height);
+
+		void SetActive(bool active);
 
 		Ref<Camera>& GetCamera() { return m_Camera; }
 		const  Ref<Camera>& GetCamera() const { return m_Camera; }
@@ -25,12 +28,13 @@ namespace schwi {
 		bool OnMouseButtonReleased(MouseButtonReleasedEvent& e);
 	private:
 		Ref<Camera> m_Camera;
+		bool m_Active = false;
 		bool leftButtonDown = false;
-		float lastX=0.0f, lastY=0.0f;
+		float lastX = 0.0f, lastY = 0.0f;
 
 		float m_ZoomLevel = 45.0f;
-		float m_CameraMoveSpeed = 5.0f;
-		float m_CameraRotationSpeed = 0.1f;
+		float m_CameraMoveSpeed = 10.0f;
+		float m_CameraRotationSpeed = 0.5f;
 	};
 
 }
