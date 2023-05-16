@@ -1,7 +1,8 @@
 #include "swpch.h"
 #include "SceneLayer.h"
 #include "Renderer/RenderCommand.h"
-#include "imgui.h"
+#include <imgui.h>
+#include <ImGuizmo.h>
 
 namespace schwi {
 	Ref<SceneLayer> SceneLayer::s_Instance = nullptr;
@@ -31,7 +32,17 @@ namespace schwi {
 
 	void SceneLayer::OnImGuiRender()
 	{
+		ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor(0.35f, 0.3f, 0.3f));
 		ImGui::Begin("Scene",nullptr,ImGuiWindowFlags_NoMove);
+
+		ImGuizmo::SetDrawlist();
+		ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, m_ViewportSize.x, m_ViewportSize.y);
+		auto camera = SceneLayer::GetInstance()->GetScene()->m_CameraController->GetCamera();
+		auto view = camera->GetViewMatrix();
+		auto proj = camera->GetProjectionMatrix();
+		ImGuizmo::DrawGrid(&view[0][0], &proj[0][0], &identityMatrix[0][0], 100.f);
+		ImGui::PopStyleColor(1);
+
 		ImVec2 panelSize = ImGui::GetContentRegionAvail();
 		uint32_t textureID = m_FrameBuffer->GetColorAttachment();
 		m_Scene->m_CameraController->SetActive(ImGui::IsWindowFocused());

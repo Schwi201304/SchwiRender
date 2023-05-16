@@ -50,7 +50,7 @@ namespace schwi {
 		CameraType m_CameraType;
 		float m_FarPlane, m_NearPlane;
 		float m_Pitch = 0.0f, m_Yaw = -90.0f;
-		glm::vec3 m_Position = { 0.0f, 0.0f, 5.0f };
+		glm::vec3 m_Position = { 0.0f, 3.0f, 5.0f };
 		glm::mat4 m_ViewMatrix;
 		glm::mat4 m_ProjectionMatrix;
 		glm::mat4 m_ViewProjectionMatrix;

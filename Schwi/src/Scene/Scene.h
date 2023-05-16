@@ -19,22 +19,24 @@ namespace schwi {
 
 		void Draw();
 
-		Ref<CameraController> m_CameraController;
-	private:
-		Ref<Shader> m_Shader, m_DefaultShader;
-		Ref<VertexArray> m_LightVao;
-		Ref<Model> m_Model;
-		Ref<Mesh> m_LightMesh, m_PlaneMesh;
-		PointLight m_Light;
-		SpotLight m_SpotLight;
-
-		bool m_EnableLineMode = false;
+		Ref<Model> GetModel(uint32_t i) { return m_ModelList[i]; }
 
 		struct SceneData
 		{
 			glm::mat4 ViewProjectionMatrix;
 		};
+		static Ref<SceneData>GetSceneData() { return s_SceneData; }
+		Ref<CameraController> m_CameraController;
+	private:
+		std::vector<Ref<Shader>> m_ShaderList;
+		std::vector<Ref<Model>> m_ModelList;
+		std::vector<Ref<PointLight>> m_PointLightList;
+		Ref<Shader> m_Shader, m_DefaultShader;
+		Ref<Mesh> sphere,plane;
+
+		bool m_EnableLineMode = false;
 		static Ref<SceneData> s_SceneData;
+
 	};
 
 }

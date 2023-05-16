@@ -6,6 +6,7 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 #include <GLFW/glfw3.h>
+#include <ImGuizmo.h>
 
 #include "Core/Application.h"
 
@@ -60,6 +61,7 @@ namespace schwi {
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
+		ImGuizmo::BeginFrame();
 	}
 
 	void ImGuiLayer::End()
@@ -81,12 +83,12 @@ namespace schwi {
 
 	void ImGuiLayer::OnImGuiRender()
 	{
-		ImGui::ShowDemoWindow();
+		//ImGui::ShowDemoWindow();
 		//ImGui::SetCurrentContext(Application::Get().GetImGuiLayer()->GetCurrentContext().get());
-		ImGui::Begin("Test");
-		ImGui::Text("Hello World");
-		ImGui::ColorEdit3("clear color", (float*)&Application::Get().m_ClearColor);
-		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-		ImGui::End();
+		//ImGui::Begin("Test");
+		//ImGui::Text("Hello World");
+		//ImGui::ColorEdit3("clear color", (float*)&Application::Get().m_ClearColor);
+		//ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		//ImGui::End();
 	}
 }

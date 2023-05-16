@@ -17,6 +17,9 @@ namespace schwi {
 
 	private:
 		static Ref<MenuLayer> s_Instance;
+		bool m_ShowEditWindow = true;
+		void EditTransform(float* cameraView, float* cameraProjection, float* matrix, bool editTransformDecomposition);
+		void ShowEditWindow();
 	};
 
 }

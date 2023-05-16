@@ -1,11 +1,11 @@
 #include "swpch.h"
 #include "Model.h"
+#include "Scene/Scene.h"
 
 namespace schwi {
 	Model::Model(std::string const& path,
-		const glm::mat4& transform,
 		bool gamma)
-		: m_GammaCorrection(gamma), m_Transform(transform)
+		: m_GammaCorrection(gamma)
 	{
 		loadModel(path);
 	}
@@ -35,8 +35,11 @@ namespace schwi {
 			m_OutlineShader->SetFloat4("u_FragColor", glm::vec4(1.0f, 0.65f, 0.0f, 1.0f));
 			for (uint32_t i = 0; i < m_Meshes.size(); i++)
 			{
-				Renderer::Submit(m_OutlineShader, m_Meshes[i]->m_VertexArray,
-					glm::scale(m_Transform, glm::vec3(1.05f)));
+				m_OutlineShader->Bind();
+				m_OutlineShader->SetMat4("u_ViewProjection", Scene::GetSceneData()->ViewProjectionMatrix);
+				m_OutlineShader->SetMat4("u_Tranform", m_Transform);
+				m_Meshes[i]->m_VertexArray->Bind();
+				RenderCommand::DrawIndexed(m_Meshes[i]->m_VertexArray);
 			}
 			RenderCommand::SetStencilMask(0xFF);
 			RenderCommand::SetDepthTest(true);
