@@ -63,6 +63,18 @@ namespace schwi {
 
 		ImGui::End();
 		//ShowEditWindow();
+		ShowStatusWindow();
+	}
+
+	void MenuLayer::ShowStatusWindow()
+	{
+		if (ImGui::Begin("Status"))
+		{
+			float frame_rate = ImGui::GetIO().Framerate;
+			ImGui::Text("Frame Rate:%f,time per frame:%f", frame_rate, 1.0f / frame_rate);
+			ImGui::Text("Vertices:");
+			ImGui::Text("Triangles:");
+		}
 	}
 
 	void MenuLayer::ShowEditWindow()

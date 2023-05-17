@@ -44,17 +44,7 @@ namespace schwi {
 
 	void CameraController::OnResize(float width, float height)
 	{
-		float aspect = width / height;
-		switch (m_Camera->GetCameraType())
-		{
-		case CameraType::Orthographic:
-			break;
-		case CameraType::Perspective:
-			CastRef<PerspCamera>(m_Camera)->SetAspect(aspect);
-			break;
-		default:
-			SW_CORE_ASSERT(false, "Unknow CameraType");
-		}
+		m_Camera->SetAspect(width / height);
 	}
 
 	void CameraController::SetActive(bool active)
@@ -70,7 +60,7 @@ namespace schwi {
 		case CameraType::Orthographic:
 			break;
 		case CameraType::Perspective:
-			CastRef<PerspCamera>(m_Camera)->SetFov(m_ZoomLevel);
+			m_Camera->SetFov(m_ZoomLevel);
 			break;
 		default:
 			SW_CORE_ASSERT(false, "Unknow CameraType");
@@ -81,16 +71,7 @@ namespace schwi {
 	bool CameraController::OnWindowResized(WindowResizeEvent& e)
 	{
 		auto aspect = (float)e.GetWidth() / (float)e.GetHeight();
-		switch (m_Camera->GetCameraType())
-		{
-		case CameraType::Orthographic:
-			break;
-		case CameraType::Perspective:
-			CastRef<PerspCamera>(m_Camera)->SetAspect(aspect);
-			break;
-		default:
-			SW_CORE_ASSERT(false, "Unknow CameraType");
-		}
+		m_Camera->SetAspect(aspect);
 		return true;
 	}
 

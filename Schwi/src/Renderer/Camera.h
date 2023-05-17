@@ -8,23 +8,48 @@ namespace schwi {
 
 	enum SCHWI_API CameraType
 	{
-		CameraTypeNone = 0,
-		Orthographic = 1,
-		Perspective = 2
+		Orthographic = 0,
+		Perspective = 1
 	};
 
 	class SCHWI_API Camera
 	{
 	public:
 		Camera() = default;
-		Camera(float nearPlane, float farPlane, CameraType cameraType = CameraType::Perspective)
-			:m_NearPlane(nearPlane), m_FarPlane(farPlane), m_CameraType(cameraType) {}
-		virtual ~Camera() = default;
+		Camera(float nearPlane, float farPlane, float aspect, CameraType cameraType = CameraType::Perspective)
+			:m_NearPlane(nearPlane), m_FarPlane(farPlane), m_Aspect(aspect), m_CameraType(cameraType)
+		{
+			UpdateViewMatrix();
+			UpdateProjectionMatrix();
+			UpdateViewProjectionMatrix();
+		}
+		~Camera() = default;
 
 		const CameraType& GetCameraType() { return m_CameraType; };
+		void SetCameraType(CameraType cameraType) 
+		{ 
+			m_CameraType = cameraType;
+			UpdateProjectionMatrix();
+			UpdateViewProjectionMatrix();
+		}
+		void SetPersp(float fov)
+		{
+			m_CameraType = CameraType::Perspective;
+			SetFov(fov);
+		}
+		void SetOrtho(float height)
+		{
+			m_CameraType = CameraType::Orthographic;
+			SetHeight(height);
+		}
 
-		const float& GetPitch() const { return m_Pitch; }
-		const float& GetYaw() const { return m_Yaw; }
+		const float GetPitch() const { return m_Pitch; }
+		const float GetYaw() const { return m_Yaw; }
+		const float GetAspect()const { return m_Aspect; }
+		const float GetHeight() const { return m_Height; }
+		const float GetFov() const { return m_Fov; }
+		const float GetNearPlane()const { return m_NearPlane; }
+		const float GetFarPlane()const { return m_FarPlane; }
 
 		const glm::vec3& GetPosition() const { return m_Position; }
 		const glm::vec3& GetRotate()const { return { m_Pitch,m_Yaw,0.0f }; }
@@ -39,80 +64,29 @@ namespace schwi {
 		void SetPosition(const glm::vec3& position);
 		void SetPitch(const float pitch);
 		void SetYaw(const float yaw);
-		void SetNearPlane(const float& val);
-		void SetFarPlane(const float& val);
+		void SetNearPlane(const float val);
+		void SetFarPlane(const float val);
+		void SetAspect(const float val);
+		void SetHeight(float val);
+		void SetFov(float fov);
 
-	protected:
+	private:
 		void UpdateViewMatrix();
-		virtual void UpdateProjectionMatrix() = 0;
+		virtual void UpdateProjectionMatrix();
 		void UpdateViewProjectionMatrix() { m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix; }
 
-	protected:
+	private:
 		CameraType m_CameraType;
-		float m_FarPlane, m_NearPlane;
+		float m_FarPlane, m_NearPlane, m_Aspect=1.0f;
 		float m_Pitch = 0.0f, m_Yaw = -90.0f;
 		glm::vec3 m_Position = { 0.0f, 3.0f, 5.0f };
-		glm::mat4 m_ViewMatrix;
-		glm::mat4 m_ProjectionMatrix;
-		glm::mat4 m_ViewProjectionMatrix;
+		glm::mat4 m_ViewMatrix = glm::mat4(1.0f);
+		glm::mat4 m_ProjectionMatrix = glm::mat4(1.0f);
+		glm::mat4 m_ViewProjectionMatrix = glm::mat4(1.0f);
 		glm::vec3 m_Front = { 0.0f, 0.0f, -1.0f }, m_Up = { 0.0f, 1.0f, 0.0f }, m_Right = { 1.0f, 0.0f, 0.0f };
-	};
 
-	class SCHWI_API OrthoCamera :public Camera
-	{
-	public:
-		OrthoCamera(float left, float right, float bottom, float top, float nearPlane = 0.1f, float farPlane = 100.0f)
-			:m_Left(left), m_Right(right), m_Bottom(bottom), m_Top(top),
-			Camera(nearPlane, farPlane, CameraType::Orthographic)
-		{
-			UpdateViewMatrix();
-			UpdateProjectionMatrix();
-			UpdateViewProjectionMatrix();
-		}
-		~OrthoCamera() = default;
+		float m_Height = 10.0f;
+		float m_Fov = 45.0f;
 
-		const float& GetLeft() const { return m_Left; }
-		const float& GetRight() const { return m_Right; }
-		const float& GetBottom() const { return m_Bottom; }
-		const float& GetTop() const { return m_Top; }
-
-
-	private:
-		virtual void UpdateProjectionMatrix() override
-		{
-			m_ProjectionMatrix = glm::ortho(m_Left, m_Right, m_Bottom, m_Top, m_NearPlane, m_FarPlane);
-		}
-
-	private:
-		float m_Left, m_Right, m_Bottom, m_Top;
-	};
-
-	class SCHWI_API PerspCamera :public Camera
-	{
-	public:
-		PerspCamera(float fov, float aspect, float nearPlane = 0.1f, float farPlane = 100.0f)
-			:m_Fov(fov), m_Aspect(aspect),
-			Camera(nearPlane, farPlane, CameraType::Perspective)
-		{
-			UpdateViewMatrix();
-			UpdateProjectionMatrix();
-			UpdateViewProjectionMatrix();
-		}
-		~PerspCamera() = default;
-
-		const float& GetFov() const { return m_Fov; }
-		const float& GetAspect() const { return m_Aspect; }
-
-		void SetFov(float fov);
-		void SetAspect(float aspect);
-
-	private:
-		virtual void UpdateProjectionMatrix() override
-		{
-			m_ProjectionMatrix = glm::perspective(glm::radians(m_Fov), m_Aspect, m_NearPlane, m_FarPlane);
-		}
-
-	private:
-		float m_Fov, m_Aspect;
 	};
 }

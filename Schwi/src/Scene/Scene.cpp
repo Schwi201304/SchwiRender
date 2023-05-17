@@ -9,8 +9,9 @@ namespace schwi {
 
 	Scene::Scene()
 	{
-		m_CameraController = CreateRef<CameraController>(CreateRef<schwi::PerspCamera>(
-			45.0f, SceneLayer::GetInstance()->GetAspect()));
+		auto camera = CreateRef<schwi::Camera>(0.1f, 100.0f, SceneLayer::GetInstance()->GetAspect());
+		camera->SetPersp(45.0f);
+		m_CameraController = CreateRef<CameraController>(camera);		
 
 		m_ModelList.push_back(CreateRef<Model>(SolutionDir + "assets/models/nanosuit/nanosuit.obj"));
 

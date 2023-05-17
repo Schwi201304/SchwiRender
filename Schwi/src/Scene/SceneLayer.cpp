@@ -22,6 +22,7 @@ namespace schwi {
 		:Layer("Scene Layer")
 	{
 		s_Instance.reset(this);
+		m_ViewportSize = { 800.0f,600.0f };
 		m_Scene = CreateRef<Scene>();
 
 	}
@@ -29,7 +30,6 @@ namespace schwi {
 	void SceneLayer::OnAttach()
 	{
 		RenderCommand::Init();
-		m_ViewportSize = { 800.0f,600.0f };
 		m_FrameBuffer = FrameBuffer::Create(m_ViewportSize.x, m_ViewportSize.y);
 	}
 

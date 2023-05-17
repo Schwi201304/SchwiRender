@@ -83,7 +83,74 @@ namespace schwi {
 				auto& translation = entity.GetComponent<TransformComponent>().Translation;
 				ImGui::DragFloat3("Tr", glm::value_ptr(translation), 0.1f);
 				auto& rotation = entity.GetComponent<TransformComponent>().Rotation;
-				ImGui::DragFloat3("Rt", glm::value_ptr(rotation), 0.1f);
+				ImGui::DragFloat3("Rt", glm::value_ptr(rotation), 1.0f);
+
+				ImGui::TreePop();
+			}
+		}
+
+		if (entity.HasComponent<CameraComponent>())
+		{
+			if (ImGui::TreeNodeEx((void*)typeid(CameraComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Camera"))
+			{
+				auto& cameraComponent = entity.GetComponent<CameraComponent>();
+				auto& camera = cameraComponent.camera;
+
+				ImGui::Checkbox("Primary", &cameraComponent.Primary);
+
+				const char* projectionTypeStrings[] = { "Orthographic","Perspective" };
+				const char* currentProjectionTypeString = projectionTypeStrings[(int)camera->GetCameraType()];
+				if (ImGui::BeginCombo("Projection", currentProjectionTypeString))
+				{
+					for (int i = 0; i < 2; i++)
+					{
+						bool isSelected = currentProjectionTypeString == projectionTypeStrings[i];
+						if (ImGui::Selectable(projectionTypeStrings[i], isSelected))
+						{
+							currentProjectionTypeString = projectionTypeStrings[i];
+							camera->SetCameraType((CameraType)i);
+						}
+
+						if (isSelected)
+							ImGui::SetItemDefaultFocus();
+					}
+
+					ImGui::EndCombo();
+				}
+
+				if (camera->GetCameraType() == CameraType::Perspective)
+				{
+					float verticalFov =camera->GetFov();
+					if (ImGui::DragFloat("FOV", &verticalFov))
+						camera->SetFov(verticalFov);
+
+				}
+
+				if (camera->GetCameraType() == CameraType::Orthographic)
+				{
+					float orthoHeight = camera->GetHeight();
+					if (ImGui::DragFloat("Height", &orthoHeight))
+						camera->SetHeight(orthoHeight);
+
+					//float orthoNear = camera->GetNearPlane();
+					//if (ImGui::DragFloat("Near", &orthoNear))
+					//	camera->SetNearPlane(orthoNear);
+					//
+					//float orthoFar = camera->GetFarPlane();
+					//if (ImGui::DragFloat("Far", &orthoFar))
+					//	camera->SetFarPlane(orthoFar);
+
+					//ImGui::Checkbox("Fixed Aspect Ratio", &cameraComponent.FixedAspectRatio);
+				}
+
+				float perspNear = camera->GetNearPlane();
+				if (ImGui::DragFloat("Near", &perspNear))
+					camera->SetNearPlane(perspNear);
+
+				float perspFar = camera->GetFarPlane();
+				if (ImGui::DragFloat("Far", &perspFar))
+					camera->SetFarPlane(perspFar);
+
 
 				ImGui::TreePop();
 			}
