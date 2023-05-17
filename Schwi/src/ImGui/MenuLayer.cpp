@@ -57,6 +57,10 @@ namespace schwi {
 				ImGui::Checkbox("Editor", &m_ShowEditWindow);
 				ImGui::EndMenu();
 			}
+			if (ImGui::BeginMenu("Setting"))
+			{
+				ImGui::EndMenu();
+			}
 
 			ImGui::EndMenuBar();
 		}
@@ -70,10 +74,26 @@ namespace schwi {
 	{
 		if (ImGui::Begin("Status"))
 		{
-			float frame_rate = ImGui::GetIO().Framerate;
-			ImGui::Text("Frame Rate:%f,time per frame:%f", frame_rate, 1.0f / frame_rate);
+			auto& io = ImGui::GetIO();
+			float frame_rate = io.Framerate;
 			ImGui::Text("Vertices:");
 			ImGui::Text("Triangles:");
+			ImGui::Text("Frame Rate:%.1f,time per frame:%.3f ms", frame_rate, 1000.0f / frame_rate);
+			ImGui::Text("Mouse Pos:%d,%d", (int)io.MousePos.x, (int)io.MousePos.y);
+			for (int i = 0; i < IM_ARRAYSIZE(io.MouseDown); i++)
+				if (ImGui::IsMouseDown(i))
+				{
+					ImGui::SameLine();
+					ImGui::Text("b%d (%.02f secs)", i, io.MouseDownDuration[i]);
+				}
+			ImGui::Text("Keys down:");
+			for (ImGuiKey key = ImGuiKey_NamedKey_BEGIN; key < ImGuiKey_NamedKey_END; key = (ImGuiKey)(key + 1))
+			{
+				if (!ImGui::IsKeyDown(key))
+					continue;
+				ImGui::SameLine();
+				ImGui::Text( "\"%s\" " , ImGui::GetKeyName(key));
+			}
 		}
 	}
 

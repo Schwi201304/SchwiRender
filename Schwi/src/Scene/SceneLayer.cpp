@@ -18,6 +18,12 @@ namespace schwi {
 		return entity;
 	}
 
+	void SceneLayer::DestroyEntity(Entity entity)
+	{
+		m_Registry.destroy(entity);
+	}
+
+
 	SceneLayer::SceneLayer()
 		:Layer("Scene Layer")
 	{
@@ -115,5 +121,38 @@ namespace schwi {
 	void SceneLayer::EndScene()
 	{
 		m_FrameBuffer->Unbind();
+	}
+
+	template<typename T>
+	void SceneLayer::OnComponentAdded(Entity entity, T& component)
+	{
+		static_assert(false);
+	}
+
+	template<>
+	void SceneLayer::OnComponentAdded<TransformComponent>(Entity entity, TransformComponent& component)
+	{
+	}
+
+	template<>
+	void SceneLayer::OnComponentAdded<CameraComponent>(Entity entity, CameraComponent& component)
+	{
+		component.camera->SetAspect(m_ViewportSize.x / m_ViewportSize.y);
+	}
+
+	template<>
+	void SceneLayer::OnComponentAdded<TagComponent>(Entity entity, TagComponent& component)
+	{
+	}
+
+	template<>
+	void SceneLayer::OnComponentAdded<LightComponent>(Entity entity, LightComponent& component)
+	{
+		if (component.light)return;
+		auto light = CreateRef<PointLight>();
+		component.light = light;
+		component.lightType = LightType::LightType_PointLight;
+		m_Scene->m_PointLightList.push_back(light);
+		
 	}
 }

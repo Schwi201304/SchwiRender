@@ -12,8 +12,6 @@ namespace schwi {
 
 #define MAX_LIGHT_NUM 8
 
-	class EditorLayer;
-
 	class SCHWI_API Scene
 	{
 	public:
@@ -42,6 +40,7 @@ namespace schwi {
 		static Ref<SceneData> s_SceneData;
 
 		friend class EditorLayer;
+		friend class SceneLayer;
 	};
 
 }

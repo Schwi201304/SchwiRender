@@ -17,6 +17,7 @@ namespace schwi {
 		~SceneLayer() = default;
 
 		Entity CreateEntity(const std::string& name = std::string());
+		void DestroyEntity(Entity entity);
 
 		virtual void OnAttach() override;
 		virtual void OnUpdate(Timestep timestep) override;
@@ -30,6 +31,10 @@ namespace schwi {
 		void EndScene();
 
 		static Ref<SceneLayer> GetInstance() { return s_Instance; };
+
+	private:
+		template<typename T>
+		void OnComponentAdded(Entity entity, T& component);
 
 	private:
 		static Ref<SceneLayer> s_Instance;

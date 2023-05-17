@@ -46,8 +46,10 @@ namespace schwi {
 		m_DefaultShader->Bind();
 		m_DefaultShader->SetFloat4("u_FragColor", glm::vec4(1.0f));
 		m_DefaultShader->SetMat4("u_ViewProjection", s_SceneData->ViewProjectionMatrix);
+		int numLight=0;
 		for (const auto& light : m_PointLightList)
 		{
+			light->Bind(m_Shader, numLight++);
 			glm::mat4 transform = glm::translate(glm::mat4(1.0f), light->Position);
 			transform = glm::scale(transform, glm::vec3(0.05f));
 			sphere->Draw(m_DefaultShader, transform);
