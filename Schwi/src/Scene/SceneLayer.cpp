@@ -52,6 +52,15 @@ namespace schwi {
 				}
 			}
 		}
+		{
+			auto group = m_Registry.view<TransformComponent, LightComponent>();
+			for (auto entity : group)
+			{
+				auto [transform, light] = group.get< TransformComponent, LightComponent>(entity);
+				light.light->Position = transform.Translation;
+			}
+		}
+
 		if (mainCamera)
 		{
 			BeginScene();
@@ -64,7 +73,7 @@ namespace schwi {
 	void SceneLayer::OnImGuiRender()
 	{
 		ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor(0.35f, 0.3f, 0.3f));
-		ImGui::Begin("Scene",nullptr,ImGuiWindowFlags_NoMove);
+		ImGui::Begin("Scene", nullptr, ImGuiWindowFlags_NoMove);
 
 		ImGuizmo::SetDrawlist();
 		ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, m_ViewportSize.x, m_ViewportSize.y);
@@ -84,8 +93,8 @@ namespace schwi {
 			m_Scene->m_CameraController->OnResize(m_ViewportSize.x, m_ViewportSize.y);
 		}
 		//ImGui::Text("point:%p\tresolution:%d * %d,%f %f", textureID, m_ScreenWidth, m_ScreenHeight, panelSize.x, panelSize.y);
-		
-		ImGui::Image((void*)(intptr_t)textureID, 
+
+		ImGui::Image((void*)(intptr_t)textureID,
 			ImVec2(m_ViewportSize.x, m_ViewportSize.y),
 			ImVec2(0, 1), ImVec2(1, 0));
 		ImGui::End();

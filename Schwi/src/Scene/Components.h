@@ -41,11 +41,23 @@ namespace schwi {
 	struct CameraComponent
 	{
 		Ref<Camera> camera=nullptr;
+		
 		bool Primary = true;
 
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
 		CameraComponent(const Ref<Camera> _camera)
 			: camera(_camera) {}
+	};
+
+	struct LightComponent
+	{
+		Ref<Light> light=nullptr;
+		LightType lightType = LightType::LightType_None;
+
+		LightComponent() = default;
+		LightComponent(const LightComponent&) = default;
+		LightComponent(const Ref<Light> _light,LightType _lightType)
+			: light(_light),lightType(_lightType) {}
 	};
 }

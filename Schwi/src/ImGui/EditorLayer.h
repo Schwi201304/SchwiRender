@@ -3,6 +3,7 @@
 #include "Layer/Layer.h"
 #include "Scene/SceneLayer.h"
 #include "Scene/Entity.h"
+#include "Hierarchy.h"
 
 namespace schwi {
 	class EditorLayer : public Layer
@@ -22,6 +23,7 @@ namespace schwi {
 		Ref<SceneLayer> m_SceneLayer;
 		Entity m_Entity;
 		Entity m_CameraEntity;
+		Hierarchy m_Hierarchy;
 
 		bool m_ViewportFocused = false, m_ViewportHovered = false;
 	};

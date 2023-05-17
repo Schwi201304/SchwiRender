@@ -144,6 +144,9 @@
     <ClInclude Include="src\ImGui\EditorLayer.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\ImGui\Hierarchy.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Log.cpp">
@@ -240,6 +243,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\ImGui\EditorLayer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ImGui\Hierarchy.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

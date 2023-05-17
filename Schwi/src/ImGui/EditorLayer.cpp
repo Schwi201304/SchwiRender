@@ -17,8 +17,11 @@ namespace schwi {
 	void EditorLayer::OnAttach()
 	{
 		m_SceneLayer = SceneLayer::GetInstance();
-		m_Entity = m_SceneLayer->CreateEntity();
-		m_Entity.AddComponent<TransformComponent>();
+
+		m_Entity = m_SceneLayer->CreateEntity("Light");
+		auto light=m_SceneLayer->GetScene()->m_PointLightList[0];
+		m_Entity.AddComponent<TransformComponent>(light->Position);
+		m_Entity.AddComponent<LightComponent>(light, light->GetLightType());
 
 		m_CameraEntity = m_SceneLayer->CreateEntity("Camera Entity");
 		auto camera = m_SceneLayer->GetInstance()->GetScene()->m_CameraController->GetCamera();
@@ -26,6 +29,7 @@ namespace schwi {
 		TransformComponent tc{ camera->GetPosition(),camera->GetRotate(),glm::vec3(1.0f) };
 		m_CameraEntity.AddComponent<TransformComponent>(tc);
 
+		m_Hierarchy.SetContext(m_SceneLayer);
 	}
 
 	void EditorLayer::OnDetach()
@@ -39,15 +43,7 @@ namespace schwi {
 
 	void EditorLayer::OnImGuiRender()
 	{
-		if (ImGui::Begin("Camera"))
-		{
-			ImGui::DragFloat3("Tr",
-				glm::value_ptr(m_CameraEntity.GetComponent<TransformComponent>().Translation));
-			ImGui::DragFloat3("Rt",
-				glm::value_ptr(m_CameraEntity.GetComponent<TransformComponent>().Rotation));
-			ImGui::End();
-		}
-
+		m_Hierarchy.OnImGuiRender();
 	}
 
 	void EditorLayer::OnEvent(Event& e)

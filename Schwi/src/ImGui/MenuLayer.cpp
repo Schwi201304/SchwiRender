@@ -62,7 +62,7 @@ namespace schwi {
 		}
 
 		ImGui::End();
-		ShowEditWindow();
+		//ShowEditWindow();
 	}
 
 	void MenuLayer::ShowEditWindow()

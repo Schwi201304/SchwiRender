@@ -23,6 +23,8 @@ namespace schwi {
 
 		Light() = default;
 
+		virtual LightType GetLightType() {return LightType::LightType_Basic;}
+
 		virtual void Bind(const Ref<Shader>& shader, const uint32_t& slot)
 		{
 			shader->Bind();
@@ -38,6 +40,7 @@ namespace schwi {
 
 		DirLight() = default;
 
+		virtual LightType GetLightType() { return LightType::LightType_DirLight; }
 		virtual void Bind(const Ref<Shader>& shader, const uint32_t& slot) override
 		{
 			shader->Bind();
@@ -55,6 +58,7 @@ namespace schwi {
 
 		PointLight() = default;
 
+		virtual LightType GetLightType() { return LightType::LightType_PointLight; }
 		virtual void Bind(const Ref<Shader>& shader, const uint32_t& slot) override
 		{
 			shader->Bind();
@@ -78,6 +82,7 @@ namespace schwi {
 
 		SpotLight() = default;
 
+		virtual LightType GetLightType() { return LightType::LightType_SpotLight; }
 		virtual void Bind(const Ref<Shader>& shader, const uint32_t& slot) override
 		{
 			shader->Bind();

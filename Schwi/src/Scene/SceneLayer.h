@@ -17,7 +17,6 @@ namespace schwi {
 		~SceneLayer() = default;
 
 		Entity CreateEntity(const std::string& name = std::string());
-		entt::registry& Reg() { return m_Registry; }
 
 		virtual void OnAttach() override;
 		virtual void OnUpdate(Timestep timestep) override;
@@ -37,6 +36,7 @@ namespace schwi {
 		Ref<Scene> m_Scene;
 		entt::registry m_Registry;
 		friend class Entity;
+		friend class Hierarchy;
 
 		glm::mat4 identityMatrix = glm::mat4(1.0f);
 		glm::vec2 m_ViewportSize;

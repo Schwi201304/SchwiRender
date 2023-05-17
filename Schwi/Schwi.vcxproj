@@ -95,6 +95,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\ImGui\Hierarchy.h" />
     <ClInclude Include="src\ImGui\EditorLayer.h" />
     <ClInclude Include="src\Scene\Entity.h" />
     <ClInclude Include="src\Scene\Components.h" />
@@ -140,6 +141,7 @@
     <ClInclude Include="src\Renderer\Texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ImGui\Hierarchy.cpp" />
     <ClCompile Include="src\ImGui\EditorLayer.cpp" />
     <ClCompile Include="src\Scene\Entity.cpp" />
     <ClCompile Include="src\ImGui\MenuLayer.cpp" />
