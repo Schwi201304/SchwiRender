@@ -53,7 +53,7 @@ namespace schwi {
 			CastRef<PerspCamera>(m_Camera)->SetAspect(aspect);
 			break;
 		default:
-			SW_ASSERT(false, "Unknow CameraType");
+			SW_CORE_ASSERT(false, "Unknow CameraType");
 		}
 	}
 
@@ -73,7 +73,7 @@ namespace schwi {
 			CastRef<PerspCamera>(m_Camera)->SetFov(m_ZoomLevel);
 			break;
 		default:
-			SW_ASSERT(false, "Unknow CameraType");
+			SW_CORE_ASSERT(false, "Unknow CameraType");
 		}
 		return true;
 	}
@@ -89,7 +89,7 @@ namespace schwi {
 			CastRef<PerspCamera>(m_Camera)->SetAspect(aspect);
 			break;
 		default:
-			SW_ASSERT(false, "Unknow CameraType");
+			SW_CORE_ASSERT(false, "Unknow CameraType");
 		}
 		return true;
 	}

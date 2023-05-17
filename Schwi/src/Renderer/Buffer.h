@@ -25,7 +25,7 @@ namespace schwi {
 		case ShaderDataType::Bool:     return 1;
 		}
 
-		SW_ASSERT(false, "Unknown ShaderDataType!");
+		SW_CORE_ASSERT(false, "Unknown ShaderDataType!");
 		return 0;
 	}
 
@@ -61,7 +61,7 @@ namespace schwi {
 			case ShaderDataType::Bool:    return 1;
 			}
 
-			SW_ASSERT(false, "Unknown ShaderDataType!");
+			SW_CORE_ASSERT(false, "Unknown ShaderDataType!");
 			return 0;
 		}
 	};

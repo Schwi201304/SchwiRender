@@ -18,8 +18,8 @@ namespace schwi {
 
 		void SetActive(bool active);
 
-		Ref<Camera>& GetCamera() { return m_Camera; }
-		const  Ref<Camera>& GetCamera() const { return m_Camera; }
+		Ref<Camera> GetCamera() { return m_Camera; }
+		const  Ref<Camera> GetCamera() const { return m_Camera; }
 	private:
 		bool OnMouseScrolled(MouseScrolledEvent& e);
 		bool OnWindowResized(WindowResizeEvent& e);

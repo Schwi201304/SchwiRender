@@ -95,6 +95,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\ImGui\EditorLayer.h" />
+    <ClInclude Include="src\Scene\Entity.h" />
+    <ClInclude Include="src\Scene\Components.h" />
     <ClInclude Include="src\ImGui\MenuLayer.h" />
     <ClInclude Include="src\Scene\SceneLayer.h" />
     <ClInclude Include="src\Scene\Scene.h" />
@@ -137,6 +140,8 @@
     <ClInclude Include="src\Renderer\Texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ImGui\EditorLayer.cpp" />
+    <ClCompile Include="src\Scene\Entity.cpp" />
     <ClCompile Include="src\ImGui\MenuLayer.cpp" />
     <ClCompile Include="src\Scene\SceneLayer.cpp" />
     <ClCompile Include="src\Scene\Scene.cpp" />
@@ -187,7 +192,6 @@
     <None Include="assets\shaders\light.glsl" />
     <None Include="assets\shaders\phong.glsl" />
     <None Include="assets\shaders\texture.glsl" />
-    <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

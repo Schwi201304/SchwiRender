@@ -1,8 +1,10 @@
 #include "swpch.h"
 #include "MenuLayer.h"
 
-#include "Core/Application.h"
+#include <glm/gtc/type_ptr.hpp>
+#include <imgui.h>
 #include <ImGuizmo.h>
+#include "Core/Application.h"
 
 namespace schwi {
 	Ref<MenuLayer> MenuLayer::s_Instance = nullptr;
@@ -27,7 +29,10 @@ namespace schwi {
 		bool showMainWindows = Application::Get().GetRunStatus();
 		ImGui::Begin("Schwi Engine", &showMainWindows,
 			ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoTitleBar);
-		Application::Get().SetRunStatus(showMainWindows);
+		if (!showMainWindows)
+		{
+			Application::Get().Close();
+		}
 
 		if (ImGui::BeginMenuBar())
 		{
@@ -40,6 +45,10 @@ namespace schwi {
 				if (ImGui::MenuItem("Open"))
 				{
 
+				}
+				if (ImGui::MenuItem("Exit", "Alt + F4"))
+				{
+					Application::Get().Close();
 				}
 				ImGui::EndMenu();
 			}
@@ -79,12 +88,12 @@ namespace schwi {
 			//	}
 			//	ImGui::EndTabBar();
 			//}
-					auto camera = SceneLayer::GetInstance()->GetScene()->m_CameraController->GetCamera();
-					auto view = camera->GetViewMatrix();
-					auto proj = camera->GetProjectionMatrix();
-					auto transform = SceneLayer::GetInstance()->GetScene()->GetModel(0)->GetTransform();
-			
-					EditTransform(&view[0][0], &proj[0][0], &transform[0][0], true);
+			auto camera = SceneLayer::GetInstance()->GetScene()->m_CameraController->GetCamera();
+			auto view = camera->GetViewMatrix();
+			auto proj = camera->GetProjectionMatrix();
+			auto transform = SceneLayer::GetInstance()->GetScene()->GetModel(0)->GetTransform();
+
+			EditTransform(glm::value_ptr(view), glm::value_ptr(proj), glm::value_ptr(transform), true);
 			ImGui::End();
 		}
 	}
@@ -93,6 +102,7 @@ namespace schwi {
 	{
 
 	}
+
 	void MenuLayer::EditTransform(float* cameraView, float* cameraProjection, float* matrix, bool editTransformDecomposition)
 	{
 		static ImGuizmo::MODE mCurrentGizmoMode(ImGuizmo::LOCAL);
@@ -173,13 +183,13 @@ namespace schwi {
 		//ImGuizmo::DrawCubes(cameraView, cameraProjection, &objectMatrix[0][0], gizmoCount);
 		ImGuizmo::Manipulate(cameraView, cameraProjection,
 			mCurrentGizmoOperation, mCurrentGizmoMode,
-			matrix,	NULL, 
-			useSnap ? &snap[0] : NULL, 
-			boundSizing ? bounds : NULL, 
+			matrix, NULL,
+			useSnap ? &snap[0] : NULL,
+			boundSizing ? bounds : NULL,
 			boundSizingSnap ? boundsSnap : NULL);
 		float camDistance = glm::length(scene->m_CameraController->GetCamera()->GetPosition());
-		ImGuizmo::ViewManipulate(cameraView, camDistance, 
-			ImVec2(ImGui::GetWindowPos().x+viewSize.x - 128, ImGui::GetWindowPos().y), 
+		ImGuizmo::ViewManipulate(cameraView, camDistance,
+			ImVec2(ImGui::GetWindowPos().x + viewSize.x - 128, ImGui::GetWindowPos().y),
 			ImVec2(128, 128), 0x10101010);
 
 		ImGui::End();

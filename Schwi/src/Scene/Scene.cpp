@@ -1,10 +1,11 @@
 #include "swpch.h"
 #include "Scene.h"
-
 #include "SceneLayer.h"
 
 namespace schwi {
 	Ref<Scene::SceneData> Scene::s_SceneData = CreateRef<SceneData>();
+
+
 
 	Scene::Scene()
 	{

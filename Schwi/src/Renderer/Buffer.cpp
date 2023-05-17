@@ -10,11 +10,11 @@ namespace schwi {
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::API::None:    SW_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
+		case RendererAPI::API::None:    SW_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
 		case RendererAPI::API::OpenGL:  return CreateRef<OpenGLVertexBuffer>(vertices, size);
 		}
 
-		SW_ASSERT(false, "Unknown RendererAPI!");
+		SW_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;
 	}
 
@@ -22,11 +22,11 @@ namespace schwi {
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::API::None:    SW_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
+		case RendererAPI::API::None:    SW_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
 		case RendererAPI::API::OpenGL:  return CreateRef<OpenGLIndexBuffer>(indices, size);
 		}
 
-		SW_ASSERT(false, "Unknown RendererAPI!");
+		SW_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;
 	}
 
@@ -34,11 +34,11 @@ namespace schwi {
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::API::None:    SW_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
+		case RendererAPI::API::None:    SW_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
 		case RendererAPI::API::OpenGL:  return CreateRef<OpenGLFrameBuffer>(width, height);
 		}
 
-		SW_ASSERT(false, "Unknown RendererAPI!");
+		SW_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;
 	}
 }

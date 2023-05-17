@@ -5,6 +5,7 @@
 #include "Core/Input.h"
 #include "Core/Core.h"
 #include "ImGui/MenuLayer.h"
+#include "ImGui/EditorLayer.h"
 
 #include <glfw/glfw3.h>
 
@@ -13,7 +14,7 @@ namespace schwi {
 
 	Application::Application()
 	{
-		SW_ASSERT(!s_Instance, "Application already exists!");
+		SW_CORE_ASSERT(!s_Instance, "Application already exists!");
 		s_Instance = this;
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(SW_BIND_EVENT_FN(Application::OnEvent));
@@ -23,6 +24,7 @@ namespace schwi {
 		PushOverlay(CreateRef<MenuLayer>());
 		m_SceneLayer = CreateRef<SceneLayer>();
 		PushLayer(m_SceneLayer);
+		PushLayer(CreateRef<EditorLayer>());
 	}
 
 	void Application::PushLayer(Ref<Layer> layer)

@@ -1,11 +1,22 @@
 #include "swpch.h"
 #include "SceneLayer.h"
 #include "Renderer/RenderCommand.h"
+#include "Components.h"
+#include "Entity.h"
 #include <imgui.h>
 #include <ImGuizmo.h>
 
 namespace schwi {
 	Ref<SceneLayer> SceneLayer::s_Instance = nullptr;
+
+	Entity SceneLayer::CreateEntity(const std::string& name)
+	{
+		Entity entity = { m_Registry.create(), s_Instance };
+		entity.AddComponent<TransformComponent>();
+		auto& tag = entity.AddComponent<TagComponent>();
+		tag.Tag = name.empty() ? "Entity" : name;
+		return entity;
+	}
 
 	SceneLayer::SceneLayer()
 		:Layer("Scene Layer")
@@ -24,10 +35,30 @@ namespace schwi {
 
 	void SceneLayer::OnUpdate(Timestep ts)
 	{
-		BeginScene();
-		m_Scene->m_CameraController->OnUpdate(ts);
-		m_Scene->Draw();
-		EndScene();
+		Ref<Camera> mainCamera = nullptr;
+		{
+			auto group = m_Registry.view<TransformComponent, CameraComponent>();
+			for (auto entity : group)
+			{
+				auto [transform, camera] = group.get<TransformComponent, CameraComponent>(entity);
+
+				if (camera.Primary)
+				{
+					mainCamera = camera.camera;
+					mainCamera->SetPosition(transform.Translation);
+					mainCamera->SetPitch(transform.Rotation.x);
+					mainCamera->SetYaw(transform.Rotation.y);
+					break;
+				}
+			}
+		}
+		if (mainCamera)
+		{
+			BeginScene();
+			m_Scene->m_CameraController->OnUpdate(ts);
+			m_Scene->Draw();
+			EndScene();
+		}
 	}
 
 	void SceneLayer::OnImGuiRender()
@@ -45,7 +76,7 @@ namespace schwi {
 
 		ImVec2 panelSize = ImGui::GetContentRegionAvail();
 		uint32_t textureID = m_FrameBuffer->GetColorAttachment();
-		m_Scene->m_CameraController->SetActive(ImGui::IsWindowFocused());
+		//m_Scene->m_CameraController->SetActive(ImGui::IsWindowFocused());
 		if (m_ViewportSize != *reinterpret_cast<glm::vec2*>(&panelSize))
 		{
 			m_ViewportSize = { panelSize.x,panelSize.y };

@@ -27,6 +27,7 @@ namespace schwi {
 		const float& GetYaw() const { return m_Yaw; }
 
 		const glm::vec3& GetPosition() const { return m_Position; }
+		const glm::vec3& GetRotate()const { return { m_Pitch,m_Yaw,0.0f }; }
 		const glm::vec3& GetUpVector() const { return m_Up; }
 		const glm::vec3& GetFrontVector() const { return m_Front; }
 		const glm::vec3& GetRightVector() const { return m_Right; }

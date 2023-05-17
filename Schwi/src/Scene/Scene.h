@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include "Core/Core.h"
 #include "Renderer/Shader.h"
 #include "Renderer/VertexArray.h"
@@ -28,6 +29,7 @@ namespace schwi {
 		static Ref<SceneData>GetSceneData() { return s_SceneData; }
 		Ref<CameraController> m_CameraController;
 	private:
+
 		std::vector<Ref<Shader>> m_ShaderList;
 		std::vector<Ref<Model>> m_ModelList;
 		std::vector<Ref<PointLight>> m_PointLightList;

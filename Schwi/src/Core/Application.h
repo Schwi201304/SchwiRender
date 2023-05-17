@@ -27,7 +27,7 @@ namespace schwi {
 		inline bool GetRunStatus() { return m_Running; }
 		inline static Application& Get() { return *s_Instance; }
 
-		inline void SetRunStatus(bool running) { m_Running = running; }
+		inline void Close() { m_Running = false; }
 
 	public:
 		glm::vec4 m_ClearColor{ 102.f / 255.f, 204.f / 255.f, 1.f, 1.f };

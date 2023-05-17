@@ -13,14 +13,14 @@ namespace schwi {
 	OpenGLContext::OpenGLContext(GLFWwindow* windowHandle)
 		: m_WindowHandle(windowHandle)
 	{
-		SW_ASSERT(windowHandle, "Window handle is null!")
+		SW_CORE_ASSERT(windowHandle, "Window handle is null!")
 	}
 
 	void OpenGLContext::Init()
 	{
 		glfwMakeContextCurrent(m_WindowHandle);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		SW_ASSERT(status, "Failed to initialize Glad!");
+		SW_CORE_ASSERT(status, "Failed to initialize Glad!");
 		SW_CORE_INFO("OpenGL Info:");
 		SW_CORE_INFO("	Vendor: {0}", sw_glGetString(GL_VENDOR));
 		SW_CORE_INFO("	Renderer: {0}", sw_glGetString(GL_RENDERER));

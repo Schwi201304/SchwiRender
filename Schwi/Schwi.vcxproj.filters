@@ -135,6 +135,15 @@
     <ClInclude Include="src\ImGui\MenuLayer.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\Scene\Components.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\Entity.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ImGui\EditorLayer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Log.cpp">
@@ -227,12 +236,17 @@
     <ClCompile Include="src\ImGui\MenuLayer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\Scene\Entity.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ImGui\EditorLayer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\shaders\texture.glsl" />
     <None Include="assets\shaders\default.glsl" />
     <None Include="assets\shaders\phong.glsl" />
     <None Include="assets\shaders\light.glsl" />
-    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

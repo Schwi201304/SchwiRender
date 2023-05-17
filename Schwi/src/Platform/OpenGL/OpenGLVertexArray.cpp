@@ -21,7 +21,7 @@ namespace schwi {
 		case ShaderDataType::Bool:     return GL_BOOL;
 		}
 
-		SW_ASSERT(false, "Unknown ShaderDataType!");
+		SW_CORE_ASSERT(false, "Unknown ShaderDataType!");
 		return 0;
 	}
 
@@ -47,7 +47,7 @@ namespace schwi {
 
 	void OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer)
 	{
-		SW_ASSERT(vertexBuffer->GetLayout().GetElements().size(), "Vertex Buffer has no layout!");
+		SW_CORE_ASSERT(vertexBuffer->GetLayout().GetElements().size(), "Vertex Buffer has no layout!");
 
 		glBindVertexArray(m_RendererID);
 		vertexBuffer->Bind();
