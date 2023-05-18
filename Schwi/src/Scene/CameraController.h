@@ -18,6 +18,7 @@ namespace schwi {
 
 		void SetActive(bool active);
 
+		void SetCamera(const Ref<Camera>& camera) { m_Camera = camera; }
 		Ref<Camera> GetCamera() { return m_Camera; }
 		const  Ref<Camera> GetCamera() const { return m_Camera; }
 	private:
@@ -27,7 +28,7 @@ namespace schwi {
 		bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
 		bool OnMouseButtonReleased(MouseButtonReleasedEvent& e);
 	private:
-		Ref<Camera> m_Camera;
+		Ref<Camera> m_Camera=CreateRef<Camera>();
 		bool m_Active = false;
 		bool leftButtonDown = false;
 		float lastX = 0.0f, lastY = 0.0f;

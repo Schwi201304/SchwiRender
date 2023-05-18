@@ -26,6 +26,7 @@ namespace schwi {
 		Hierarchy m_Hierarchy;
 
 		bool m_ViewportFocused = false, m_ViewportHovered = false;
+		friend class MenuLayer;
 	};
 
 }

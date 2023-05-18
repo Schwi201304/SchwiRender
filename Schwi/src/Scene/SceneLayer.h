@@ -1,6 +1,5 @@
 #pragma once
 
-#include <entt/entt.hpp>
 #include "Layer/Layer.h"
 #include "Renderer/Buffer.h"
 #include "Scene.h"
@@ -27,9 +26,11 @@ namespace schwi {
 		inline float GetAspect() { return m_ViewportSize.x / m_ViewportSize.y; }
 		inline glm::vec2 GetViewportSize() { return m_ViewportSize; }
 		inline Ref<Scene> GetScene() { return m_Scene; }
+		inline entt::registry& GetRegistry() { return m_Scene->m_Registry; }
 		void BeginScene();
 		void EndScene();
 
+		Entity GetPrimaryCameraEntity();
 		static Ref<SceneLayer> GetInstance() { return s_Instance; };
 
 	private:
@@ -39,9 +40,9 @@ namespace schwi {
 	private:
 		static Ref<SceneLayer> s_Instance;
 		Ref<Scene> m_Scene;
-		entt::registry m_Registry;
 		friend class Entity;
 		friend class Hierarchy;
+		friend class SceneSerializer;
 
 		glm::mat4 identityMatrix = glm::mat4(1.0f);
 		glm::vec2 m_ViewportSize;

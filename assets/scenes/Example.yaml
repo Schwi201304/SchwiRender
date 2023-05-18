@@ -1,0 +1,35 @@
+Scene: Untitled
+Entities:
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Translation: [0, 3, 5]
+      Rotation: [0, -90, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 1
+        Near: 0.100000001
+        Far: 100
+        PerspectiveFOV: 45
+        OrthographicSize: 10
+      Primary: true
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: Light
+    TransformComponent:
+      Translation: [2, 2, 2]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    LightComponent:
+      Type: 3
+  - Entity: 12345576878789
+    TagComponent:
+      Tag: Model
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 0.5]
+    ModelComponent:
+      Path: assets/models/nanosuit/nanosuit.obj

@@ -22,13 +22,13 @@ namespace schwi {
 	{
 		ImGui::Begin("Hierarchy");
 
-		m_Context->m_Registry.each([&](auto entityID)
+		m_Context->GetRegistry().each([&](auto entityID)
 			{
 				Entity entity{ entityID , m_Context };
 				DrawEntityNode(entity);
 			});
 
-		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
+		if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && ImGui::IsWindowHovered())
 			m_SelectionContext = {};
 
 		if (ImGui::BeginPopupContextWindow("Hierarchy Menu"))
@@ -38,6 +38,7 @@ namespace schwi {
 
 			ImGui::EndPopup();
 		}
+
 
 		ImGui::End();
 
@@ -78,34 +79,36 @@ namespace schwi {
 
 		ImGuiTreeNodeFlags flags = ((m_SelectionContext == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
 		bool opened = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)entity, flags, tag.c_str());
-		if (ImGui::IsItemClicked())
+		if ((ImGui::IsMouseClicked(0) || ImGui::IsMouseClicked(1)) && ImGui::IsItemHovered())
 		{
 			m_SelectionContext = entity;
-		}
-
-		bool entityDeleted = false;
-		if (ImGui::BeginPopupContextItem())
-		{
-			if (ImGui::MenuItem("Delete Entity"))
-				entityDeleted = true;
-
-			ImGui::EndPopup();
 		}
 
 		if (opened)
 		{
 			ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;
-			bool opened = ImGui::TreeNodeEx((void*)9817239, flags, tag.c_str());
-			if (opened)
-				ImGui::TreePop();
+			//	bool opened = ImGui::TreeNodeEx((void*)9817239, flags, tag.c_str());
+			//	if (opened)
+			//		ImGui::TreePop();
 			ImGui::TreePop();
 		}
-
-		if (entityDeleted)
+		if (m_SelectionContext == entity)
 		{
-			m_Context->DestroyEntity(entity);
-			if (m_SelectionContext == entity)
+			bool entityDeleted = false;
+			if (ImGui::BeginPopupContextItem("Hierarchy Menu"))
+			{
+				if (ImGui::MenuItem("Delete Entity"))
+					entityDeleted = true;
+
+				ImGui::EndPopup();
+			}
+
+			if (entityDeleted)
+			{
+				m_Context->DestroyEntity(entity);
 				m_SelectionContext = {};
+			}
+
 		}
 	}
 

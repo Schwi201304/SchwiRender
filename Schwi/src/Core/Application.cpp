@@ -21,10 +21,10 @@ namespace schwi {
 
 		m_ImGuiLayer = CreateRef<ImGuiLayer>();
 		PushOverlay(m_ImGuiLayer);
-		PushOverlay(CreateRef<MenuLayer>());
 		m_SceneLayer = CreateRef<SceneLayer>();
 		PushLayer(m_SceneLayer);
 		PushLayer(CreateRef<EditorLayer>());
+		PushOverlay(CreateRef<MenuLayer>());
 	}
 
 	void Application::PushLayer(Ref<Layer> layer)

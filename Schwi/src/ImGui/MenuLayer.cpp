@@ -4,7 +4,10 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <imgui.h>
 #include <ImGuizmo.h>
+
 #include "Core/Application.h"
+#include "Scene/SceneSerializer.h"
+#include "Scene/SceneLayer.h"
 
 namespace schwi {
 	Ref<MenuLayer> MenuLayer::s_Instance = nullptr;
@@ -38,15 +41,21 @@ namespace schwi {
 		{
 			if (ImGui::BeginMenu("File"))
 			{
-				if (ImGui::MenuItem("New"))
+				if (ImGui::MenuItem("New","Ctral+N"))
 				{
 
 				}
-				if (ImGui::MenuItem("Open"))
+				if (ImGui::MenuItem("Open","Ctrl+O"))
 				{
-
+					SceneSerializer serializer(SceneLayer::GetInstance());
+					serializer.Deserialize(SolutionDir + "assets/scenes/Example.yaml");
 				}
-				if (ImGui::MenuItem("Exit", "Alt + F4"))
+				if (ImGui::MenuItem("Save","Ctrl+S"))
+				{
+					SceneSerializer serializer(SceneLayer::GetInstance());
+					serializer.Serialize(SolutionDir + "assets/scenes/Example.yaml");
+				}
+				if (ImGui::MenuItem("Exit", "Alt+F4"))
 				{
 					Application::Get().Close();
 				}
@@ -120,12 +129,12 @@ namespace schwi {
 			//	}
 			//	ImGui::EndTabBar();
 			//}
-			auto camera = SceneLayer::GetInstance()->GetScene()->m_CameraController->GetCamera();
-			auto view = camera->GetViewMatrix();
-			auto proj = camera->GetProjectionMatrix();
-			auto transform = SceneLayer::GetInstance()->GetScene()->GetModel(0)->GetTransform();
-
-			EditTransform(glm::value_ptr(view), glm::value_ptr(proj), glm::value_ptr(transform), true);
+			//auto camera = SceneLayer::GetInstance()->GetScene()->m_CameraController->GetCamera();
+			//auto view = camera->GetViewMatrix();
+			//auto proj = camera->GetProjectionMatrix();
+			//auto transform = SceneLayer::GetInstance()->GetScene()->GetModel(0)->GetTransform();
+			//
+			//EditTransform(glm::value_ptr(view), glm::value_ptr(proj), glm::value_ptr(transform), true);
 			ImGui::End();
 		}
 	}

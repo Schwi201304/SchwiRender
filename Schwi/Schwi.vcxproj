@@ -16,6 +16,7 @@
     <ProjectGuid>{172458dc-dbdd-4289-adf8-e5309a561d7a}</ProjectGuid>
     <RootNamespace>Schwi</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Schwi</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -95,6 +96,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Scene\SceneSerializer.h" />
     <ClInclude Include="src\ImGui\Hierarchy.h" />
     <ClInclude Include="src\ImGui\EditorLayer.h" />
     <ClInclude Include="src\Scene\Entity.h" />
@@ -141,6 +143,7 @@
     <ClInclude Include="src\Renderer\Texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Scene\SceneSerializer.cpp" />
     <ClCompile Include="src\ImGui\Hierarchy.cpp" />
     <ClCompile Include="src\ImGui\EditorLayer.cpp" />
     <ClCompile Include="src\Scene\Entity.cpp" />

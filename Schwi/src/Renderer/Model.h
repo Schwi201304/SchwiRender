@@ -22,6 +22,7 @@ namespace schwi {
 		void DrawOutline();
 
 		glm::mat4 GetTransform() { return m_Transform; }
+		void SetTransform(const glm::mat4& ts) { m_Transform = ts; }
 
 		void SetDrawOutline(bool draw) { m_DrawOutline = draw; }
 		void SetTranslate(const glm::vec3& translate)

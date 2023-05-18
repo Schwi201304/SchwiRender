@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <Renderer/Camera.h>
+#include <Renderer/Mesh.h>
 
 namespace schwi {
 	struct TagComponent
@@ -56,8 +57,40 @@ namespace schwi {
 
 		LightComponent() = default;
 		LightComponent(const LightComponent&) = default;
-		LightComponent(const Ref<Light> _light,LightType _lightType=LightType::LightType_Basic)
+		LightComponent(const Ref<Light>& _light,LightType _lightType=LightType::LightType_Basic)
 			: light(_light),lightType(_lightType) {}
 				
 	};
+
+	struct ModelComponent
+	{
+		Ref<Model> model = nullptr;
+		std::string path;
+
+		ModelComponent() = default;
+		ModelComponent(const ModelComponent&) = default;
+		ModelComponent(const std::string& _path) :path(_path)
+		{
+			model = CreateRef<Model>(path);
+		}
+	};
+
+	struct MeshComponent
+	{
+		Ref<Mesh> mesh = nullptr;
+		MeshComponent() = default;
+		MeshComponent(const MeshComponent&) = default;
+		MeshComponent(const Ref<Mesh>& mesh)
+			: mesh(mesh) {}
+		MeshComponent(const MeshType& type, const uint32_t& sample = 1)
+			:mesh(CreateRef<Mesh>(type, sample)) {}
+
+		void Reset() { mesh.reset(); }
+		void Reload(const MeshType& type, const uint32_t& sample = 1)
+		{
+			mesh.reset();
+			mesh = CreateRef<Mesh>(type, sample);
+		}
+	};
+
 }

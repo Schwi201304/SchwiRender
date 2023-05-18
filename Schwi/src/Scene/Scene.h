@@ -1,5 +1,6 @@
 #pragma once
 
+#include <entt/entt.hpp>
 
 #include "Core/Core.h"
 #include "Renderer/Shader.h"
@@ -18,26 +19,23 @@ namespace schwi {
 		Scene();
 		~Scene() = default;
 
-		void Draw();
-
-		Ref<Model> GetModel(uint32_t i) { return m_ModelList[i]; }
+		void Draw(const Ref<Camera>&);
 
 		struct SceneData
 		{
 			glm::mat4 ViewProjectionMatrix;
 		};
 		static Ref<SceneData>GetSceneData() { return s_SceneData; }
-		Ref<CameraController> m_CameraController;
+		Ref<CameraController> m_CameraController=CreateRef<CameraController>();
 	private:
+		void DrawLight();
 
-		std::vector<Ref<Shader>> m_ShaderList;
-		std::vector<Ref<Model>> m_ModelList;
-		std::vector<Ref<PointLight>> m_PointLightList;
-		Ref<Shader> m_Shader, m_DefaultShader;
-		Ref<Mesh> sphere,plane;
-
+		Ref<Shader> m_Shader = Shader::Create(SolutionDir + "assets/shaders/phong.glsl");
+		Ref<Shader> m_DefaultShader = Shader::Create(SolutionDir + "assets/shaders/default.glsl");
+		
 		bool m_EnableLineMode = false;
 		static Ref<SceneData> s_SceneData;
+		entt::registry m_Registry;
 
 		friend class EditorLayer;
 		friend class SceneLayer;

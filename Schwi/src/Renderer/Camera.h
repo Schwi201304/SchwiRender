@@ -76,8 +76,8 @@ namespace schwi {
 		void UpdateViewProjectionMatrix() { m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix; }
 
 	private:
-		CameraType m_CameraType;
-		float m_FarPlane, m_NearPlane, m_Aspect=1.0f;
+		CameraType m_CameraType=CameraType::Perspective;
+		float m_FarPlane=0.1f, m_NearPlane=100.f, m_Aspect=1.0f;
 		float m_Pitch = 0.0f, m_Yaw = -90.0f;
 		glm::vec3 m_Position = { 0.0f, 3.0f, 5.0f };
 		glm::mat4 m_ViewMatrix = glm::mat4(1.0f);

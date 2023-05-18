@@ -3,6 +3,7 @@
 #include "Renderer/RenderCommand.h"
 #include "Components.h"
 #include "Entity.h"
+#include <glm/gtc/type_ptr.hpp>
 #include <imgui.h>
 #include <ImGuizmo.h>
 
@@ -11,7 +12,7 @@ namespace schwi {
 
 	Entity SceneLayer::CreateEntity(const std::string& name)
 	{
-		Entity entity = { m_Registry.create(), s_Instance };
+		Entity entity = { m_Scene->m_Registry.create(), s_Instance };
 		entity.AddComponent<TransformComponent>();
 		auto& tag = entity.AddComponent<TagComponent>();
 		tag.Tag = name.empty() ? "Entity" : name;
@@ -20,7 +21,7 @@ namespace schwi {
 
 	void SceneLayer::DestroyEntity(Entity entity)
 	{
-		m_Registry.destroy(entity);
+		m_Scene->m_Registry.destroy(entity);
 	}
 
 
@@ -43,7 +44,7 @@ namespace schwi {
 	{
 		Ref<Camera> mainCamera = nullptr;
 		{
-			auto group = m_Registry.view<TransformComponent, CameraComponent>();
+			auto group = m_Scene->m_Registry.view<TransformComponent, CameraComponent>();
 			for (auto entity : group)
 			{
 				auto [transform, camera] = group.get<TransformComponent, CameraComponent>(entity);
@@ -59,7 +60,7 @@ namespace schwi {
 			}
 		}
 		{
-			auto group = m_Registry.view<TransformComponent, LightComponent>();
+			auto group = m_Scene->m_Registry.view<TransformComponent, LightComponent>();
 			for (auto entity : group)
 			{
 				auto [transform, light] = group.get< TransformComponent, LightComponent>(entity);
@@ -70,8 +71,10 @@ namespace schwi {
 		if (mainCamera)
 		{
 			BeginScene();
+			if (mainCamera != m_Scene->m_CameraController->GetCamera())
+				m_Scene->m_CameraController->SetCamera(mainCamera);
 			m_Scene->m_CameraController->OnUpdate(ts);
-			m_Scene->Draw();
+			m_Scene->Draw(mainCamera);
 			EndScene();
 		}
 	}
@@ -86,7 +89,7 @@ namespace schwi {
 		auto camera = SceneLayer::GetInstance()->GetScene()->m_CameraController->GetCamera();
 		auto view = camera->GetViewMatrix();
 		auto proj = camera->GetProjectionMatrix();
-		ImGuizmo::DrawGrid(&view[0][0], &proj[0][0], &identityMatrix[0][0], 100.f);
+		ImGuizmo::DrawGrid(glm::value_ptr(view), glm::value_ptr(proj), glm::value_ptr(identityMatrix), 100.f);
 		ImGui::PopStyleColor(1);
 
 		ImVec2 panelSize = ImGui::GetContentRegionAvail();
@@ -123,10 +126,22 @@ namespace schwi {
 		m_FrameBuffer->Unbind();
 	}
 
+	Entity SceneLayer::GetPrimaryCameraEntity()
+	{
+		auto view = m_Scene->m_Registry.view<CameraComponent>();
+		for (auto entity : view)
+		{
+			const auto& camera = view.get<CameraComponent>(entity);
+			if (camera.Primary)
+				return Entity{ entity, s_Instance };
+		}
+		return {};
+	}
+
 	template<typename T>
 	void SceneLayer::OnComponentAdded(Entity entity, T& component)
 	{
-		static_assert(false);
+		//static_assert(false);
 	}
 
 	template<>
@@ -137,6 +152,8 @@ namespace schwi {
 	template<>
 	void SceneLayer::OnComponentAdded<CameraComponent>(Entity entity, CameraComponent& component)
 	{
+		if (component.camera)return;
+		component.camera = CreateRef<Camera>();
 		component.camera->SetAspect(m_ViewportSize.x / m_ViewportSize.y);
 	}
 
@@ -149,10 +166,13 @@ namespace schwi {
 	void SceneLayer::OnComponentAdded<LightComponent>(Entity entity, LightComponent& component)
 	{
 		if (component.light)return;
-		auto light = CreateRef<PointLight>();
-		component.light = light;
+		component.light = CreateRef<PointLight>();
 		component.lightType = LightType::LightType_PointLight;
-		m_Scene->m_PointLightList.push_back(light);
 		
+	}
+
+	template<>
+	void SceneLayer::OnComponentAdded<ModelComponent>(Entity entity, ModelComponent& component)
+	{
 	}
 }

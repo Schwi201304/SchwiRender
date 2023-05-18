@@ -16,8 +16,8 @@ namespace schwi {
 		T& AddComponent(Args&&... args)
 		{
 			SW_CORE_ASSERT(!HasComponent<T>(), "Entity already has component!");
-			T& component = m_Scene->m_Registry.emplace<T>(m_EntityHandle, std::forward<Args>(args)...);
-			m_Scene->OnComponentAdded<T>(*this, component);
+			T& component = m_SceneLayer->GetRegistry().emplace<T>(m_EntityHandle, std::forward<Args>(args)...);
+			m_SceneLayer->OnComponentAdded<T>(*this, component);
 			return component;
 		}
 
@@ -25,20 +25,20 @@ namespace schwi {
 		T& GetComponent()
 		{
 			SW_CORE_ASSERT(HasComponent<T>(), "Entity does not have component!");
-			return m_Scene->m_Registry.get<T>(m_EntityHandle);
+			return m_SceneLayer->GetRegistry().get<T>(m_EntityHandle);
 		}
 
 		template<typename T>
 		bool HasComponent()
 		{
-			return m_Scene->m_Registry.all_of<T>(m_EntityHandle);
+			return m_SceneLayer->GetRegistry().all_of<T>(m_EntityHandle);
 		}
 
 		template<typename T>
 		void RemoveComponent()
 		{
 			SW_CORE_ASSERT(HasComponent<T>(), "Entity does not have component!");
-			m_Scene->m_Registry.remove<T>(m_EntityHandle);
+			m_SceneLayer->GetRegistry().remove<T>(m_EntityHandle);
 		}
 
 		operator bool() const { return m_EntityHandle != entt::null; }
@@ -47,7 +47,7 @@ namespace schwi {
 
 		bool operator==(const Entity& other) const
 		{
-			return m_EntityHandle == other.m_EntityHandle && m_Scene == other.m_Scene;
+			return m_EntityHandle == other.m_EntityHandle && m_SceneLayer == other.m_SceneLayer;
 		}
 
 		bool operator!=(const Entity& other) const
@@ -56,7 +56,7 @@ namespace schwi {
 		}
 	private:
 		entt::entity m_EntityHandle{ entt::null };
-		Ref<SceneLayer> m_Scene = nullptr;
+		Ref<SceneLayer> m_SceneLayer = nullptr;
 	};
 
 }
