@@ -1,15 +1,16 @@
 #pragma once
 
-#include "Renderer/Camera.h"
 #include "Core/Timestep.h"
 #include "Events/ApplicationEvent.h"
 #include "Events/MouseEvent.h"
 
 namespace schwi {
+	class Camera;
+
 	class SCHWI_API CameraController
 	{
 	public:
-		CameraController() = default;
+		CameraController();
 		CameraController(Ref<Camera> camera) :m_Camera(camera) {}
 
 		void OnUpdate(Timestep ts);
@@ -28,7 +29,7 @@ namespace schwi {
 		bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
 		bool OnMouseButtonReleased(MouseButtonReleasedEvent& e);
 	private:
-		Ref<Camera> m_Camera=CreateRef<Camera>();
+		Ref<Camera> m_Camera;
 		bool m_Active = false;
 		bool leftButtonDown = false;
 		float lastX = 0.0f, lastY = 0.0f;

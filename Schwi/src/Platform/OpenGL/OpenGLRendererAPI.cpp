@@ -1,7 +1,8 @@
 #include "swpch.h"
 #include "OpenGLRendererAPI.h"
 
-#include <glad/glad.h>
+#include "Renderer/Buffer.h"
+#include "Renderer/VertexArray.h"
 
 namespace schwi {
 	void OpenGLRendererAPI::Init()

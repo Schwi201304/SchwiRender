@@ -1,11 +1,7 @@
 #include "swpch.h"
 #include "Hierarchy.h"
 
-#include "imgui.h"
 #include "Scene/Components.h"
-
-#include <glm/gtc/type_ptr.hpp>
-#include <imgui_internal.h>
 
 namespace schwi {
 	Hierarchy::Hierarchy(const Ref<SceneLayer>& context)

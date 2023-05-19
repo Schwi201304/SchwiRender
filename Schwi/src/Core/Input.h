@@ -1,5 +1,5 @@
 #pragma once
-#include <swpch.h>
+#include "Core.h"
 
 namespace schwi {
 	class SCHWI_API Input

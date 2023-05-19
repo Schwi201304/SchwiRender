@@ -1,8 +1,8 @@
 #pragma once
-#include "Renderer/Shader.h"
-#include "Core/Core.h"
-#include <string>
+
 #include <unordered_map>
+
+#include "Renderer/Shader.h"
 
 namespace schwi {
 	class SCHWI_API OpenGLShader : public Shader

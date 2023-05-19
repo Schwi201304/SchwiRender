@@ -1,10 +1,6 @@
 #pragma once
 #include "Layer/Layer.h"
-#include "Events/ApplicationEvent.h"
-#include "Events/KeyEvent.h"
-#include "Events/MouseEvent.h"
 
-#include <imgui.h>
 namespace schwi {
 
 	class SCHWI_API ImGuiLayer : public Layer

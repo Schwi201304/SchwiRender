@@ -1,7 +1,10 @@
 #include "swpch.h"
 #include "Renderer.h"
-#include "Platform/OpenGL/OpenGLShader.h"
 
+#include "Platform/OpenGL/OpenGLShader.h"
+#include "Camera.h"
+#include "Shader.h"
+#include "VertexArray.h"
 
 namespace schwi {
 	Renderer::SceneData* Renderer::s_SceneData = new Renderer::SceneData;

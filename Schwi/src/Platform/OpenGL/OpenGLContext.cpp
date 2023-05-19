@@ -1,11 +1,6 @@
 #include "swpch.h"
 #include "OpenGLContext.h"
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <GL/GL.h>
-
-
 namespace schwi {
 
 #define sw_glGetString(c) reinterpret_cast<const char*>(glGetString(c))

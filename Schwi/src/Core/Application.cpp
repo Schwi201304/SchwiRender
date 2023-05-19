@@ -1,13 +1,13 @@
 #include "swpch.h"
 #include "Application.h"
 
-#include "Renderer/Renderer.h"
 #include "Core/Input.h"
 #include "Core/Core.h"
+#include "Renderer/RenderCommand.h"
+#include "ImGui/ImGuiLayer.h"
 #include "ImGui/MenuLayer.h"
 #include "ImGui/EditorLayer.h"
-
-#include <glfw/glfw3.h>
+#include "Scene/SceneLayer.h"
 
 namespace schwi {
 	Application* Application::s_Instance = nullptr;

@@ -1,8 +1,9 @@
 #pragma once
 
-#include <glm/glm.hpp>
-#include <Renderer/Camera.h>
-#include <Renderer/Mesh.h>
+#include "Renderer/Camera.h"
+#include "Renderer/Model.h"
+#include "Renderer/Mesh.h"
+#include "Renderer/Light.h"
 
 namespace schwi {
 	struct TagComponent

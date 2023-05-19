@@ -4,7 +4,7 @@ namespace schwi {
 
 	using MouseCode = int;
 	namespace Mouse {
-		enum : MouseCode
+		enum SCHWI_API : MouseCode
 		{
 			// From glfw3.h
 			Button0 = 0,
@@ -25,7 +25,7 @@ namespace schwi {
 
 	using KeyCode = int;
 	namespace Key {
-		enum :int
+		enum SCHWI_API :int
 		{
 			// From glfw3.h
 			Space = 32,

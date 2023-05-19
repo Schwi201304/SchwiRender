@@ -1,8 +1,8 @@
 #pragma once
 
-#include "SceneLayer.h"
-
 namespace schwi {
+	class SceneLayer;
+
 	class SceneSerializer
 	{
 	public:

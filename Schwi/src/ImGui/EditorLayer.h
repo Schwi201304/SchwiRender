@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Layer/Layer.h"
-#include "Scene/SceneLayer.h"
-#include "Scene/Entity.h"
 #include "Hierarchy.h"
 
 namespace schwi {
+	class SceneLayer;
+
 	class EditorLayer : public Layer
 	{
 	public:
@@ -21,8 +21,6 @@ namespace schwi {
 	private:
 		static Ref<EditorLayer> s_Instance;
 		Ref<SceneLayer> m_SceneLayer;
-		Entity m_Entity;
-		Entity m_CameraEntity;
 		Hierarchy m_Hierarchy;
 
 		bool m_ViewportFocused = false, m_ViewportHovered = false;

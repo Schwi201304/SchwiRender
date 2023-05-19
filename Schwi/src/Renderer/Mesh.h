@@ -2,14 +2,13 @@
 
 #include "Core/Core.h"
 #include "Texture.h"
-#include "Shader.h"
-#include "Material.h"
-#include "Renderer.h"
-#include "Buffer.h"
-
-#define MAX_BONE_INFLUENCE 4
 
 namespace schwi {
+	class VertexArray;
+	struct PhongMaterial;
+	class Shader;
+	class Texture2D;
+
 	struct SCHWI_API Vertex {
 		glm::vec3 Position;
 		glm::vec2 TexCoords;

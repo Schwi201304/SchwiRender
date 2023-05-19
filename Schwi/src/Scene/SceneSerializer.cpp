@@ -1,10 +1,11 @@
 #include "swpch.h"
 #include "SceneSerializer.h"
 
+#include <yaml-cpp/yaml.h>
+
 #include "Entity.h"
 #include "Components.h"
-
-#include <yaml-cpp/yaml.h>
+#include "SceneLayer.h"
 
 namespace YAML {
 
@@ -148,6 +149,7 @@ namespace schwi {
 
 			auto& lc = entity.GetComponent<LightComponent>();
 			out << YAML::Key << "Type" << YAML::Value << (int)lc.lightType;
+			out << YAML::EndMap;
 		}
 		out << YAML::EndMap;
 	}

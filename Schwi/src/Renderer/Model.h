@@ -1,15 +1,18 @@
 #pragma once
-
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-#include <vector>
-
 #include "Core/Core.h"
-#include "Mesh.h"
 
+struct aiScene;
+struct aiNode;
+struct aiMesh;
+struct aiMaterial;
+enum aiTextureType;
 
 namespace schwi {
+	class Mesh;
+	class Texture2D;	
+	enum class TextureType;
+	class Shader;
+
 	class SCHWI_API Model
 	{
 	public:
@@ -49,7 +52,7 @@ namespace schwi {
 		glm::mat4 m_Transform = glm::mat4(1.0f);
 		bool m_GammaCorrection;
 		bool m_DrawOutline = false;
-		Ref<Shader> m_OutlineShader = Shader::Create(SolutionDir + "assets/shaders/default.glsl");
+		Ref<Shader> m_OutlineShader;
 
 		void ComputeTransform() { m_Transform = glm::mat4_cast(glm::qua<float>(glm::radians(m_Rotate))) * glm::scale(glm::translate(glm::mat4(1.0f), m_Translate), m_Scale); }
 		void loadModel(const std::string& path);

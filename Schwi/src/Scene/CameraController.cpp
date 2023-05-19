@@ -4,10 +4,13 @@
 #include "Core/Input.h"
 #include "Core/Code.h"
 #include "Core/Core.h"
-
-#include <imgui.h>
+#include "Renderer/Camera.h"
 
 namespace schwi {
+	CameraController::CameraController()
+	{
+		m_Camera = CreateRef<Camera>();
+	}
 
 	void CameraController::OnUpdate(Timestep ts)
 	{

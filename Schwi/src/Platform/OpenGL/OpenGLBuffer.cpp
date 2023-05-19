@@ -1,6 +1,5 @@
 #include "swpch.h"
 #include "OpenGLBuffer.h"
-#include <glad/glad.h>
 
 namespace schwi {
 

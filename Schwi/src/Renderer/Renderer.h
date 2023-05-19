@@ -1,10 +1,10 @@
 #pragma once
 
 #include "RenderCommand.h"
-#include "Camera.h"
-#include "Shader.h"
 
 namespace schwi {
+	class Camera;
+	class Shader;
 
 	class SCHWI_API Renderer
 	{

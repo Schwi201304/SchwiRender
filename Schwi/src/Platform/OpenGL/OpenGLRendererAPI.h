@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Renderer/RendererAPI.h"
+
 namespace schwi {
 	class SCHWI_API OpenGLRendererAPI : public RendererAPI
 	{

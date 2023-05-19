@@ -1,8 +1,9 @@
 #pragma once
 
-#include "Buffer.h"
-
 namespace schwi {
+	class VertexBuffer;
+	class IndexBuffer;
+
 	class SCHWI_API VertexArray
 	{
 	public:

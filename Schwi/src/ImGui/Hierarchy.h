@@ -1,9 +1,10 @@
 #pragma once
 
-#include "Scene/SceneLayer.h"
 #include "Scene/Entity.h"
 
 namespace schwi {
+	class SceneLayer;
+
 	class Hierarchy
 	{
 	public:

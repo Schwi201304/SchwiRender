@@ -2,16 +2,12 @@
 
 #include <entt/entt.hpp>
 
-#include "Core/Core.h"
-#include "Renderer/Shader.h"
-#include "Renderer/VertexArray.h"
-#include "Renderer/Model.h"
-#include "Renderer/Light.h"
-#include "CameraController.h"
-
 namespace schwi {
 
 #define MAX_LIGHT_NUM 8
+	class Shader;
+	class Camera;
+	class CameraController;
 
 	class SCHWI_API Scene
 	{
@@ -30,9 +26,8 @@ namespace schwi {
 	private:
 		void DrawLight();
 
-		Ref<Shader> m_Shader = Shader::Create(SolutionDir + "assets/shaders/phong.glsl");
-		Ref<Shader> m_DefaultShader = Shader::Create(SolutionDir + "assets/shaders/default.glsl");
-		
+		Ref<Shader> m_Shader;
+		Ref<Shader> m_DefaultShader;
 		bool m_EnableLineMode = false;
 		static Ref<SceneData> s_SceneData;
 		entt::registry m_Registry;

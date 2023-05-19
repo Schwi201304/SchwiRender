@@ -1,13 +1,13 @@
 #include "swpch.h"
 #include "MenuLayer.h"
 
-#include <glm/gtc/type_ptr.hpp>
-#include <imgui.h>
 #include <ImGuizmo.h>
 
 #include "Core/Application.h"
-#include "Scene/SceneSerializer.h"
 #include "Scene/SceneLayer.h"
+#include "Scene/SceneSerializer.h"
+#include "Renderer/Camera.h"
+#include "Scene/CameraController.h"
 
 namespace schwi {
 	Ref<MenuLayer> MenuLayer::s_Instance = nullptr;

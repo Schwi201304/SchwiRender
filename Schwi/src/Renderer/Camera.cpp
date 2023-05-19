@@ -1,8 +1,6 @@
 #include "swpch.h"
 #include "Camera.h"
 
-#include <glm/gtc/quaternion.hpp>
-
 namespace schwi {
 
 	void Camera::SetPosition(const glm::vec3& position)

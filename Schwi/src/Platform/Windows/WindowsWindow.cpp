@@ -1,11 +1,10 @@
 #include "swpch.h"
-#include <glad/glad.h>
 #include "WindowsWindow.h"
+
 #include "Events/ApplicationEvent.h"
 #include "Events/MouseEvent.h"
 #include "Events/KeyEvent.h"
 #include "Platform/OpenGL/OpenGLContext.h"
-
 
 namespace schwi {
 

@@ -254,6 +254,12 @@
     <ClCompile Include="src\Scene\SceneSerializer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer\Material.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\Light.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\shaders\texture.glsl" />

@@ -1,11 +1,10 @@
 #pragma once
 
-#include <string>
 #include "Core/Core.h"
-#include "Camera.h"
-#include "Shader.h"
 
 namespace schwi {
+	class Shader;
+
 	enum class LightType
 	{
 		LightType_None = 0,
@@ -24,14 +23,7 @@ namespace schwi {
 		Light() = default;
 
 		virtual LightType GetLightType() {return LightType::LightType_Basic;}
-
-		virtual void Bind(const Ref<Shader>& shader, const uint32_t& slot)
-		{
-			shader->Bind();
-			shader->SetFloat3("u_Light[" + std::to_string(slot) + "].color", Color);
-			shader->SetFloat3("u_Light[" + std::to_string(slot) + "].position", Position);
-			shader->SetFloat("u_Light[" + std::to_string(slot) + "].intensity", Intensity);
-		}
+		virtual void Bind(const Ref<Shader>& shader, const uint32_t& slot);
 	};
 
 	struct DirLight : public Light
@@ -41,13 +33,7 @@ namespace schwi {
 		DirLight() = default;
 
 		virtual LightType GetLightType() { return LightType::LightType_DirLight; }
-		virtual void Bind(const Ref<Shader>& shader, const uint32_t& slot) override
-		{
-			shader->Bind();
-			shader->SetFloat3("u_DirLight[" + std::to_string(slot) + "].color", Color);
-			shader->SetFloat3("u_DirLight[" + std::to_string(slot) + "].direction", Direction);
-			shader->SetFloat("u_DirLight[" + std::to_string(slot) + "].intensity", Intensity);
-		}
+		virtual void Bind(const Ref<Shader>& shader, const uint32_t& slot) override;
 	};
 
 	struct PointLight : public Light
@@ -59,16 +45,7 @@ namespace schwi {
 		PointLight() = default;
 
 		virtual LightType GetLightType() { return LightType::LightType_PointLight; }
-		virtual void Bind(const Ref<Shader>& shader, const uint32_t& slot) override
-		{
-			shader->Bind();
-			shader->SetFloat3("u_PointLight[" + std::to_string(slot) + "].color", Color);
-			shader->SetFloat3("u_PointLight[" + std::to_string(slot) + "].position", Position);
-			shader->SetFloat("u_PointLight[" + std::to_string(slot) + "].constant", Constant);
-			shader->SetFloat("u_PointLight[" + std::to_string(slot) + "].linear", Linear);
-			shader->SetFloat("u_PointLight[" + std::to_string(slot) + "].quadratic", Quadratic);
-			shader->SetFloat("u_PointLight[" + std::to_string(slot) + "].intensity", Intensity);
-		}
+		virtual void Bind(const Ref<Shader>& shader, const uint32_t& slot) override;
 	};
 
 	struct SpotLight : public Light
@@ -83,19 +60,7 @@ namespace schwi {
 		SpotLight() = default;
 
 		virtual LightType GetLightType() { return LightType::LightType_SpotLight; }
-		virtual void Bind(const Ref<Shader>& shader, const uint32_t& slot) override
-		{
-			shader->Bind();
-			shader->SetFloat3("u_SpotLight[" + std::to_string(slot) + "].color", Color);
-			shader->SetFloat3("u_SpotLight[" + std::to_string(slot) + "].position", Position);
-			shader->SetFloat3("u_SpotLight[" + std::to_string(slot) + "].direction", Direction);
-			shader->SetFloat("u_SpotLight[" + std::to_string(slot) + "].cutoff", CutOff);
-			shader->SetFloat("u_SpotLight[" + std::to_string(slot) + "].outerCutOff", OuterCutOff);
-			shader->SetFloat("u_SpotLight[" + std::to_string(slot) + "].constant", Constant);
-			shader->SetFloat("u_SpotLight[" + std::to_string(slot) + "].linear", Linear);
-			shader->SetFloat("u_SpotLight[" + std::to_string(slot) + "].quadratic", Quadratic);
-			shader->SetFloat("u_SpotLight[" + std::to_string(slot) + "].intensity", Intensity);
-		}
+		virtual void Bind(const Ref<Shader>& shader, const uint32_t& slot) override;
 	};
 
 }

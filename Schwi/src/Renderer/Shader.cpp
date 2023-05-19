@@ -1,13 +1,13 @@
 #include "swpch.h"
 #include "Shader.h"
 
-#include "Renderer.h"
+#include "RendererAPI.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 
 namespace schwi {
 	Ref<Shader> Shader::Create(const std::string& filepath)
 	{
-		switch (Renderer::GetAPI())
+		switch (RendererAPI::GetAPI())
 		{
 		case RendererAPI::API::None:    SW_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
 		case RendererAPI::API::OpenGL:  return CreateRef<OpenGLShader>(filepath);
@@ -19,7 +19,7 @@ namespace schwi {
 
 	Ref<Shader> Shader::Create(const std::string& vertexSrc, const std::string& fragmentSrc)
 	{
-		switch (Renderer::GetAPI())
+		switch (RendererAPI::GetAPI())
 		{
 		case RendererAPI::API::None:  
 			SW_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); 

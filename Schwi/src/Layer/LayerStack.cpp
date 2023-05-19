@@ -1,6 +1,7 @@
 #include "swpch.h"
 #include "LayerStack.h"
 
+#include "Layer.h"
 namespace schwi {
 
 	LayerStack::LayerStack()

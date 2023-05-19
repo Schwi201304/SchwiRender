@@ -1,6 +1,13 @@
 #include "swpch.h"
 #include "Mesh.h"
 
+#include "Texture.h"
+#include "Shader.h"
+#include "Material.h"
+#include "Buffer.h"
+#include "VertexArray.h"
+#include "RenderCommand.h"
+
 namespace schwi {
 	Mesh::Mesh(std::vector<Vertex> vertices,
 		std::vector<uint32_t> indices,

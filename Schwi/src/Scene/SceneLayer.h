@@ -1,13 +1,12 @@
 #pragma once
 
 #include "Layer/Layer.h"
-#include "Renderer/Buffer.h"
 #include "Scene.h"
 
 
 namespace schwi {
-
 	class Entity;
+	class FrameBuffer;
 
 	class SCHWI_API SceneLayer : public Layer
 	{

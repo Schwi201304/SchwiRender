@@ -1,10 +1,12 @@
 #pragma once
 
 #include "Core/Window.h"
-#include <GLFW/glfw3.h>
-#include "renderer/Context.h"
+
+struct GLFWwindow;
 
 namespace schwi {
+	class Context;
+
 	class SCHWI_API WindowsWindow :public Window
 	{
 	public:

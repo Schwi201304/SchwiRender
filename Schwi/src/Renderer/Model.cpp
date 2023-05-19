@@ -1,6 +1,15 @@
 #include "swpch.h"
 #include "Model.h"
+
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
 #include "Scene/Scene.h"
+#include "RenderCommand.h"
+#include "Shader.h"
+#include "Mesh.h"
+#include "VertexArray.h"
 
 namespace schwi {
 	Model::Model(std::string const& path,
@@ -8,6 +17,7 @@ namespace schwi {
 		: m_GammaCorrection(gamma)
 	{
 		loadModel(path);
+		m_OutlineShader = Shader::Create(SolutionDir + "assets/shaders/default.glsl");
 	}
 
 	void Model::Draw(Ref<Shader>& shader)

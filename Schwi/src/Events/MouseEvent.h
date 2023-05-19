@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Event.h"
+#include "Core/Code.h"
 
 namespace schwi {
 	class SCHWI_API MouseMovedEvent : public Event

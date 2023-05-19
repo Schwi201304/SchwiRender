@@ -1,9 +1,8 @@
 #pragma once
 
-#include <glm/glm.hpp>
-#include "VertexArray.h"
-
 namespace schwi {
+	class VertexArray;
+
 	class SCHWI_API RendererAPI
 	{
 	public:

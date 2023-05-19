@@ -1,7 +1,5 @@
 #pragma once
 
-#include "swpch.h"
-
 #include "Events/Event.h"
 
 namespace schwi {

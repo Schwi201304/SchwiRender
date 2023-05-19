@@ -2,15 +2,16 @@
 
 #include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
-#include "ImGui/ImGuiLayer.h"
-#include "Core/Timestep.h"
+#include "Events/KeyEvent.h"
 #include "Core/Window.h"
 #include "Layer/LayerStack.h"
-#include "Renderer/Buffer.h"
-#include "Renderer/Shader.h"
-#include "Scene/SceneLayer.h"
 
 namespace schwi {
+	class Shader;
+	class ImGuiLayer;
+	class SceneLayer;
+	class FrameBuffer;
+
 	class SCHWI_API Application
 	{
 	public:

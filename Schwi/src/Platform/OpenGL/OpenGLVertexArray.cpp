@@ -1,7 +1,7 @@
 #include "swpch.h"
 #include "OpenGLVertexArray.h"
 
-#include <glad/glad.h>
+#include "Renderer/Buffer.h"
 
 namespace schwi {
 	static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)

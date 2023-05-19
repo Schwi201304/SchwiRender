@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Layer.h"
-
 namespace schwi {
+	class Layer;
+
 	class SCHWI_API LayerStack
 	{
 	public:
