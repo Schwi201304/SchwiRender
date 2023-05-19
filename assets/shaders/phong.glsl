@@ -72,13 +72,6 @@ struct Material
 	float shininess;
 };
 
-struct Light
-{
-	vec3 color;
-	vec3 position;
-	float intensity;
-};
-
 struct DirLight
 {
 	vec3 color;
@@ -112,12 +105,10 @@ struct SpotLight
 #define MAX_LIGHT_NUM 8
 
 uniform Material u_Material;
-uniform Light u_Light[MAX_LIGHT_NUM];
 uniform DirLight u_DirLight[MAX_LIGHT_NUM];
 uniform PointLight u_PointLight[MAX_LIGHT_NUM];
 uniform SpotLight u_SpotLight[MAX_LIGHT_NUM];
 
-uniform int BasicNum;
 uniform int DirLightNum;
 uniform int PointLightNum;
 uniform int SpotLightNum;
@@ -125,27 +116,6 @@ uniform int u_UseNormalMap;
 
 uniform float Ambient = 0.1;
 vec3 normal = vec3(0.0, 0.0, 1.0);
-
-//  Calculate normal light
-vec3 CalculateLight(Light light)
-{
-	//  environment light
-	vec3 ambient = Ambient * light.color * vec3(texture(u_Material.diffuse, v_TexCoords));
-
-	//  diffuse light
-	vec3 norm = normalize(normal);
-	vec3 lightDir = normalize(TBN * light.position - v_FragPos);
-	float diff = max(dot(norm, lightDir), 0.0);
-	vec3 diffuse = vec3(texture(u_Material.diffuse, v_TexCoords)) * light.color * diff;
-
-	//  specular light
-	vec3 viewDir = normalize(v_ViewPos - v_FragPos);
-	vec3 reflectDir = reflect(-lightDir, norm);
-	float spec = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.shininess);
-	vec3 specular = vec3(texture(u_Material.specular, v_TexCoords)) * spec * light.color;
-
-	return (ambient + diffuse + specular) * light.intensity;
-}
 
 //  Calculate directional light
 vec3 CalculateDirLight(DirLight light)
@@ -190,6 +160,7 @@ vec3 CalculatePointLight(PointLight light)
 	float dist = length(TBN * light.position - v_FragPos);
 	float attenuation = 1.0 / (light.constant + light.linear * dist + light.quadratic * (dist * dist));
 
+	//return light.position;
 	return (ambient + diffuse + specular) * attenuation * light.intensity;
 }
 
@@ -231,10 +202,6 @@ void main()
 		normal = v_Normal;
 
 	vec3 result = vec3(0.0);
-	for (int i = 0; i < BasicNum; i++)
-	{
-		result += CalculateLight(u_Light[i]);
-	}
 
 	for (int i = 0; i < DirLightNum; i++)
 	{

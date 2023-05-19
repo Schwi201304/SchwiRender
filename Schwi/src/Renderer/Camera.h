@@ -4,7 +4,7 @@
 
 namespace schwi {
 
-	enum SCHWI_API CameraType
+	enum class SCHWI_API CameraType
 	{
 		Orthographic = 0,
 		Perspective = 1
@@ -13,7 +13,12 @@ namespace schwi {
 	class SCHWI_API Camera
 	{
 	public:
-		Camera() = default;
+		Camera()
+		{
+			UpdateViewMatrix();
+			UpdateProjectionMatrix();
+			UpdateViewProjectionMatrix();
+		}
 		Camera(float nearPlane, float farPlane, float aspect, CameraType cameraType = CameraType::Perspective)
 			:m_NearPlane(nearPlane), m_FarPlane(farPlane), m_Aspect(aspect), m_CameraType(cameraType)
 		{
@@ -74,8 +79,8 @@ namespace schwi {
 		void UpdateViewProjectionMatrix() { m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix; }
 
 	private:
-		CameraType m_CameraType=CameraType::Perspective;
-		float m_FarPlane=0.1f, m_NearPlane=100.f, m_Aspect=1.0f;
+		CameraType m_CameraType = CameraType::Perspective;
+		float m_FarPlane=100.0f, m_NearPlane=0.1f, m_Aspect=1.0f;
 		float m_Pitch = 0.0f, m_Yaw = -90.0f;
 		glm::vec3 m_Position = { 0.0f, 3.0f, 5.0f };
 		glm::mat4 m_ViewMatrix = glm::mat4(1.0f);

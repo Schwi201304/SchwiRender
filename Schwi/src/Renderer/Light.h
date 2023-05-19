@@ -7,7 +7,6 @@ namespace schwi {
 
 	enum class LightType
 	{
-		LightType_None = 0,
 		LightType_Basic = 1,
 		LightType_DirLight = 2,
 		LightType_PointLight = 3,
@@ -22,8 +21,8 @@ namespace schwi {
 
 		Light() = default;
 
-		virtual LightType GetLightType() {return LightType::LightType_Basic;}
-		virtual void Bind(const Ref<Shader>& shader, const uint32_t& slot);
+		virtual LightType GetLightType() { return LightType::LightType_Basic; }
+		virtual void Bind(const Ref<Shader>& shader, const uint32_t& slot) = 0;
 	};
 
 	struct DirLight : public Light

@@ -124,6 +124,9 @@ namespace schwi {
 		auto entity = CreateEntity("Camera");
 		auto& camera = entity.AddComponent<CameraComponent>();
 		camera.camera = CreateRef<Camera>();
+		auto& ts = entity.GetComponent<TransformComponent>();
+		ts.Translation = camera.camera->GetPosition();
+		ts.Rotation = camera.camera->GetRotate();
 	}
 
 	void SceneLayer::OpenScene()
@@ -174,7 +177,6 @@ namespace schwi {
 	template<typename T>
 	void SceneLayer::OnComponentAdded(Entity entity, T& component)
 	{
-		//static_assert(false);
 	}
 
 	template<>
@@ -185,7 +187,6 @@ namespace schwi {
 	template<>
 	void SceneLayer::OnComponentAdded<CameraComponent>(Entity entity, CameraComponent& component)
 	{
-		if (component.camera)return;
 		component.camera = CreateRef<Camera>();
 		component.camera->SetAspect(m_ViewportSize.x / m_ViewportSize.y);
 	}
@@ -198,14 +199,17 @@ namespace schwi {
 	template<>
 	void SceneLayer::OnComponentAdded<LightComponent>(Entity entity, LightComponent& component)
 	{
-		if (component.light)return;
 		component.light = CreateRef<PointLight>();
-		component.lightType = LightType::LightType_PointLight;
-		
+		component.lightType = LightType::LightType_PointLight;		
 	}
 
 	template<>
 	void SceneLayer::OnComponentAdded<ModelComponent>(Entity entity, ModelComponent& component)
+	{
+	}
+
+	template<>
+	void SceneLayer::OnComponentAdded<MeshComponent>(Entity entity, MeshComponent& component)
 	{
 	}
 }

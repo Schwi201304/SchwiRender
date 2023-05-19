@@ -2,6 +2,7 @@
 #include "Hierarchy.h"
 
 #include "Scene/Components.h"
+#include "Core/Util.h"
 
 namespace schwi {
 	Hierarchy::Hierarchy(const Ref<SceneLayer>& context)
@@ -50,6 +51,16 @@ namespace schwi {
 				if (ImGui::MenuItem("Light"))
 				{
 					m_SelectionContext.AddComponent<LightComponent>();
+					ImGui::CloseCurrentPopup();
+				}
+				if (ImGui::MenuItem("Model"))
+				{
+					m_SelectionContext.AddComponent<ModelComponent>();
+					ImGui::CloseCurrentPopup();
+				}
+				if (ImGui::MenuItem("Mesh"))
+				{
+					m_SelectionContext.AddComponent<MeshComponent>();
 					ImGui::CloseCurrentPopup();
 				}
 				ImGui::EndPopup();
@@ -206,11 +217,9 @@ namespace schwi {
 							currentProjectionTypeString = projectionTypeStrings[i];
 							camera->SetCameraType((CameraType)i);
 						}
-
 						if (isSelected)
 							ImGui::SetItemDefaultFocus();
 					}
-
 					ImGui::EndCombo();
 				}
 
@@ -249,6 +258,57 @@ namespace schwi {
 				auto light = lc.light;
 				ImGui::ColorEdit3("Color", glm::value_ptr(light->Color));
 				ImGui::SliderFloat("Intensity", &light->Intensity, 0.001, 10.0);
+
+				ImGui::TreePop();
+			}
+		}
+		if (entity.HasComponent<ModelComponent>())
+		{
+			bool open = ImGui::TreeNodeEx((void*)typeid(ModelComponent).hash_code(), treeNodeFlags, "Model");
+			if (open)
+			{
+				auto& mc = entity.GetComponent<ModelComponent>();
+				if (ImGui::Button("Open New Model"))
+				{
+					auto path = FileDialogs::OpenFile("Model (*.obj)\0*.obj\0");
+					if (!path.empty())
+					{
+						mc.path = path;
+						mc.model = CreateRef<Model>(path);
+					}
+				}
+				ImGui::TreePop();
+			}
+		}
+		if (entity.HasComponent<MeshComponent>())
+		{
+			bool open = ImGui::TreeNodeEx((void*)typeid(MeshComponent).hash_code(), treeNodeFlags, "Model");
+			if (open)
+			{
+				auto& mc = entity.GetComponent<MeshComponent>();
+				const char* meshTypeStrings[] = { "None","Plane","Cube","Sphere","TriangleMesh"};
+				const char* currentMeshTypeString = meshTypeStrings[(int)mc.type];
+				if (ImGui::BeginCombo("MeshType", currentMeshTypeString))
+				{
+					for (int i = 0; i < 5; i++)
+					{
+						bool isSelected = currentMeshTypeString == meshTypeStrings[i];
+						if (ImGui::Selectable(meshTypeStrings[i], isSelected))
+						{
+							currentMeshTypeString = meshTypeStrings[i];
+							mc.type = (MeshType)i;
+							mc.mesh = CreateRef<Mesh>(mc.type, mc.sample);
+						}
+						if (isSelected)
+							ImGui::SetItemDefaultFocus();
+					}
+					ImGui::EndCombo();
+				}
+				if (ImGui::InputInt("Sample", &mc.sample))
+				{
+					mc.mesh = CreateRef<Mesh>(mc.type, mc.sample);
+				}
+				ImGui::TreePop();
 			}
 		}
 	}

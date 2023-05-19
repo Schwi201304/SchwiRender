@@ -4,14 +4,6 @@
 #include "Shader.h"
 
 namespace schwi {
-	void Light::Bind(const Ref<Shader>& shader, const uint32_t& slot)
-	{
-		shader->Bind();
-		shader->SetFloat3("u_Light[" + std::to_string(slot) + "].color", Color);
-		shader->SetFloat3("u_Light[" + std::to_string(slot) + "].position", Position);
-		shader->SetFloat("u_Light[" + std::to_string(slot) + "].intensity", Intensity);
-	}
-
 	void DirLight::Bind(const Ref<Shader>& shader, const uint32_t& slot)
 	{
 		shader->Bind();

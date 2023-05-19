@@ -151,6 +151,17 @@ namespace schwi {
 			out << YAML::Key << "Type" << YAML::Value << (int)lc.lightType;
 			out << YAML::EndMap;
 		}
+
+		if (entity.HasComponent<MeshComponent>())
+		{
+			out << YAML::Key << "MeshComponent";
+			out << YAML::BeginMap;
+
+			auto& mc = entity.GetComponent<MeshComponent>();
+			out << YAML::Key << "Type" << YAML::Value << (int)mc.type;
+			out << YAML::Key << "Sample" << YAML::Value << mc.sample;
+			out << YAML::EndMap;
+		}
 		out << YAML::EndMap;
 	}
 
@@ -211,7 +222,6 @@ namespace schwi {
 				auto transformComponent = entity["TransformComponent"];
 				if (transformComponent)
 				{
-					// Entities always have transforms
 					auto& tc = deserializedEntity.GetComponent<TransformComponent>();
 					tc.Translation = transformComponent["Translation"].as<glm::vec3>();
 					tc.Rotation = transformComponent["Rotation"].as<glm::vec3>();
@@ -238,7 +248,7 @@ namespace schwi {
 				if (modelComponent)
 				{
 					auto path = modelComponent["Path"].as<std::string>();
-					auto& mc = deserializedEntity.AddComponent<ModelComponent>(SolutionDir+path);
+					auto& mc = deserializedEntity.AddComponent<ModelComponent>(SolutionDir + path);
 					mc.path = path;
 				}
 
@@ -247,6 +257,14 @@ namespace schwi {
 				{
 					auto lc = deserializedEntity.AddComponent<LightComponent>();
 					lc.lightType = (LightType)lightComponent["Type"].as<int>();
+				}
+
+				auto meshComponent = entity["MeshComponent"];
+				if (meshComponent)
+				{
+					auto type = (MeshType)meshComponent["Type"].as<int>();
+					auto sample = meshComponent["Sample"].as<int>();
+					auto mc = deserializedEntity.AddComponent<MeshComponent>(type, sample);
 				}
 			}
 		}
