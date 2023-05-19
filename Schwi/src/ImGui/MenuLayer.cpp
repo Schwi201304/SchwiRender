@@ -4,10 +4,11 @@
 #include <ImGuizmo.h>
 
 #include "Core/Application.h"
+#include "Core/Util.h"
 #include "Scene/SceneLayer.h"
 #include "Scene/SceneSerializer.h"
-#include "Renderer/Camera.h"
 #include "Scene/CameraController.h"
+#include "Renderer/Camera.h"
 
 namespace schwi {
 	Ref<MenuLayer> MenuLayer::s_Instance = nullptr;
@@ -43,17 +44,15 @@ namespace schwi {
 			{
 				if (ImGui::MenuItem("New","Ctral+N"))
 				{
-
+					SceneLayer::GetInstance()->NewScene();
 				}
 				if (ImGui::MenuItem("Open","Ctrl+O"))
 				{
-					SceneSerializer serializer(SceneLayer::GetInstance());
-					serializer.Deserialize(SolutionDir + "assets/scenes/Example.yaml");
+					SceneLayer::GetInstance()->OpenScene();
 				}
 				if (ImGui::MenuItem("Save","Ctrl+S"))
 				{
-					SceneSerializer serializer(SceneLayer::GetInstance());
-					serializer.Serialize(SolutionDir + "assets/scenes/Example.yaml");
+					SceneLayer::GetInstance()->SaveScene();
 				}
 				if (ImGui::MenuItem("Exit", "Alt+F4"))
 				{

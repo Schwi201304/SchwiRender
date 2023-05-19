@@ -101,6 +101,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\Util.h" />
     <ClInclude Include="src\Scene\SceneSerializer.h" />
     <ClInclude Include="src\ImGui\Hierarchy.h" />
     <ClInclude Include="src\ImGui\EditorLayer.h" />
@@ -148,6 +149,7 @@
     <ClInclude Include="src\Renderer\Texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\Windows\WindowsUtil.cpp" />
     <ClCompile Include="src\Renderer\Light.cpp" />
     <ClCompile Include="src\Renderer\Material.cpp" />
     <ClCompile Include="src\Scene\SceneSerializer.cpp" />

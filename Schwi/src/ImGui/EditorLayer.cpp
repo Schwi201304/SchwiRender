@@ -9,9 +9,6 @@ namespace schwi {
 
 	void EditorLayer::OnAttach()
 	{
-		m_SceneLayer = SceneLayer::GetInstance();
-
-		m_Hierarchy.SetContext(m_SceneLayer);
 	}
 
 	void EditorLayer::OnDetach()

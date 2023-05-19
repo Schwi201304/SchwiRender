@@ -20,7 +20,6 @@ namespace schwi {
 		static Ref<EditorLayer> GetInstance() { return s_Instance; }
 	private:
 		static Ref<EditorLayer> s_Instance;
-		Ref<SceneLayer> m_SceneLayer;
 		Hierarchy m_Hierarchy;
 
 		bool m_ViewportFocused = false, m_ViewportHovered = false;

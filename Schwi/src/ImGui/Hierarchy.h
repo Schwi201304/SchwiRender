@@ -20,7 +20,6 @@ namespace schwi {
 		void DrawComponents(Entity entity);
 
 	private:
-		Ref<SceneLayer> m_Context;
 		Entity m_SelectionContext;
 	};
 

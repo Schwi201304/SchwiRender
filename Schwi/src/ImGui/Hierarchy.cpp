@@ -6,21 +6,15 @@
 namespace schwi {
 	Hierarchy::Hierarchy(const Ref<SceneLayer>& context)
 	{
-		SetContext(context);
-	}
-
-	void Hierarchy::SetContext(const Ref<SceneLayer>& context)
-	{
-		m_Context = context;
 	}
 
 	void Hierarchy::OnImGuiRender()
 	{
 		ImGui::Begin("Hierarchy");
 
-		m_Context->GetRegistry().each([&](auto entityID)
+		SceneLayer::GetInstance()->GetRegistry().each([&](auto entityID)
 			{
-				Entity entity{ entityID , m_Context };
+				Entity entity{ entityID , SceneLayer::GetInstance() };
 				DrawEntityNode(entity);
 			});
 
@@ -30,7 +24,7 @@ namespace schwi {
 		if (ImGui::BeginPopupContextWindow("Hierarchy Menu"))
 		{
 			if (ImGui::MenuItem("Create Empty Entity"))
-				m_Context->CreateEntity("Empty Entity");
+				SceneLayer::GetInstance()->CreateEntity("Empty Entity");
 
 			ImGui::EndPopup();
 		}
@@ -53,13 +47,11 @@ namespace schwi {
 					m_SelectionContext.AddComponent<CameraComponent>();
 					ImGui::CloseCurrentPopup();
 				}
-
 				if (ImGui::MenuItem("Light"))
 				{
 					m_SelectionContext.AddComponent<LightComponent>();
 					ImGui::CloseCurrentPopup();
 				}
-
 				ImGui::EndPopup();
 			}
 		}
@@ -79,7 +71,6 @@ namespace schwi {
 		{
 			m_SelectionContext = entity;
 		}
-
 		if (opened)
 		{
 			ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;
@@ -98,10 +89,9 @@ namespace schwi {
 
 				ImGui::EndPopup();
 			}
-
 			if (entityDeleted)
 			{
-				m_Context->DestroyEntity(entity);
+				SceneLayer::GetInstance()->DestroyEntity(entity);
 				m_SelectionContext = {};
 			}
 
@@ -195,7 +185,6 @@ namespace schwi {
 				ImGui::TreePop();
 			}
 		}
-
 		if (entity.HasComponent<CameraComponent>())
 		{
 			if (ImGui::TreeNodeEx((void*)typeid(CameraComponent).hash_code(), treeNodeFlags, "Camera"))
@@ -238,16 +227,6 @@ namespace schwi {
 					float orthoHeight = camera->GetHeight();
 					if (ImGui::DragFloat("Height", &orthoHeight))
 						camera->SetHeight(orthoHeight);
-
-					//float orthoNear = camera->GetNearPlane();
-					//if (ImGui::DragFloat("Near", &orthoNear))
-					//	camera->SetNearPlane(orthoNear);
-					//
-					//float orthoFar = camera->GetFarPlane();
-					//if (ImGui::DragFloat("Far", &orthoFar))
-					//	camera->SetFarPlane(orthoFar);
-
-					//ImGui::Checkbox("Fixed Aspect Ratio", &cameraComponent.FixedAspectRatio);
 				}
 
 				float perspNear = camera->GetNearPlane();
@@ -258,8 +237,18 @@ namespace schwi {
 				if (ImGui::DragFloat("Far", &perspFar))
 					camera->SetFarPlane(perspFar);
 
-
 				ImGui::TreePop();
+			}
+		}
+		if (entity.HasComponent<LightComponent>())
+		{
+			bool open = ImGui::TreeNodeEx((void*)typeid(LightComponent).hash_code(), treeNodeFlags, "Light");
+			if (open)
+			{
+				auto& lc = entity.GetComponent<LightComponent>();
+				auto light = lc.light;
+				ImGui::ColorEdit3("Color", glm::value_ptr(light->Color));
+				ImGui::SliderFloat("Intensity", &light->Intensity, 0.001, 10.0);
 			}
 		}
 	}

@@ -231,7 +231,6 @@ namespace schwi {
 					cc.camera->SetNearPlane(cameraProps["Near"].as<float>());
 					cc.camera->SetFarPlane(cameraProps["Far"].as<float>());
 
-
 					cc.Primary = cameraComponent["Primary"].as<bool>();
 				}
 
@@ -251,7 +250,6 @@ namespace schwi {
 				}
 			}
 		}
-
 		return true;
 	}
 

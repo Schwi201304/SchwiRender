@@ -3,11 +3,13 @@
 
 #include <ImGuizmo.h>
 
+#include "Core/Util.h"
 #include "Renderer/RenderCommand.h"
 #include "Renderer/Buffer.h"
 #include "Components.h"
 #include "Entity.h"
 #include "CameraController.h"
+#include "SceneSerializer.h"
 
 namespace schwi {
 	Ref<SceneLayer> SceneLayer::s_Instance = nullptr;
@@ -114,6 +116,35 @@ namespace schwi {
 	void SceneLayer::OnEvent(Event& e)
 	{
 		m_Scene->m_CameraController->OnEvent(e);
+	}
+
+	void SceneLayer::NewScene()
+	{
+		m_Scene = CreateRef<Scene>();
+		auto entity = CreateEntity("Camera");
+		auto& camera = entity.AddComponent<CameraComponent>();
+		camera.camera = CreateRef<Camera>();
+	}
+
+	void SceneLayer::OpenScene()
+	{
+		auto path= FileDialogs::OpenFile("Schwi Scene (*.schwi)\0*.schwi\0");
+		if (!path.empty())
+		{
+			m_Scene = CreateRef<Scene>();
+			SceneSerializer serializer(s_Instance);
+			serializer.Deserialize(path);
+		}
+	}
+
+	void SceneLayer::SaveScene()
+	{
+		std::string filepath = FileDialogs::SaveFile("Schwi Scene (*.schwi)\0*.schwi\0");
+		if (!filepath.empty())
+		{
+			SceneSerializer serializer(s_Instance);
+			serializer.Serialize(filepath);
+		}
 	}
 
 	void SceneLayer::BeginScene()
