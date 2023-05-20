@@ -21,15 +21,11 @@ namespace schwi {
 
 	void Scene::DrawLight()
 	{
-		m_DefaultShader->Bind();
-		m_DefaultShader->SetFloat4("u_FragColor", glm::vec4(1.0f));
-		m_DefaultShader->SetMat4("u_ViewProjection", s_SceneData->ViewProjectionMatrix);
-
-		auto group = m_Registry.view<TransformComponent, LightComponent, MeshComponent>();
+		auto group = m_Registry.view<TransformComponent, LightComponent>();
 		size_t point = 0;
 		for (auto entity : group)
 		{
-			auto [transform, light, mesh] = group.get<TransformComponent, LightComponent, MeshComponent>(entity);
+			auto [transform, light] = group.get<TransformComponent, LightComponent>(entity);
 			light.light->Position = transform.Translation;
 			switch (light.lightType)
 			{
@@ -39,8 +35,6 @@ namespace schwi {
 			case LightType::LightType_Basic:
 				SW_CORE_ERROR("LightType cannot be Basic");
 			}
-			if (mesh.mesh)
-				mesh.mesh->Draw(m_DefaultShader, transform.GetTransform());
 		}
 		m_Shader->Bind();
 		m_Shader->SetInt("PointLightNum", point);
@@ -56,14 +50,29 @@ namespace schwi {
 		m_Shader->Bind();
 		m_Shader->SetFloat3("u_ViewPos", camera->GetPosition());
 		m_Shader->SetMat4("u_ViewProjection", s_SceneData->ViewProjectionMatrix);
-		auto group = m_Registry.view< TransformComponent, ModelComponent>();
-		for (auto entity : group)
+
+		auto models = m_Registry.view< TransformComponent, ModelComponent>();
+		for (auto entity : models)
 		{
-			auto [transform, model] = group.get<TransformComponent, ModelComponent>(entity);
+			auto [transform, model] = models.get<TransformComponent, ModelComponent>(entity);
 			if (model.model)
 			{
 				model.model->SetTransform(transform.GetTransform());
 				model.model->Draw(m_Shader);
+			}
+		}
+
+		m_DefaultShader->Bind();
+		m_DefaultShader->SetFloat4("u_FragColor", glm::vec4(1.0f));
+		m_DefaultShader->SetMat4("u_ViewProjection", s_SceneData->ViewProjectionMatrix);
+
+		auto meshes = m_Registry.view< TransformComponent, MeshComponent>();
+		for (auto entity : meshes)
+		{
+			auto [transform, mesh] = meshes.get<TransformComponent, MeshComponent>(entity);
+			if (mesh.mesh)
+			{
+				mesh.mesh->Draw(m_DefaultShader,transform.GetTransform());
 			}
 		}
 	}

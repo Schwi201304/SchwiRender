@@ -110,6 +110,7 @@ namespace schwi {
 		ImGui::Image((void*)(intptr_t)textureID,
 			ImVec2(m_ViewportSize.x, m_ViewportSize.y),
 			ImVec2(0, 1), ImVec2(1, 0));
+
 		ImGui::End();
 	}
 

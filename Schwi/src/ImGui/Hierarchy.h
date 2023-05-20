@@ -12,6 +12,7 @@ namespace schwi {
 		Hierarchy(const Ref<SceneLayer>& scene);
 
 		void SetContext(const Ref<SceneLayer>& scene);
+		Entity& GetSelectedEntity() { return m_SelectionContext; }
 
 		void OnImGuiRender();
 

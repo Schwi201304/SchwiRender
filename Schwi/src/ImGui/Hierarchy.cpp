@@ -306,6 +306,7 @@ namespace schwi {
 				}
 				if (ImGui::InputInt("Sample", &mc.sample))
 				{
+					mc.sample = std::max(mc.sample, 1);
 					mc.mesh = CreateRef<Mesh>(mc.type, mc.sample);
 				}
 				ImGui::TreePop();

@@ -18,12 +18,17 @@ namespace schwi {
 		void OnEvent(Event& e) override;
 
 		static Ref<EditorLayer> GetInstance() { return s_Instance; }
+
 	private:
+		void GizmoEditor();
+
 		static Ref<EditorLayer> s_Instance;
 		Hierarchy m_Hierarchy;
-
+		int m_GizmoType = -1;
 		bool m_ViewportFocused = false, m_ViewportHovered = false;
+
 		friend class MenuLayer;
+		friend class SceneLayer;
 	};
 
 }
